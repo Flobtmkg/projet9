@@ -4,6 +4,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 
 
 @FeignClient(name = "microserviceusers", url = "localhost:8084")
-public class ProxyUser {
+public interface ProxyUser {
 
 }
