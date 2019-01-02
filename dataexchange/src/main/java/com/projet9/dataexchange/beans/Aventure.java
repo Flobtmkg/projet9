@@ -1,25 +1,50 @@
 package com.projet9.dataexchange.beans;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
 public class Aventure {
-    private Integer id;
+    private int id;
     private String nom;
     private Float prix;
-    private Date dateDebut;
-    private Date dateFin;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
     private String description;
-    private Integer idCategorie;
+    private int idCategorie;
 
     private Categorie categorie;
 
+    public Aventure(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, int idCategorie) {
+        this.id = id;
+        this.nom = nom;
+        this.prix = prix;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.description = description;
+        this.idCategorie = idCategorie;
+    }
 
-    public Integer getId() {
+    public LocalDate getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(LocalDate dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public LocalDate getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(LocalDate dateFin) {
+        this.dateFin = dateFin;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -39,22 +64,6 @@ public class Aventure {
         this.prix = prix;
     }
 
-    public Date getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut(Date dateDebut) {
-        this.dateDebut = dateDebut;
-    }
-
-    public Date getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin(Date dateFin) {
-        this.dateFin = dateFin;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -63,11 +72,11 @@ public class Aventure {
         this.description = description;
     }
 
-    public Integer getIdCategorie() {
+    public int getIdCategorie() {
         return idCategorie;
     }
 
-    public void setIdCategorie(Integer idCategorie) {
+    public void setIdCategorie(int idCategorie) {
         this.idCategorie = idCategorie;
     }
 

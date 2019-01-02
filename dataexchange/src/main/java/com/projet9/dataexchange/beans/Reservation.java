@@ -1,26 +1,27 @@
 package com.projet9.dataexchange.beans;
 
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Reservation {
     // Champs de base
     private int id;
     private int idAventure;
     private int idUser;
-    private Calendar dateReservation;
+    private LocalDate dateReservation;
     private int numEtat;
-    private Calendar timestampCommentaireReservation;
+    private LocalDateTime timestampCommentaireReservation;
     private String commentaireReservation;
 
     // Objets composites
-    //private Aventure aventure;
+    private Aventure aventure;
     private User user;
     private EtatReservation etatReservation;
 
 
     // Constructeur avec champs de base
-    public Reservation(int id, int idAventure, int idUser, Calendar dateReservation, int numEtat, Calendar timestampCommentaireReservation, String commentaireReservation) {
+    public Reservation(int id, int idAventure, int idUser, LocalDate dateReservation, int numEtat, LocalDateTime timestampCommentaireReservation, String commentaireReservation) {
         this.id = id;
         this.idAventure = idAventure;
         this.idUser = idUser;
@@ -28,6 +29,22 @@ public class Reservation {
         this.numEtat = numEtat;
         this.timestampCommentaireReservation = timestampCommentaireReservation;
         this.commentaireReservation = commentaireReservation;
+    }
+
+    public LocalDate getDateReservation() {
+        return dateReservation;
+    }
+
+    public void setDateReservation(LocalDate dateReservation) {
+        this.dateReservation = dateReservation;
+    }
+
+    public LocalDateTime getTimestampCommentaireReservation() {
+        return timestampCommentaireReservation;
+    }
+
+    public void setTimestampCommentaireReservation(LocalDateTime timestampCommentaireReservation) {
+        this.timestampCommentaireReservation = timestampCommentaireReservation;
     }
 
     public int getId() {
@@ -54,13 +71,6 @@ public class Reservation {
         this.idUser = idUser;
     }
 
-    public Calendar getDateReservation() {
-        return dateReservation;
-    }
-
-    public void setDateReservation(Calendar dateReservation) {
-        this.dateReservation = dateReservation;
-    }
 
     public int getNumEtat() {
         return numEtat;
@@ -68,14 +78,6 @@ public class Reservation {
 
     public void setNumEtat(int numEtat) {
         this.numEtat = numEtat;
-    }
-
-    public Calendar getTimestampCommentaireReservation() {
-        return timestampCommentaireReservation;
-    }
-
-    public void setTimestampCommentaireReservation(Calendar timestampCommentaireReservation) {
-        this.timestampCommentaireReservation = timestampCommentaireReservation;
     }
 
     public String getCommentaireReservation() {
@@ -100,5 +102,13 @@ public class Reservation {
 
     public void setEtatReservation(EtatReservation etatReservation) {
         this.etatReservation = etatReservation;
+    }
+
+    public Aventure getAventure() {
+        return aventure;
+    }
+
+    public void setAventure(Aventure aventure) {
+        this.aventure = aventure;
     }
 }

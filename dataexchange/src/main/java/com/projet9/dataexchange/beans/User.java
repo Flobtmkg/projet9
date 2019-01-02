@@ -1,6 +1,6 @@
 package com.projet9.dataexchange.beans;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
 public class User {
@@ -8,10 +8,19 @@ public class User {
     private int id;
     private String nom;
     private String prenom;
-    private Date dateNaissance;
+    private LocalDate dateNaissance;
     private String email;
     private String password;
 
+
+    public User(int id, String nom, String prenom, LocalDate dateNaissance, String email, String password) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.email = email;
+        this.password = password;
+    }
 
     public int getId() {
         return id;
@@ -37,11 +46,11 @@ public class User {
         this.prenom = prenom;
     }
 
-    public Date getDateNaissance() {
+    public LocalDate getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 

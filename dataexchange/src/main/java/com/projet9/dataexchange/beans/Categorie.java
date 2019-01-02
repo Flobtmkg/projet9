@@ -2,16 +2,21 @@ package com.projet9.dataexchange.beans;
 
 
 public class Categorie {
-    private Integer id;
+    private int id;
     private String nom;
     private String description;
 
+    public Categorie(int id, String nom, String description) {
+        this.id = id;
+        this.nom = nom;
+        this.description = description;
+    }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

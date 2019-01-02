@@ -6,6 +6,11 @@ public class EtatReservation {
 private int numEtat;
 private String etat;
 
+    public EtatReservation(int numEtat, String etat) {
+        this.numEtat = numEtat;
+        this.etat = etat;
+    }
+
     public int getNumEtat() {
         return numEtat;
     }
