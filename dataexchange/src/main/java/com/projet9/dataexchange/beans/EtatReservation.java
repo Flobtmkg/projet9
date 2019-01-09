@@ -2,9 +2,8 @@ package com.projet9.dataexchange.beans;
 
 public class EtatReservation {
 
-
-private int numEtat;
-private String etat;
+    private int numEtat;
+    private String etat;
 
     public EtatReservation(int numEtat, String etat) {
         this.numEtat = numEtat;

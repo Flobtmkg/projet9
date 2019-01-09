@@ -1,16 +1,16 @@
 package com.projet9.dataexchange.beans;
 
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Reservation {
+
     // Champs de base
     private int id;
     private int idAventure;
     private int idUser;
-    private LocalDate dateReservation;
     private int numEtat;
+    private LocalDate dateReservation;
     private LocalDateTime timestampCommentaireReservation;
     private String commentaireReservation;
 
@@ -21,14 +21,15 @@ public class Reservation {
 
 
     // Constructeur avec champs de base
-    public Reservation(int id, int idAventure, int idUser, LocalDate dateReservation, int numEtat, LocalDateTime timestampCommentaireReservation, String commentaireReservation) {
+    public Reservation(int id, int idAventure, int idUser, int numEtat, LocalDate dateReservation, LocalDateTime timestampCommentaireReservation, String commentaireReservation, EtatReservation etatReservation) {
         this.id = id;
         this.idAventure = idAventure;
         this.idUser = idUser;
-        this.dateReservation = dateReservation;
         this.numEtat = numEtat;
+        this.dateReservation = dateReservation;
         this.timestampCommentaireReservation = timestampCommentaireReservation;
         this.commentaireReservation = commentaireReservation;
+        this.etatReservation = etatReservation;
     }
 
     public LocalDate getDateReservation() {

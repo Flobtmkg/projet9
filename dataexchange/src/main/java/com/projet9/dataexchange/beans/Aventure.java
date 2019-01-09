@@ -16,7 +16,7 @@ public class Aventure {
     private Categorie categorie;
 
     // Constructeur par champ
-    public Aventure(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, int idCategorie, byte[] image) {
+    public Aventure(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, int idCategorie, byte[] image, Categorie categorie) {
         this.id = id;
         this.nom = nom;
         this.prix = prix;
@@ -25,6 +25,7 @@ public class Aventure {
         this.description = description;
         this.idCategorie = idCategorie;
         this.image = image;
+        this.categorie = categorie;
     }
 
     public LocalDate getDateDebut() {
@@ -98,4 +99,6 @@ public class Aventure {
     public void setImage(byte[] image) {
         this.image = image;
     }
+
+
 }
