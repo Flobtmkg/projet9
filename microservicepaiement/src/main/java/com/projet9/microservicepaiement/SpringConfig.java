@@ -1,5 +1,6 @@
 package com.projet9.microservicepaiement;
 
+import com.projet9.dataexchange.decoder.CustomErrorDecoder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,5 +22,10 @@ public class SpringConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.projet9.microservicepaiement"))
                 .paths(PathSelectors.any())
                 .build();
+    }
+
+    @Bean
+    public CustomErrorDecoder mCustomErrorDecoder(){
+        return new CustomErrorDecoder();
     }
 }

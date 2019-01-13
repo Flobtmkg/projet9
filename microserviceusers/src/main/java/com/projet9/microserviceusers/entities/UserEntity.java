@@ -1,6 +1,5 @@
 package com.projet9.microserviceusers.entities;
 
-import com.projet9.dataexchange.beans.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -8,8 +7,11 @@ import java.time.LocalDate;
 @Entity(name="user")
 @Table(name="user")
 public class UserEntity {
+
+    // On rend l'ID non insérable
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "numEtat", updatable = false, nullable = false)
     private int id;
     private String nom;
     private String prenom;
@@ -27,6 +29,11 @@ public class UserEntity {
         this.email = email;
         this.password = password;
         this.image = image;
+    }
+
+    // Constructeur par defaut exigé par hibernate
+    public UserEntity(){
+
     }
 
     public int getId() {

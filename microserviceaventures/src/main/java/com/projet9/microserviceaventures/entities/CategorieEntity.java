@@ -1,14 +1,16 @@
 package com.projet9.microserviceaventures.entities;
 
-import com.projet9.dataexchange.beans.Categorie;
 
 import javax.persistence.*;
 
 @Entity(name="categorie")
 @Table(name="categorie")
 public class CategorieEntity {
+
+    // On rend l'ID non insérable
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
     private String nom;
     private String description;
@@ -17,6 +19,11 @@ public class CategorieEntity {
         this.id = id;
         this.nom = nom;
         this.description = description;
+    }
+
+    // Constructeur par defaut exigé par hibernate
+    public CategorieEntity(){
+
     }
 
     public int getId() {

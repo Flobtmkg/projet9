@@ -1,6 +1,5 @@
 package com.projet9.microserviceaventures.entities;
 
-import com.projet9.dataexchange.beans.Aventure;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -8,19 +7,30 @@ import java.time.LocalDate;
 @Entity(name="aventure")
 @Table(name="aventure")
 public class AventureEntity {
+
+    // On rend l'ID non insérable
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
     private String nom;
     private Float prix;
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private String description;
+
+    // On rend la FK non insérable pour ne pas faire doublon avec l'ID de l'entité Catégorie ramenée par hibernate ??
+    @Column(insertable = false, updatable = false)
     private int idCategorie;
+
     @Lob
     private byte[] image;
+
+    // On définie la logique de jointure et l'ID de l'entité ramenée fait office de FK ??
     @ManyToOne
+    @JoinColumn(name = "idCategorie")
     private CategorieEntity categorieEntity;
+
 
     public AventureEntity(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, int idCategorie, byte[] image, CategorieEntity categorieEntity) {
         this.id = id;
@@ -32,6 +42,11 @@ public class AventureEntity {
         this.idCategorie = idCategorie;
         this.image = image;
         this.categorieEntity = categorieEntity;
+    }
+
+    // Constructeur par defaut exigé par hibernate
+    public AventureEntity(){
+
     }
 
     public int getId() {
@@ -82,7 +97,7 @@ public class AventureEntity {
         this.description = description;
     }
 
-    public int getIdCategorie() {
+   public int getIdCategorie() {
         return idCategorie;
     }
 

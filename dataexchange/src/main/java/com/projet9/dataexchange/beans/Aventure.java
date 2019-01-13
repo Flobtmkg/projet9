@@ -23,9 +23,9 @@ public class Aventure {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.description = description;
-        this.idCategorie = idCategorie;
         this.image = image;
         this.categorie = categorie;
+        this.idCategorie = idCategorie;
     }
 
     public LocalDate getDateDebut() {

@@ -1,6 +1,5 @@
 package com.projet9.microservicereservation.entities;
 
-import com.projet9.dataexchange.beans.Reservation;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,17 +9,28 @@ import java.time.LocalDateTime;
 @Table(name="reservation")
 public class ReservationEntity {
 
+    // On rend l'ID non insérable
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
     private int idAventure;
     private int idUser;
+
+    // On rend la FK non insérable pour ne pas faire doublon avec l'ID de l'entité EtatReservation ramenée par hibernate ??
+    @Column(insertable = false, updatable = false)
     private int numEtat;
+
     private LocalDate dateReservation;
     private LocalDateTime timestampCommentaireReservation;
     private String commentaireReservation;
+
+
+    // On définie la logique de jointure et l'ID de l'entité ramenée fait office de FK ??
     @ManyToOne
+    @JoinColumn(name = "numEtat")
     private EtatReservationEntity etatReservationEntity;
+
 
     public ReservationEntity(int id, int idAventure, int idUser, int numEtat, LocalDate dateReservation, LocalDateTime timestampCommentaireReservation, String commentaireReservation, EtatReservationEntity etatReservationEntity) {
         this.id = id;
@@ -32,6 +42,13 @@ public class ReservationEntity {
         this.commentaireReservation = commentaireReservation;
         this.etatReservationEntity = etatReservationEntity;
     }
+
+
+    // Constructeur par defaut exigé par hibernate
+    public ReservationEntity(){
+
+    }
+
 
     public int getId() {
         return id;
