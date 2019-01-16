@@ -34,7 +34,6 @@ public class AventureController {
         return AventureMapper.toDto(savedAventureEntity);
     }
 
-
     @PutMapping("/api/Aventures")
     public Aventure update(@RequestBody Aventure aventure){
         if(aventureDao.existsById(aventure.getId())){
@@ -44,19 +43,16 @@ public class AventureController {
         throw new ObjectNotFoundException(aventure.getId(),AventureEntity.class);
     }
 
-
-    @GetMapping("/api/Aventures/{id}")
-    public Aventure getById(@PathVariable("id") int id){
-        Optional<AventureEntity> optionalAventureEntity = aventureDao.findById(id);
-        return AventureMapper.toDto(optionalAventureEntity.orElseThrow(()-> new ObjectNotFoundException(id,AventureEntity.class)));
-    }
-
-
     @GetMapping("/api/Aventures")
     public List<Aventure> getAll(){
         return aventureDao.findAll().stream().map(AventureMapper::toDto).collect(Collectors.toList());
     }
 
+    @GetMapping("/api/Aventures/{id}")
+    public Aventure getById(@PathVariable("id") int id){
+        Optional<AventureEntity> optionalAventureEntity = aventureDao.findById(id);
+        return AventureMapper.toDto(optionalAventureEntity.orElseThrow(()-> new ObjectNotFoundException(id, AventureEntity.class)));
+    }
 
     @DeleteMapping("/api/Aventures/{id}")
     public void delete(@PathVariable("id") int id){
