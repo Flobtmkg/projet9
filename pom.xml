@@ -15,6 +15,7 @@
         <module>microservicereservation</module>
         <module>microserviceusers</module>
         <module>microservicewebapp</module>
+        <module>springcloudconfig</module>
     </modules>
 
     <properties>
