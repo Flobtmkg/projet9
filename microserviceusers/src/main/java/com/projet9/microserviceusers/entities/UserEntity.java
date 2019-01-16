@@ -11,7 +11,7 @@ public class UserEntity {
     // On rend l'ID non insérable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "numEtat", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
     private String nom;
     private String prenom;
