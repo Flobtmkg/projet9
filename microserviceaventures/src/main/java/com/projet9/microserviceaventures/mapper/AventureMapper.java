@@ -17,8 +17,8 @@ public class AventureMapper {
                 aventureEntity.getDateDebut(),
                 aventureEntity.getDateFin(),
                 aventureEntity.getDescription(),
-                aventureEntity.getIdCategorie(),
                 aventureEntity.getImage(),
+                aventureEntity.getCategorieEntity().getId(),
                 CategorieMapper.toDto(aventureEntity.getCategorieEntity())
         );
     }
@@ -31,7 +31,6 @@ public class AventureMapper {
                     aventure.getDateDebut(),
                     aventure.getDateFin(),
                     aventure.getDescription(),
-                    aventure.getIdCategorie(),
                     aventure.getImage(),
                     CategorieMapper.toEntity(aventure.getCategorie())
             );

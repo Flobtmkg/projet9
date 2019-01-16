@@ -19,27 +19,23 @@ public class AventureEntity {
     private LocalDate dateFin;
     private String description;
 
-    // On rend la FK non insérable pour ne pas faire doublon avec l'ID de l'entité Catégorie ramenée par hibernate ??
-    @Column(insertable = false, updatable = false)
-    private int idCategorie;
 
     @Lob
     private byte[] image;
 
-    // On définie la logique de jointure et l'ID de l'entité ramenée fait office de FK ??
+
     @ManyToOne
-    @JoinColumn(name = "idCategorie")
+    @JoinColumn(name = "id_categorie")
     private CategorieEntity categorieEntity;
 
 
-    public AventureEntity(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, int idCategorie, byte[] image, CategorieEntity categorieEntity) {
+    public AventureEntity(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, byte[] image, CategorieEntity categorieEntity) {
         this.id = id;
         this.nom = nom;
         this.prix = prix;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.description = description;
-        this.idCategorie = idCategorie;
         this.image = image;
         this.categorieEntity = categorieEntity;
     }
@@ -95,14 +91,6 @@ public class AventureEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-   public int getIdCategorie() {
-        return idCategorie;
-    }
-
-    public void setIdCategorie(int idCategorie) {
-        this.idCategorie = idCategorie;
     }
 
     public byte[] getImage() {

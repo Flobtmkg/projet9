@@ -16,7 +16,7 @@ public class Aventure {
     private Categorie categorie;
 
     // Constructeur par champ
-    public Aventure(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, int idCategorie, byte[] image, Categorie categorie) {
+    public Aventure(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, byte[] image, int idCategorie, Categorie categorie) {
         this.id = id;
         this.nom = nom;
         this.prix = prix;
