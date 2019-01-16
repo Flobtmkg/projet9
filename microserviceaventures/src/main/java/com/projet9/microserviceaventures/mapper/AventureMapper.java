@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class AventureMapper {
 
-    @Autowired
-    static CategorieDao categorieDao;
 
     public static Aventure toDto(AventureEntity aventureEntity) {
         return new Aventure(
