@@ -7,12 +7,12 @@ public class Reservation {
 
     // Champs de base
     private int id;
-    private int idAventure;
-    private int idUser;
-    private int numEtat;
     private LocalDate dateReservation;
     private LocalDateTime timestampCommentaireReservation;
     private String commentaireReservation;
+    private int idAventure;
+    private int idUser;
+    private int numEtat;
 
     // Objets composites
     private Aventure aventure;

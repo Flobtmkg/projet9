@@ -14,39 +14,30 @@ public class ReservationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
-    private int idAventure;
-    private int idUser;
-
-    // On rend la FK non insérable pour ne pas faire doublon avec l'ID de l'entité EtatReservation ramenée par hibernate ??
-    @Column(insertable = false, updatable = false)
-    private int numEtat;
-
     private LocalDate dateReservation;
     private LocalDateTime timestampCommentaireReservation;
     private String commentaireReservation;
 
+    private int idAventure;
+    private int idUser;
 
-    // On définie la logique de jointure et l'ID de l'entité ramenée fait office de FK ??
     @ManyToOne
-    @JoinColumn(name = "numEtat")
+    @JoinColumn(name = "num_Etat")
     private EtatReservationEntity etatReservationEntity;
 
 
-    public ReservationEntity(int id, int idAventure, int idUser, int numEtat, LocalDate dateReservation, LocalDateTime timestampCommentaireReservation, String commentaireReservation, EtatReservationEntity etatReservationEntity) {
+    public ReservationEntity(int id, int idAventure, int idUser, LocalDate dateReservation, LocalDateTime timestampCommentaireReservation, String commentaireReservation, EtatReservationEntity etatReservationEntity) {
         this.id = id;
         this.idAventure = idAventure;
         this.idUser = idUser;
-        this.numEtat = numEtat;
         this.dateReservation = dateReservation;
         this.timestampCommentaireReservation = timestampCommentaireReservation;
         this.commentaireReservation = commentaireReservation;
         this.etatReservationEntity = etatReservationEntity;
     }
 
-
     // Constructeur par defaut exigé par hibernate
     public ReservationEntity(){
-
     }
 
 
@@ -72,14 +63,6 @@ public class ReservationEntity {
 
     public void setIdUser(int idUser) {
         this.idUser = idUser;
-    }
-
-    public int getNumEtat() {
-        return numEtat;
-    }
-
-    public void setNumEtat(int numEtat) {
-        this.numEtat = numEtat;
     }
 
     public LocalDate getDateReservation() {
