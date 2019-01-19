@@ -11,8 +11,8 @@
     <modules>
         <module>dataexchange</module>
         <module>microserviceaventures</module>
-        <module>microservicepaiement</module>
-        <module>microservicereservation</module>
+        <module>microservicepaiements</module>
+        <module>microservicereservations</module>
         <module>microserviceusers</module>
         <module>microservicewebapp</module>
         <module>springcloudconfig</module>
