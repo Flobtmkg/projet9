@@ -16,12 +16,6 @@
 *.iml
 *.ipr
 
-### Maven config ###
-maven-wrapper.properties
-maven-wrapper.jar
-*.cmd
-mvnw
-
 ### NetBeans ###
 /nbproject/private/
 /build/

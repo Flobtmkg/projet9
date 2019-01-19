@@ -16,6 +16,7 @@
         <module>microserviceusers</module>
         <module>microservicewebapp</module>
         <module>springcloudconfig</module>
+        <module>eureka</module>
     </modules>
 
     <properties>
