@@ -28,6 +28,9 @@ public class Aventure {
         this.idCategorie = idCategorie;
     }
 
+    // Constructeur par defaut
+    public Aventure(){}
+
     public LocalDate getDateDebut() {
         return dateDebut;
     }

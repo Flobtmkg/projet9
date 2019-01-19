@@ -2,13 +2,15 @@ package com.projet9.dataexchange.proxies;
 
 import com.projet9.dataexchange.beans.User;
 import jdk.nashorn.internal.ir.annotations.Reference;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@FeignClient(name = "microserviceusers", url = "localhost:8084")
+@FeignClient(name = "microserviceusers")
+@RibbonClient(name = "microserviceusers")
 public interface ProxyUser {
 
     @PostMapping(value = "/api/Users")

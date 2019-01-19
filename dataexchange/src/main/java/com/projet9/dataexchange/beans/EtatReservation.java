@@ -10,6 +10,9 @@ public class EtatReservation {
         this.etat = etat;
     }
 
+    // Constructeur par defaut
+    EtatReservation(){}
+
     public int getNumEtat() {
         return numEtat;
     }

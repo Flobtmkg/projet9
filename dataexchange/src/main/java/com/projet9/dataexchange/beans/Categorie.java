@@ -12,6 +12,9 @@ public class Categorie {
         this.description = description;
     }
 
+    // Constructeur par defaut
+    public Categorie(){}
+
     public int getId() {
         return id;
     }

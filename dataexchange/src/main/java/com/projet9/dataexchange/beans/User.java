@@ -24,6 +24,9 @@ public class User {
         this.image = image;
     }
 
+    // Constructeur par defaut
+    public User(){}
+
     public int getId() {
         return id;
     }

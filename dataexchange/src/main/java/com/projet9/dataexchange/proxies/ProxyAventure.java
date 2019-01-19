@@ -2,12 +2,15 @@ package com.projet9.dataexchange.proxies;
 
 import com.projet9.dataexchange.beans.Aventure;
 import com.projet9.dataexchange.beans.Categorie;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "microserviceaventures", url = "localhost:8081")
+@FeignClient(name = "microserviceaventures")
+@RibbonClient(name = "microserviceaventures")
 public interface ProxyAventure {
 
     // Accès aux aventures

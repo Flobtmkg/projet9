@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Coucou test</title>
+    <title>Test d'affichage des Aventures</title>
 </head>
 <body>
-    <input type="text" th:value="coucou!">
+    <p>Liste des aventures:<p/>
+    <div th:each="av : ${aventuresList}">
+        <div>
+            <p th:text="${av.nom}"/>
+            <p th:text="${av.prix}"/>
+            <p th:text="${av.dateDebut}"/>
+            <p th:text="${av.dateFin}"/>
+        </div>
+        <br>
+    </div>
 </body>
 </html>

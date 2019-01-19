@@ -32,6 +32,9 @@ public class Reservation {
         this.etatReservation = etatReservation;
     }
 
+    // Constructeur par defaut
+    public Reservation(){}
+
     public LocalDate getDateReservation() {
         return dateReservation;
     }

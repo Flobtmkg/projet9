@@ -3,12 +3,14 @@ package com.projet9.dataexchange.proxies;
 
 import com.projet9.dataexchange.beans.EtatReservation;
 import com.projet9.dataexchange.beans.Reservation;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "microservicereservations", url = "localhost:8083")
+@FeignClient(name = "microservicereservations")
+@RibbonClient(name = "microservicereservations")
 public interface ProxyReservation {
 
     // Accès aux reservations
