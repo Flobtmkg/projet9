@@ -19,7 +19,7 @@ public class CategorieController {
     CategorieDao categorieDao;
 
 
-    @PostMapping("/api/Categories")
+    @PostMapping(path = "/api/Categories", produces = "application/json")
     public Categorie create(@RequestBody Categorie categorie){
         CategorieEntity savedCategorieEntity = categorieDao.save(CategorieMapper.toEntity(categorie));
         // retourne l'entité avec le nouvel id crée
@@ -27,7 +27,7 @@ public class CategorieController {
     }
 
 
-    @PutMapping("/api/Categories")
+    @PutMapping(path = "/api/Categories", produces = "application/json")
     public Categorie update(@RequestBody Categorie categorie){
         if(categorieDao.existsById(categorie.getId())){
             CategorieEntity savedCategorieEntity = categorieDao.save(CategorieMapper.toEntity(categorie));
@@ -37,20 +37,20 @@ public class CategorieController {
     }
 
 
-    @GetMapping("/api/Categories/{id}")
+    @GetMapping(path = "/api/Categories/{id}", produces = "application/json")
     public Categorie getById(@PathVariable("id") int id){
         Optional<CategorieEntity> optionalCategorieEntity = categorieDao.findById(id);
         return CategorieMapper.toDto(optionalCategorieEntity.orElseThrow(()-> new ObjectNotFoundException(id,CategorieEntity.class)));
     }
 
 
-    @GetMapping("/api/Categories")
+    @GetMapping(path = "/api/Categories", produces = "application/json")
     public List<Categorie> getAll(){
         return categorieDao.findAll().stream().map(CategorieMapper::toDto).collect(Collectors.toList());
     }
 
 
-    @DeleteMapping("/api/Categories/{id}")
+    @DeleteMapping(path = "/api/Categories/{id}", produces = "application/json")
     public void delete(@PathVariable("id") int id){
         categorieDao.deleteById(id);
     }

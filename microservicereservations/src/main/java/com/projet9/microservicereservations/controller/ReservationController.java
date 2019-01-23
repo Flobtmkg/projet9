@@ -23,7 +23,7 @@ public class ReservationController {
     @Autowired
     EtatReservationDao etatReservationDao;
 
-    @PostMapping("/api/Reservations")
+    @PostMapping(path = "/api/Reservations", produces = "application/json")
     public Reservation create(@RequestBody Reservation reservation){
         // Lors de la création, numEtat peut être renseigné sans que le bean EtatReservation correspondant ne soit chargé
         if(reservation.getEtatReservation()==null){
@@ -35,7 +35,7 @@ public class ReservationController {
     }
 
 
-    @PutMapping("/api/Reservations")
+    @PutMapping(path = "/api/Reservations", produces = "application/json")
     public Reservation update(@RequestBody Reservation reservation){
         if(reservationDao.existsById(reservation.getId())){
             ReservationEntity savedReservationEntity = reservationDao.save(ReservationMapper.toEntity(reservation));
@@ -45,20 +45,20 @@ public class ReservationController {
     }
 
 
-    @GetMapping("/api/Reservations/{id}")
+    @GetMapping(path = "/api/Reservations/{id}", produces = "application/json")
     public Reservation getById(@PathVariable("id") int id){
         Optional<ReservationEntity> optionalReservationEntity = reservationDao.findById(id);
         return ReservationMapper.toDto(optionalReservationEntity.orElseThrow(()-> new ObjectNotFoundException(id,ReservationEntity.class)));
     }
 
 
-    @GetMapping("/api/Reservations")
+    @GetMapping(path = "/api/Reservations", produces = "application/json")
     public List<Reservation> getAll(){
         return reservationDao.findAll().stream().map(ReservationMapper::toDto).collect(Collectors.toList());
     }
 
 
-    @DeleteMapping("/api/Reservations/{id}")
+    @DeleteMapping(path = "/api/Reservations/{id}", produces = "application/json")
     public void delete(@PathVariable("id") int id){
         reservationDao.deleteById(id);
     }

@@ -19,13 +19,13 @@ public class UserController {
     private UserDao userDao;
 
 
-    @PostMapping(value = "/api/Users")
+    @PostMapping(path = "/api/Users", produces = "application/json")
     public User create(@RequestBody User user) {
         UserEntity savedUserEntity =  userDao.save(UserMapper.toEntity(user));
         return UserMapper.toDto(savedUserEntity);
     }
 
-    @PutMapping(value = "/api/Users")
+    @PutMapping(path = "/api/Users", produces = "application/json")
     public User update(@RequestBody User user) {
         if (userDao.existsById(user.getId())) {
             userDao.save(UserMapper.toEntity(user));
@@ -34,18 +34,18 @@ public class UserController {
         throw new ObjectNotFoundException(user.getId(),UserEntity.class);
     }
 
-    @GetMapping(value = "/api/Users")
+    @GetMapping(path = "/api/Users", produces = "application/json")
     public List<User> getAll() {
         return userDao.findAll().stream().map(UserMapper::toDto).collect(Collectors.toList());
     }
 
-    @GetMapping(value = "/api/Users/{id}")
+    @GetMapping(path = "/api/Users/{id}", produces = "application/json")
     public User getById(@PathVariable("id") int id)  {
         Optional<UserEntity> userEntity = userDao.findById(id);
         return UserMapper.toDto(userEntity.orElseThrow(() -> new ObjectNotFoundException(id, UserEntity.class)));
     }
 
-    @DeleteMapping(value = "/api/Users/{id}")
+    @DeleteMapping(path = "/api/Users/{id}", produces = "application/json")
     public void delete(@PathVariable("id") int id) {
         userDao.deleteById(id);
     }

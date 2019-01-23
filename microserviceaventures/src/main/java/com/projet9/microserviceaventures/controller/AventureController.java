@@ -8,6 +8,7 @@ import com.projet9.microserviceaventures.entities.AventureEntity;
 import com.projet9.microserviceaventures.mapper.AventureMapper;
 import com.projet9.microserviceaventures.mapper.CategorieMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class AventureController {
     AventureDao aventureDao;
 
 
-    @PostMapping("/api/Aventures")
+    @PostMapping(path = "/api/Aventures", produces = "application/json")
     public Aventure create(@RequestBody Aventure aventure){
         // Lors de la création, idCatégorie peut être renseigné sans que le bean Catégorie correspondant ne soit chargé
         if(aventure.getCategorie()==null){
@@ -34,7 +35,7 @@ public class AventureController {
         return AventureMapper.toDto(savedAventureEntity);
     }
 
-    @PutMapping("/api/Aventures")
+    @PutMapping(path = "/api/Aventures", produces = "application/json")
     public Aventure update(@RequestBody Aventure aventure){
         if(aventureDao.existsById(aventure.getId())){
             AventureEntity savedAventureEntity = aventureDao.save(AventureMapper.toEntity(aventure));
@@ -43,18 +44,18 @@ public class AventureController {
         throw new ObjectNotFoundException(aventure.getId(),AventureEntity.class);
     }
 
-    @GetMapping("/api/Aventures")
+    @GetMapping(path = "/api/Aventures", produces = "application/json")
     public List<Aventure> getAll(){
         return aventureDao.findAll().stream().map(AventureMapper::toDto).collect(Collectors.toList());
     }
 
-    @GetMapping("/api/Aventures/{id}")
+    @GetMapping(path = "/api/Aventures/{id}", produces = "application/json")
     public Aventure getById(@PathVariable("id") int id){
         Optional<AventureEntity> optionalAventureEntity = aventureDao.findById(id);
         return AventureMapper.toDto(optionalAventureEntity.orElseThrow(()-> new ObjectNotFoundException(id, AventureEntity.class)));
     }
 
-    @DeleteMapping("/api/Aventures/{id}")
+    @DeleteMapping(path = "/api/Aventures/{id}", produces = "application/json")
     public void delete(@PathVariable("id") int id){
         aventureDao.deleteById(id);
     }

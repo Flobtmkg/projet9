@@ -19,7 +19,7 @@ public class EtatReservationController {
     EtatReservationDao etatReservationDao;
 
 
-    @PostMapping("/api/EtatReservations")
+    @PostMapping(path = "/api/EtatReservations", produces = "application/json")
     public EtatReservation create(@RequestBody EtatReservation etatReservation){
         EtatReservationEntity savedReservationEntity = etatReservationDao.save(EtatReservationMapper.toEntity(etatReservation));
         // retourne l'entité avec le nouvel id crée
@@ -27,7 +27,7 @@ public class EtatReservationController {
     }
 
 
-    @PutMapping("/api/EtatReservations")
+    @PutMapping(path = "/api/EtatReservations", produces = "application/json")
     public EtatReservation update(@RequestBody EtatReservation etatReservation){
         if(etatReservationDao.existsById(etatReservation.getNumEtat())){
             EtatReservationEntity savedEtatReservationEntity = etatReservationDao.save(EtatReservationMapper.toEntity(etatReservation));
@@ -37,20 +37,20 @@ public class EtatReservationController {
     }
 
 
-    @GetMapping("/api/EtatReservations/{id}")
+    @GetMapping(path = "/api/EtatReservations/{id}", produces = "application/json")
     public EtatReservation getById(@PathVariable("id") int id){
         Optional<EtatReservationEntity> optionalEtatReservationEntity = etatReservationDao.findById(id);
         return EtatReservationMapper.toDto(optionalEtatReservationEntity.orElseThrow(()-> new ObjectNotFoundException(id,EtatReservationEntity.class)));
     }
 
 
-    @GetMapping("/api/EtatReservations")
+    @GetMapping(path = "/api/EtatReservations", produces = "application/json")
     public List<EtatReservation> getAll(){
         return etatReservationDao.findAll().stream().map(EtatReservationMapper::toDto).collect(Collectors.toList());
     }
 
 
-    @DeleteMapping("/api/EtatReservations/{id}")
+    @DeleteMapping(path = "/api/EtatReservations/{id}", produces = "application/json")
     public void delete(@PathVariable("id") int id){
         etatReservationDao.deleteById(id);
     }
