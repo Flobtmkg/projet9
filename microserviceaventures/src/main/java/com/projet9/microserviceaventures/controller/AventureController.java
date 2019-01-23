@@ -7,6 +7,8 @@ import com.projet9.microserviceaventures.dao.CategorieDao;
 import com.projet9.microserviceaventures.entities.AventureEntity;
 import com.projet9.microserviceaventures.mapper.AventureMapper;
 import com.projet9.microserviceaventures.mapper.CategorieMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,8 @@ import java.util.stream.Collectors;
 
 @RestController
 public class AventureController {
+
+    Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     CategorieDao categorieDao;
@@ -47,6 +51,7 @@ public class AventureController {
     @GetMapping(path = "/api/Aventures", produces = "application/json")
     public List<Aventure> getAll(){
         return aventureDao.findAll().stream().map(AventureMapper::toDto).collect(Collectors.toList());
+
     }
 
     @GetMapping(path = "/api/Aventures/{id}", produces = "application/json")

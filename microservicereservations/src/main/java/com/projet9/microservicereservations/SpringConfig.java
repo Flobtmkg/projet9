@@ -1,5 +1,6 @@
 package com.projet9.microservicereservations;
 
+import brave.sampler.Sampler;
 import com.projet9.dataexchange.decoder.CustomErrorDecoder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,11 @@ public class SpringConfig {
     @Bean
     public CustomErrorDecoder mCustomErrorDecoder(){
         return new CustomErrorDecoder();
+    }
+
+    @Bean
+    public Sampler defaultSampler(){
+        return Sampler.ALWAYS_SAMPLE;
     }
 
 }
