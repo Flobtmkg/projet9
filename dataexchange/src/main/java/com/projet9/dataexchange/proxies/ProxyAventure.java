@@ -9,43 +9,43 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "microserviceaventures")
+@FeignClient(name = "zuulapigateway")
 @RibbonClient(name = "microserviceaventures")
 public interface ProxyAventure {
 
     // Accès aux aventures
 
-    @PostMapping("/api/Aventures")
+    @PostMapping("microserviceaventures/api/Aventures")
     Aventure createAventure(@RequestBody Aventure aventure);
 
-    @PutMapping("/api/Aventures")
+    @PutMapping("microserviceaventures/api/Aventures")
     Aventure updateAventure(@RequestBody Aventure aventure);
 
-    @GetMapping("/api/Aventures")
+    @GetMapping("microserviceaventures/api/Aventures")
     List<Aventure> getAllAventures();
 
-    @GetMapping("/api/Aventures/{id}")
+    @GetMapping("microserviceaventures/api/Aventures/{id}")
     Aventure getAventureById(@PathVariable("id") int id);
 
-    @DeleteMapping("/api/Aventures/{id}")
+    @DeleteMapping("microserviceaventures/api/Aventures/{id}")
     void deleteAventure(@PathVariable("id") int id);
 
 
     // Accès aux categories
 
-    @PostMapping("/api/Categories")
+    @PostMapping("microserviceaventures/api/Categories")
     Categorie createCategorie(@RequestBody Categorie categorie);
 
-    @PutMapping("/api/Categories")
+    @PutMapping("microserviceaventures/api/Categories")
     Categorie updateCategorie(@RequestBody Categorie categorie);
 
-    @GetMapping("/api/Categories")
+    @GetMapping("microserviceaventures/api/Categories")
     List<Categorie> getAllCategories();
 
-    @GetMapping("/api/Categories/{id}")
+    @GetMapping("microserviceaventures/api/Categories/{id}")
     Categorie getCategorieById(@PathVariable("id") int id);
 
-    @DeleteMapping("/api/Categories/{id}")
+    @DeleteMapping("microserviceaventures/api/Categories/{id}")
     void deleteCategorie(@PathVariable("id") int id);
 
 }

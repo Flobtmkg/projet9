@@ -9,23 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@FeignClient(name = "microserviceusers")
+@FeignClient(name = "zuulapigateway")
 @RibbonClient(name = "microserviceusers")
 public interface ProxyUser {
 
-    @PostMapping(value = "/api/Users")
+    @PostMapping(value = "microserviceusers/api/Users")
     User create(@RequestBody User user);
 
-    @PutMapping(value = "/api/Users")
+    @PutMapping(value = "microserviceusers/api/Users")
     User update(@RequestBody User user);
 
-    @GetMapping(value = "/api/Users")
+    @GetMapping(value = "microserviceusers/api/Users")
     List<User> getAll();
 
-    @GetMapping(value = "api/Users/{id}")
+    @GetMapping(value = "microserviceusers/api/Users/{id}")
     User getById(@PathVariable("id") int id);
 
-    @DeleteMapping(value = "/api/Users/{id}")
+    @DeleteMapping(value = "microserviceusers/api/Users/{id}")
     void delete(@PathVariable("id") int id);
 
 }
