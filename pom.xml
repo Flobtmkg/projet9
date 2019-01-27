@@ -17,6 +17,7 @@
         <module>microservicewebapp</module>
         <module>springcloudconfig</module>
         <module>zuulapigateway</module>
+        <module>springadmin</module>
         <module>eureka</module>
     </modules>
 

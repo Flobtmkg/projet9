@@ -1,19 +1,58 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Test d'affichage des Aventures</title>
-</head>
-<body>
-    <p>Liste des aventures:<p/>
-    <div th:each="av : ${aventuresList}">
-        <div>
-            <p th:text="${av.nom}"/>
-            <p th:text="${av.prix}"/>
-            <p th:text="${av.dateDebut}"/>
-            <p th:text="${av.dateFin}"/>
+<!--Début Block commun à toutes les pages-->
+
+        <!DOCTYPE html>
+        <html xmlns:th="http://www.thymeleaf.org">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="icon" href="/img/icon2.png">
+            <script type="text/javascript" src="/js/ecran.js"></script>
+            <link type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+            <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+            <link type="text/css" href="/css/menu.css" rel="stylesheet">
+            <link type="text/css" href="/css/accueil.css" rel="stylesheet">
+            <title>Reservez votre aventure</title>
+        </head>
+        <body onresize="changeImage()" onload="changeImage()">
+        <!-- Necessaire au système d'adaptation d'images automatique controlé en javascript -->
+        <!-- Affiche toujours l'image de fond en optimisé quelque soit les tailles d'écrans (du smartphone à la 4K) -->
+        <img id="image4K" class="imagePrechargee" src="/img/meretciel4k.jpg">
+        <!-- include menu -->
+        <div th:replace="menu.html"></div>
+
+<!--Fin Block commun à toutes les pages-->
+
+<div id="presentation" class="container-fluid">
+    <form class="form-group col-sm-8 offset-sm-2" th:action="@{/action-url}" method="POST">
+        <h1>Envie d'aventure?</h1>
+        <div id="groupRecherche" class="input-group">
+            <input type="search" name="motCles" class="form-control" placeholder="Recherchez une aventure, une catégorie..." maxlength="100" pattern="[^\x22]+">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-secondary btn-lg"><i class="fas fa-search"></i></button>
+            </div>
         </div>
-        <br>
+        <h4 id="commentairePresentation">Vous trouverez votre frisson ici.</h4>
+    </form>
+</div>
+
+    <!--
+    <div>
+        <p>Liste des aventures:<p/>
+        <div th:each="av : ${aventuresList}">
+            <div>
+                <p th:text="${av.nom}"/>
+                <p th:text="${av.prix}"/>
+                <p th:text="${av.dateDebut}"/>
+                <p th:text="${av.dateFin}"/>
+            </div>
+            <br>
+        </div>
     </div>
+    -->
 </body>
 </html>

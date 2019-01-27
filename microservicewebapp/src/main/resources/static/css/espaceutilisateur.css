@@ -1,0 +1,61 @@
+body{background-repeat: no-repeat; background-attachment: fixed;min-width: 510px}
+legend{border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: rgba(0,0,0,0.1);margin-top: 15px}
+div#divdefond{position:fixed;height:100%;width:100%; top:0px; background-color:rgba(0, 0, 0, 0.7); z-index: -1}
+.linkBlanc{color:rgba(220, 220, 220, 1); text-shadow:0px 2px 4px rgba(0, 0, 0, 0.5);}
+.linkBlanc:hover{color:rgba(220, 220, 220, 1); text-shadow:0px 2px 4px rgba(255, 255, 255, 0.5);}
+.badRow{background-color: rgba(255, 0, 0, 0.05)!important;}
+.badRow2{background-color: rgba(0, 0, 0, 0.2)!important;}
+.badText{color: lightcoral!important}
+.desableText{padding-left:0; color: rgba(255, 255, 255, 0.3)!important}
+.blockduHaut{margin-top: 20px;}
+.cadrephoto{height:200px;width:200px; float:left;}
+.cadrephoto2{height:200px;width:200px; float:left;margin-bottom: 20px}
+#presentation{float:left; padding:0; margin-top: 20px}
+div#blockTransparent{height:200px;width:20px; float:left}
+.textDescription{resize: none;font-style: italic}
+textarea#textDescription0{resize: none;font-style: italic;color:rgba(220,220,220,1);background-color:rgba(0,0,0,0);border-color:rgba(0,0,0,0)}
+textarea#textDescription2{resize: none;font-style: italic;color:rgba(0,0,0,1);}
+textarea#textDescription1{resize: none;font-style: italic;color:rgba(220,220,220,1);background-color:rgba(0,0,0,0);border-color:rgba(0,0,0,0);width:33.33%!important;padding:0}
+.blockdescription{margin-top:20px;padding:0px;background-color:rgba(255,255,255,0.1)}
+.paneldescription{margin-bottom:10px}
+/* texte sur fond noir */
+.infossurnoir{color:rgba(220, 220, 220, 1); text-shadow:0px 2px 4px rgba(0, 0, 0, 0.5);}
+.infossurnoirheader{color:rgba(220, 220, 220, 1); text-shadow:0px 2px 4px rgba(0, 0, 0, 0.5);padding-left:0}
+.petittextsurnoir{color:rgba(200, 200, 200, 1);padding-left:0}
+/* texte sur fond blanc */
+.infossurblanc{color:rgba(35, 35, 35, 1); text-shadow:0px 2px 4px rgba(0, 0, 0, 0.2);}
+.infossurblancheader{color:rgba(35, 35, 35, 1); text-shadow:0px 2px 4px rgba(0, 0, 0, 0.2);padding-left:0}
+.petittextsurblanc{color:rgba(55, 55, 55, 1);padding-left:0}
+/**/
+.infossurblanc2{text-shadow:0px 2px 4px rgba(0, 0, 0, 0.2); color:rgba(0, 0, 0, 1); border-bottom:1px; border-bottom-color:rgba(0,0,0,0.1); border-bottom-style: solid}
+.textvalidation{color:rgba(0, 0, 0, 1)}
+.btnvalider{margin-top:22px;width:80px;margin-bottom: 10px}
+.reglage{float:left}
+div#lien{margin-top:20px}
+.labelparametre{background-color:rgba(0,0,0,0.4);padding-left: 5px;padding-right: 5px;padding-bottom: 5px;padding-top: 3px;margin-top:0px}
+label#labelPlusBas{margin-top:15px}
+label{margin-top:8px;}
+#lienMdp{margin-top: 15px}
+div#blockCheck{margin-top:0px;margin-bottom:0px}
+.table-scroll{max-height: 200px;overflow-y: auto;margin-top:5px}
+.table-scroll2{max-height: 130px;overflow-y: auto;margin-top:0px}
+div#buttonsupp{margin-top:30px;padding-left:0}
+.buttonsupp2{margin-top:20px;padding-left:0}
+.ligne{border-bottom:1px;border-color:rgba(180, 180, 180, 0.05);border-bottom-style: solid;padding-top:10px;margin-left:0px;margin-right:0px}
+.ligneheader{border-bottom:2px;border-color:rgba(255, 255, 255, 0.6);border-bottom-style: solid}
+.contenuheader{padding-left:15px;padding-right:15px}
+.buttonFile{top:0px; margin:0px;float:left}
+#nonfloat{float:none}
+.inputMargin{margin-bottom: 15px}
+.paragMargin{margin-bottom: 5px}
+.txtaucentre{text-align: center}
+.label1{
+    color:rgba(180, 180, 180, 1);
+    text-shadow:0px 2px 4px rgba(0, 0, 0, 0.5);
+    border-color:rgba(180, 180, 180, 0.3);
+}
+/*
+.cModal > div > div {
+    max-height: none;
+    overflow-y: hidden;
+}*/

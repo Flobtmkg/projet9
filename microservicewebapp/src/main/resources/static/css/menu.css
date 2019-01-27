@@ -1,0 +1,117 @@
+div#connexion{margin-right:8px}
+/**/
+nav#barre{background: rgba(255, 255, 255, 0.2); z-index: 2 ; box-shadow: rgba(0,0,0,0.1) 0 3px 6px 0}
+/*
+ */
+.imagePrechargee{display: none}
+/**/
+#menuConnexion{display: none; position: fixed; margin-right: auto; width: 100%; z-index: 999;}
+/**/
+.elementdelisteMenu{background-color: rgba(255,255,255,0.2)}
+.elementdelisteMenu:hover{
+    background-color: rgba(0,0,0,0.3)
+}
+.elementdelisteMenu:focus{
+    background-color: rgba(255,255,255,0.2)
+}
+/**/
+label#connecte{color:rgba(255, 255, 255, 1); margin-right:6px}
+/**/
+.floaterLeft{float:left}
+/**/
+ul#listutilisateur{display:none; top:-20px;z-index:10}
+/**/
+.centerMenu{margin-left: auto;margin-right: auto}
+/**/
+.modalHeader{margin-top: 10px;text-shadow:0px 2px 4px rgba(0, 0, 0, 0.2); color:rgba(0, 0, 0, 1); border-bottom:1px; border-bottom-color:rgba(0,0,0,0.1); border-bottom-style: solid;}
+/**/
+.modalMargin{margin-top:22px; margin-bottom: 10px}
+/**/
+.texterreur{color:rgba(0, 0, 0, 1)}
+/**/
+button#boutonhome{padding-bottom: 8px; box-shadow: rgba(0,0,0,0.3) 0 3px 6px 0}
+/**/
+.contenuImageErreur{float: left; margin-right:15px;box-sizing: content-box}
+/**/
+.contenuErreur{margin-top:22px;}
+/**/
+
+.liensMenu:hover {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+}
+.liensMenu{
+    margin-right: 40px;
+    color:rgba(255, 255, 255, 0.7);
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.textMenu{
+    margin-right: 15px;
+    color:rgba(255, 255, 255, 0.7);
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+    padding-top: auto;
+    padding-bottom:0;
+    margin-top:0;
+    margin-bottom: 0px;
+}
+.liensMenu2{
+    margin-right: 40px;
+    color:rgba(0, 0, 0, 1)
+}
+/*Surcharge de bootstrap
+.navbar-nav{
+    flex-direction: row;
+}*/
+/*Modification de la classe pour le message modal full CSS*/
+.cModal {
+    overflow-y: initial;
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    opacity:0;
+    pointer-events: none;
+}
+.cModal:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.cModal > div {
+    max-width: 500px;
+    position: relative;
+    margin: 5% auto;
+    padding: 8px 30px 15px 30px;
+    border-radius: 4px;
+    background: #fff;
+}
+.cModal > div > div {
+    max-height: 500px;
+    overflow-y: auto;
+}
+/**/
+/*modification de la classe pour le bouton rond*/
+.btn-xs {
+    width: 45px;
+    height: 45px;
+    border-radius: 23px;
+}
+/*modification de la classe pour appliquer une rotation au logo*/
+.rotatelogo:hover {
+    box-shadow: 0px 0px 2px 2px rgba(255, 255, 255, 0.2);
+    opacity: 1;
+}
+.rotatelogo {
+    opacity: 0.2;
+    border-radius: 25px;
+    -webkit-animation:spin 200ms linear;
+    -moz-animation:spin 200ms linear;
+    animation:spin 200ms linear;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
