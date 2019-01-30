@@ -30,4 +30,5 @@ public class AcceuilController {
         //request.getSession().setAttribute("userGuest",us);
         return "accueil";
     }
+
 }
