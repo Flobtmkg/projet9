@@ -1,0 +1,253 @@
+<!--Début Block commun à toutes les pages-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/img/icon3.png">
+    <script type="text/javascript" src="/js/ecran.js"></script>
+    <link type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+    <link type="text/css" href="/css/menu.css" rel="stylesheet">
+    <link type="text/css" href="/css/espaceutilisateur.css" rel="stylesheet">
+    <!--Chargement des polices Google-->
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <title>Espace utilisateur</title>
+</head>
+<body onresize="changeImage()" onload="changeImage()">
+<!-- Necessaire au système d'adaptation d'images automatique controlé en javascript -->
+<!-- Affiche toujours l'image de fond en optimisé quelque soit les tailles d'écrans (du smartphone à la 4K) -->
+<img id="image4K" class="imagePrechargee" src="/img/meretciel4k.jpg">
+<!-- include menu -->
+<div th:replace="menu.html"></div>
+
+<!--Fin Block commun à toutes les pages-->
+
+<div id="divdefond"></div>
+
+<!---->
+<div id="ModalValidation" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Confirmation!</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: green" class="fas fa-check-circle fa-5x"></i>
+            </div>
+            <p class="texterreur">Les changements ont bien été effectués.</p>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+        </footer>
+    </div>
+</div>
+<!---->
+<div id="ModalAnnule" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Confirmation!</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: green" class="fas fa-check-circle fa-5x"></i>
+            </div>
+            <p class="texterreur">La reservation a été annulée.</p>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+        </footer>
+    </div>
+</div>
+<div id="Modalerreur" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Oups!</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: darkred" class="fas fa-exclamation-triangle fa-5x"></i>
+            </div>
+            <p class="texterreur">Une erreur est survenue. Réessayez plus tard.</p>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+        </footer>
+    </div>
+</div>
+<!---->
+<div id="ModalConfirmationAnnulation" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Confirmation requise</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: darkblue" class="fas fa-question-circle fa-5x"></i>
+            </div>
+            <p class="texterreur">Confirmez vous l'annulation de la réservation ?</p>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+            <a href="AnnulerReservation?resid=${param.resid}" class="btn btn-primary btn-sm modalMargin"><i class="fas fa-times"></i> Confirmer</a>
+        </footer>
+    </div>
+</div>
+<!---->
+<!---->
+<div id="Modalmodif" class="cModal">
+    <div>
+        <header>
+            <h2 class="infossurblanc2">Modifez et validez vos informations</h2>
+        </header>
+        <div>
+            <Form action="modifInfosGenerales" method="post">
+                <label>Prenom:</label>
+                <input type="text" class="form-control" th:value="${session?.userGuest?.prenom}" placeholder="Prenom*" name="prenom" pattern="[a-zA-Z-]{1,50}" required>
+                <label>Nom:</label>
+                <input type="text" class="form-control" th:value="${session?.userGuest?.nom}" placeholder="Nom*" name="nom" pattern="[a-zA-Z-]{1,50}" required>
+                <label>Date de naissance:</label>
+                <input type="text" class="form-control" th:value="${#temporals.format(session?.userGuest?.dateNaissance, 'dd/MM/yyyy')}" placeholder="01/01/01" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])(/0[1-9]|/1[012])/[0-9]{4}" name="dateNaissance" required>
+                <label>E-mail:</label>
+                <input type="text" class="form-control" th:value="${session?.userGuest?.email}" placeholder="e-mail*" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                <div id="lienMdp" >
+                    <a href="#Modalmodifmdp" >Pour modifier votre mot de passe cliquez ici</a>
+                </div>
+                <footer>
+                    <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Annuler</a>
+                    <input type="submit" class="btn btn-success btn-sm btnvalider" value="Valider">
+                </footer>
+            </Form>
+        </div>
+    </div>
+</div>
+<div id="Modalmodifmdp" class="cModal">
+    <div>
+        <header>
+            <h2 class="infossurblanc2">Modifez et validez vos informations</h2>
+        </header>
+        <div>
+            <Form action="modifInfosSupp" method="post">
+                <label>Mot de passe actuel:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="mot de passe actuel*" name="motDePasseA"  pattern="[a-zA-Z0-9._%+-]{7,20}" required>
+                </div>
+                <label>Nouveau mot de passe: (de 7 à 20 caractères)</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="nouveau mot de passe*" name="motDePasseN"  pattern="[a-zA-Z0-9._%+-]{7,20}" required>
+                </div>
+                <label>Confirmez le nouveau mot de passe:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="nouveau mot de passe*" name="motDePasseN2"  pattern="[a-zA-Z0-9._%+-]{7,20}" required>
+                </div>
+                <footer>
+                    <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Annuler</a>
+                    <input type="submit" class="btn btn-success btn-sm btnvalider" value="Valider">
+                </footer>
+            </Form>
+        </div>
+    </div>
+</div>
+<!--->
+<!--->
+<!--->
+<!--->
+<div class="container-fluid">
+    <div class="blockduHaut">
+        <!-- imgPath -->
+        <div class="offset-sm-1 cadrephoto2" style="background: url('/img/user.jpg') center no-repeat; background-size: 100% auto; background-color:rgba(0, 0, 0, 0.6)">
+            <img class="photo cadrephoto" style="background: center no-repeat; background-size: 100% auto; background-color:rgba(0, 0, 0, 0)">
+        </div>
+        <!-- imgPath -->
+        <div id="blockTransparent"></div>
+        <div id="presentation">
+            <h2 class="infossurnoir" th:text="${session?.userGuest?.prenom} + ' ' + ${session?.userGuest?.nom}"></h2>
+            <h4 class="infossurnoir" th:text="${session?.userGuest?.age} + ' ans'"></h4>
+            <h5 class="infossurnoir" th:text="${session?.userGuest?.email}"></h5>
+            <a class="btn btn-secondary btn-sm reglage" title="Paramètres" href="#Modalmodif"><i class="fas fa-cog"></i></a>
+            <label class="label1 labelparametre"> Modifier les infos</label>
+        </div>
+    </div>
+    <!-- -->
+    <!-- PreReservations -->
+    <!-- -->
+    <!-- Def de l'enum-->
+    <!-- -->
+    <form class="card offset-sm-1 col-sm-10 col-12 form-group blockdescription">
+        <div class="card-body paneldescription">
+            <legend class="label1">Vos reservations:</legend>
+            <div th:if="${reservationsUtilisateur!=null && !reservationsUtilisateur.isEmpty()}">
+                <div class="col-12 ligneheader">
+                    <div class="row contenuheader">
+                        <label class="col-1 infossurnoirheader txtaucentre">Reservation</label>
+                        <label class="col-2 infossurnoirheader txtaucentre">Aventure</label>
+                        <label class="col-2 infossurnoirheader txtaucentre">Date de début</label>
+                        <label class="col-2 infossurnoirheader txtaucentre">Date de fin</label>
+                        <label class="col-2 infossurnoirheader txtaucentre">Etat de la reservation</label>
+                        <label class="col-3 infossurnoirheader txtaucentre">Actions</label>
+                    </div>
+                </div>
+
+                <div th:each="reservation : ${reservationsUtilisateur}" class="col-12 mCustomScrollbar table-scroll" data-mcs-theme="light-thin">
+
+                            <div th:if="${reservation?.etatReservation?.etat == T(com.projet9.dataexchange.beans.Etats).NONPAYEE.toString()}" class="row ligne">
+                                <p class="col-1 petittextsurnoir txtaucentre" th:text="'ID n° ' + ${reservation?.id}"></p>
+                                <p class="col-2 petittextsurnoir txtaucentre"><a target="_blank" class="linkBlanc" th:text="${reservation?.aventure?.nom}" th:href="@{/aventure(id=${reservation?.aventure?.id})}" ></a></p>
+                                <p class="col-2 petittextsurnoir txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
+                                <p class="col-2 petittextsurnoir txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateFin, 'dd/MM/yyyy')}"></p>
+                                <p class="col-2 petittextsurnoir txtaucentre" th:text="${reservation?.etatReservation?.etat}"></p>
+                                <div style="margin-left: auto; margin-right: auto">
+                                    <a class="btn btn-secondary btn-sm" title="Effectuer le paiement" ><i class="fas fa-money-check-alt fa-2x" style="color:white"></i></a>
+                                    <button class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" disabled="true" ><i class="fas fa-comments fa-2x" style="color:white"></i></button>
+                                </div>
+                            </div>
+
+                            <div th:if="${reservation?.etatReservation?.etat == T(com.projet9.dataexchange.beans.Etats).PAYEE.toString()}" class="row ligne">
+                                <p class="col-1 petittextsurnoir txtaucentre" th:text="'ID n° ' + ${reservation?.id}"></p>
+                                <p class="col-2 petittextsurnoir txtaucentre"><a target="_blank" class="linkBlanc" th:text="${reservation?.aventure?.nom}" th:href="@{/aventure(id=${reservation?.aventure?.id})}" ></a></p>
+                                <p class="col-2 petittextsurnoir txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
+                                <p class="col-2 petittextsurnoir txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateFin, 'dd/MM/yyyy')}"></p>
+                                <p class="col-2 petittextsurnoir txtaucentre" th:text="${reservation?.etatReservation?.etat}"></p>
+                                <div style="margin-left: auto; margin-right: auto">
+                                    <a class="btn btn-secondary btn-sm" title="Annuler cette réservation" th:href="@{/espaceutilisateur(resid=${reservation?.id})} + '#ModalConfirmationAnnulation'"><i class="fas fa-times fa-2x"></i></a>
+                                    <a th:if="${reservation?.aventure?.dateDebut.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" ><i class="fas fa-comments fa-2x" style="color:white"></i></a>
+                                    <button th:if="${!reservation?.aventure?.dateDebut.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" disabled="true" ><i class="fas fa-comments fa-2x" style="color:white"></i></button>
+                                </div>
+                            </div>
+
+
+                            <div th:if="${reservation?.etatReservation?.etat == T(com.projet9.dataexchange.beans.Etats).ANNULEEAVANTPAIEMENT.toString() || reservation?.etatReservation?.etat == T(com.projet9.dataexchange.beans.Etats).ANNUlEEAPRESPAIEMENT.toString()}" class="row ligne badRow2">
+                                <p class="col-1 petittextsurnoir txtaucentre" th:text="'ID n° ' + ${reservation?.id}"></p>
+                                <p class="col-2 petittextsurnoir txtaucentre"><a target="_blank" class="linkBlanc" th:text="${reservation?.aventure?.nom}" th:href="@{/aventure(id=${reservation?.aventure?.id})}" ></a></p>
+                                <p class="col-2 petittextsurnoir txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
+                                <p class="col-2 petittextsurnoir txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateFin, 'dd/MM/yyyy')}"></p>
+                                <p class="col-2 petittextsurnoir txtaucentre" th:text="${reservation?.etatReservation?.etat}"></p>
+                                <div style="margin-left: auto; margin-right: auto">
+                                    <button class="btn btn-secondary btn-sm" title="Annuler cette réservation" disabled="true"><i class="fas fa-times fa-2x"></i></button>
+                                    <button class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" disabled="true" ><i class="fas fa-comments fa-2x" style="color:white"></i></button>
+                                </div>
+                            </div>
+                </div>
+            </div>
+            <h6 th:if="${reservationsUtilisateur== null || reservationsUtilisateur.isEmpty()}" class="infossurnoir"><br>Vous n'avez pas fait de reservation pour le moment.</h6>
+        </div>
+    </form>
+</div>
+</body>
+</html>

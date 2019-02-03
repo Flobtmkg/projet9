@@ -26,8 +26,8 @@ public class AcceuilController {
         //List<Aventure> avs = proxyAventure.getAllAventures();
         //request.setAttribute("aventuresList",avs);
 
-        //User us = new User(1, "mon nom", "mon prenom", LocalDate.now(), "manewadress@gmail.com", "password", null );
-        //request.getSession().setAttribute("userGuest",us);
+        User us = new User(1, "mon nom", "mon prenom", LocalDate.of(1990,10,18), "manewadress@gmail.com", "password", null );
+        request.getSession().setAttribute("userGuest",us);
         return "accueil";
     }
 

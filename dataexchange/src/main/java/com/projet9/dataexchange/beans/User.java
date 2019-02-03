@@ -1,6 +1,7 @@
 package com.projet9.dataexchange.beans;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 
 public class User {
@@ -81,5 +82,9 @@ public class User {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public int getAge(){
+        return (int)dateNaissance.until(LocalDate.now(), ChronoUnit.YEARS);
     }
 }
