@@ -1,0 +1,115 @@
+<!--Début Block commun à toutes les pages-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/img/icon3.png">
+    <script type="text/javascript" src="/js/ecran.js"></script>
+    <link type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+    <link type="text/css" href="/css/menu.css" rel="stylesheet">
+    <link type="text/css" href="/css/aventure.css" rel="stylesheet">
+    <!--Chargement des polices Google-->
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <title th:text="${aventure?.nom}"></title>
+</head>
+<body onresize="changeImage()" onload="changeImage()">
+<!-- Necessaire au système d'adaptation d'images automatique controlé en javascript -->
+<!-- Affiche toujours l'image de fond en optimisé quelque soit les tailles d'écrans (du smartphone à la 4K) -->
+<img id="image4K" class="imagePrechargee" src="/img/meretciel4k.jpg">
+<!-- include menu -->
+<div th:replace="menu.html"></div>
+
+<!--Fin Block commun à toutes les pages-->
+
+<div id="divdefond"></div>
+
+<!-- Espace de definition des fenêtres modales -->
+<div id="ModalValidation" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Confirmation!</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: green" class="fas fa-check-circle fa-5x"></i>
+            </div>
+            <p class="texterreur">Votre réservation a bien été prise en compte.</p>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+        </footer>
+    </div>
+</div>
+
+<!-- Espace de definition des blocks -->
+<div class="container-fluid">
+    <div id="cadrephoto" class="offset-sm-1 col-9 col-sm-5 col-lg-3 col-xl-2" style="background: url('/img/icon4.png') center no-repeat; background-size: 100% auto;"></div>
+    <div id="blockTransparent"></div>
+    <div id="presentation" class="offset-0 offset-sm-1 offset-lg-0 col-lg-6 col-sm-10 col-12">
+        <legend class="label2" th:text="'Aventure n°' + ${aventure?.id}"></legend>
+        <h2 class="infossurnoir" th:text="${aventure?.nom}"></h2>
+        <h2 class="infossurnoir" th:text="'Catégorie : ' + ${aventure?.categorie?.nom}"></h2>
+        <br>
+        <h5 class="infossurnoir" th:text="'Prix par personne : ' + ${aventure?.prix} + '€'"></h5>
+        <br>
+        <h5 class="infossurnoir" th:text="'Commencement de l\'aventure : '+ ${#temporals.format(aventure?.dateDebut, 'dd/MM/yyyy')}"></h5>
+        <h5 class="infossurnoir" th:text="'Fin de l\'aventure : ' + ${#temporals.format(aventure?.dateFin, 'dd/MM/yyyy')}"></h5>
+        <h5 class="infossurnoir" th:text="'Date limite d\'inscription : '"></h5>
+        <br>
+        <h6 class="infossurnoir" th:text="'Nombre de participants : '"></h6>
+    </div>
+    <!--  -->
+    <!-- Penser a check si une réservation de l'aventure n'existe pas déjà -->
+    <form th:if="${session?.userGuest?.id>0}" action="AjouterReservation" method="post" class="col-12 card" style="padding:0; background-color: unset; border: unset">
+        <div class="offset-sm-1 col-sm-10 col-lg-3 col-xl-2 col-12" style="padding:0;">
+            <input type="hidden" name="idAventure" th:value="${aventure?.id}">
+            <button type="submit" class="btn btnCustom btnGris col-12"><i class="far fa-bookmark"></i> Reserver cette aventure</button>
+        </div>
+    </form>
+
+    <!-- Penser a gérer les cas de réservation impossible -->
+    <!--<c:if test="${sessionScope.userGuest.idUtilisateur!=0 && !empty sessionScope.userGuest.idUtilisateur && (livreprete==true || livreReserve==true || attenteComplete==true)}">
+        <form class="card offset-sm-1 col-sm-10 col-12 form-group blockdescription3">
+            <c:if test="${sessionScope.userGuest.idUtilisateur!=0 && !empty sessionScope.userGuest.idUtilisateur && livreprete==true}">
+                <p id="aafficherenligne" class="nonreservation">Reservation impossible. Vous avez déjà un prêt en cours pour cet ouvrage.</p>
+            </c:if>
+            <c:if test="${sessionScope.userGuest.idUtilisateur!=0 && !empty sessionScope.userGuest.idUtilisateur && livreReserve==true}">
+                <p id="aafficherenligne" class="nonreservation">Reservation impossible. Vous avez déjà une réservation en cours pour cet ouvrage.</p>
+            </c:if>
+            <c:if test="${sessionScope.userGuest.idUtilisateur!=0 && !empty sessionScope.userGuest.idUtilisateur && attenteComplete==true}">
+                <p id="aafficherenligne" class="nonreservation">Reservation impossible. La liste d'attente et pleine.</p>
+            </c:if>
+        </form>
+    </c:if>-->
+    <!--  -->
+    <form class="card offset-sm-1 col-sm-10 col-12 form-group blockdescription">
+        <div class="card-body paneldescription">
+            <legend class="label1">Description de l'aventure:</legend>
+            <div class="input-group col-12">
+                <textarea readonly name="description" rows="5" id="textDescription0" class="form-control" maxlength="1000" placeholder="..." disabled th:text="${aventure?.description}"></textarea>
+            </div>
+        </div>
+    </form>
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <form class="card offset-sm-1 col-sm-10 col-12 form-group blockdescription">
+        <div class="card-body paneldescription">
+            <legend class="label1">Commentaires de nos aventuriers:</legend>
+            <div class="input-group col-12" th:each="commentaire:${commentaires}">
+                <textarea readonly name="description" rows="5" id="textDescription0" class="form-control" maxlength="1000" placeholder="..." disabled th:text="${commentaire}"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
