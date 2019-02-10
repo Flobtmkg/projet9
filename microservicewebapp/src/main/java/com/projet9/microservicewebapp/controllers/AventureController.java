@@ -17,7 +17,7 @@ public class AventureController {
     ProxyAventure proxyAventure;
 
     @GetMapping("/aventure/{id}")
-    public String toAventure(HttpServletRequest request, @PathVariable("id") int id){
+    public String goToAventure(HttpServletRequest request, @PathVariable("id") int id){
         Aventure aventure = proxyAventure.getAventureById(id);
         request.setAttribute("aventure",aventure);
         return "aventure";

@@ -28,4 +28,9 @@ public interface ProxyUser {
     @DeleteMapping(value = "microserviceusers/api/Users/{id}")
     void delete(@PathVariable("id") int id);
 
+    @GetMapping(value = "microserviceusers/api/Users/autentificationById/{id}/{mdp}")
+    boolean isAutentificationCorrectById(@PathVariable("id") int id, @PathVariable("mdp") String mdp);
+
+    @GetMapping(value = "microserviceusers/api/Users/autentification/{email}/{mdp}")
+    User autentification(@PathVariable("email") String email, @PathVariable("mdp") String hashMdp);
 }

@@ -14,6 +14,7 @@ public class ReservationMapper {
                 reservationEntity.getDateReservation(),
                 reservationEntity.getTimestampCommentaireReservation(),
                 reservationEntity.getCommentaireReservation(),
+                reservationEntity.isReservationPrecedente(),
                 EtatReservationMapper.toDto(reservationEntity.getEtatReservationEntity())
         );
     }
@@ -26,6 +27,7 @@ public class ReservationMapper {
                 reservation.getDateReservation(),
                 reservation.getTimestampCommentaireReservation(),
                 reservation.getCommentaireReservation(),
+                reservation.isReservationPrecedente(),
                 EtatReservationMapper.toEntity(reservation.getEtatReservation())
         );
     }

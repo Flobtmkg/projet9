@@ -10,13 +10,15 @@ public class Aventure {
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private String description;
+    private int limiteReservation;
+    private LocalDate dateCloture;
     private int idCategorie;
     private byte[] image;
 
     private Categorie categorie;
 
     // Constructeur par champ
-    public Aventure(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, byte[] image, int idCategorie, Categorie categorie) {
+    public Aventure(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, int limiteReservation, LocalDate dateCloture, byte[] image, int idCategorie, Categorie categorie) {
         this.id = id;
         this.nom = nom;
         this.prix = prix;
@@ -26,6 +28,8 @@ public class Aventure {
         this.image = image;
         this.categorie = categorie;
         this.idCategorie = idCategorie;
+        this.limiteReservation = limiteReservation;
+        this.dateCloture = dateCloture;
     }
 
     // Constructeur par defaut
@@ -78,6 +82,25 @@ public class Aventure {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
+    public int getLimiteReservation() {
+        return limiteReservation;
+    }
+
+    public void setLimiteReservation(int limiteReservation) {
+        this.limiteReservation = limiteReservation;
+    }
+
+
+    public LocalDate getDateCloture() {
+        return dateCloture;
+    }
+
+    public void setDateCloture(LocalDate dateCloture) {
+        this.dateCloture = dateCloture;
+    }
+
 
     public int getIdCategorie() {
         return idCategorie;

@@ -63,9 +63,9 @@
         <br>
         <h5 class="infossurnoir" th:text="'Commencement de l\'aventure : '+ ${#temporals.format(aventure?.dateDebut, 'dd/MM/yyyy')}"></h5>
         <h5 class="infossurnoir" th:text="'Fin de l\'aventure : ' + ${#temporals.format(aventure?.dateFin, 'dd/MM/yyyy')}"></h5>
-        <h5 class="infossurnoir" th:text="'Date limite d\'inscription : '"></h5>
+        <h5 class="infossurnoir" th:text="'Date limite d\'inscription : ' + ${#temporals.format(aventure?.dateCloture, 'dd/MM/yyyy')}"></h5>
         <br>
-        <h6 class="infossurnoir" th:text="'Nombre de participants : '"></h6>
+        <h6 class="infossurnoir" th:text="'Nombre de participants : ' + ${aventure?.limiteReservation}"></h6>
     </div>
     <!--  -->
     <!-- Penser a check si une réservation de l'aventure n'existe pas déjà -->
