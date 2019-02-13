@@ -26,10 +26,10 @@ public class Aventure {
         this.dateFin = dateFin;
         this.description = description;
         this.image = image;
-        this.categorie = categorie;
-        this.idCategorie = idCategorie;
         this.limiteReservation = limiteReservation;
         this.dateCloture = dateCloture;
+        this.idCategorie = idCategorie;
+        this.categorie = categorie;
     }
 
     // Constructeur par defaut

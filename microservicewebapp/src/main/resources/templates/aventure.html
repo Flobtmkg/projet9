@@ -105,8 +105,9 @@
     <form class="card offset-sm-1 col-sm-10 col-12 form-group blockdescription">
         <div class="card-body paneldescription">
             <legend class="label1">Commentaires de nos aventuriers:</legend>
-            <div class="input-group col-12" th:each="commentaire:${commentaires}">
-                <textarea readonly name="description" rows="5" id="textDescription0" class="form-control" maxlength="1000" placeholder="..." disabled th:text="${commentaire}"></textarea>
+            <div class="col-12" th:each="reservation : ${reservations}">
+                <p class="headerComm" th:text="${reservation.user.prenom} + ' ' + ${reservation.user.nom} + ' - le ' + ${#temporals.format(reservation.timestampCommentaireReservation, 'dd/MM/yyyy à HH:mm:ss')}"></p>
+                <p class="comm" th:text="${reservation.commentaireReservation}"></p>
             </div>
         </div>
     </form>

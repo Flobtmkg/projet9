@@ -1,12 +1,8 @@
 body{background-repeat: no-repeat; background-attachment: fixed;min-width: 510px}
-#groupRecherche{margin-top: 30px}
 h1{color:rgba(230, 230, 230, 1);font-weight:100;font-size:300%;text-shadow:0px 2px 4px rgba(0, 0, 0, 1)}
 h2{color:rgba(230, 230, 230, 1);font-weight:500;font-size:180%; text-shadow:0px 2px 4px rgba(0, 0, 0, 1)}
-div#presentation{position:relative; top:150px}
-div#barreDeRecherche{padding:0; margin-top:0px}
 div#divdefond{position:fixed;height:100%;width:100%; top:0px; background-color:rgba(0, 0, 0, 0.7); z-index: -1}
 .cadrephoto{height:100px;width:100px; float:left; margin-bottom:10px; border-radius:4px}
-div#blockTransparent{height:400px;width:20px; float:left}
 textarea#textDescription{resize: none;font-style: italic}
 textarea#textDescription0{resize: none;font-style: italic;color:rgba(220,220,220,1);background-color:rgba(0,0,0,0);border-color:rgba(0,0,0,0);}
 textarea#textDescription1{resize: none;font-style: italic;color:rgba(220,220,220,1);background-color:rgba(0,0,0,0);border-color:rgba(0,0,0,0);width:33.33%!important;padding:0}
