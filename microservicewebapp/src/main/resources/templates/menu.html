@@ -23,7 +23,7 @@
         <div class="col-md-3 offset-md-9 col-12 offset-0">
             <div class="list-group" id="list-tab" role="tablist" onmousemove="editPriorite(true)">
                 <a class="list-group-item list-group-item-action elementdelisteMenu liensMenu" th:href="@{/espaceutilisateur}" role="tab"><i class="fas fa-user-circle"></i> Espace utilisateur</a>
-                <a class="list-group-item list-group-item-action elementdelisteMenu liensMenu" href="" role="tab"><i class="fas fa-power-off"></i> Déconnexion</a>
+                <a class="list-group-item list-group-item-action elementdelisteMenu liensMenu" th:href="@{/deconnexion}" role="tab"><i class="fas fa-power-off"></i> Déconnexion</a>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
                 <h2 class="modalHeader"><i class="fas fa-sign-in-alt"></i> Connexion</h2>
             </header>
             <div class="form-group modalMargin">
-                <a th:href="inscription"><i class="fas fa-edit"></i> Vous n'avez pas de Compte? Inscrivez-vous!</a>
+                <a th:href="@{/inscription}"><i class="fas fa-edit"></i> Vous n'avez pas de Compte? Inscrivez-vous!</a>
             </div>
             <div class="form-group modalMargin">
                 <label for="inputEmail">E-mail</label>
@@ -59,7 +59,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-at"></i></span>
                     </div>
-                    <input id="inputEmail" type="email" name="idco" class="form-control col-12" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+                    <input id="inputEmail" type="email" name="idco" class="form-control col-12" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                 </div>
                 <label for="inputPassword">Mot de passe</label>
                 <div class="input-group">

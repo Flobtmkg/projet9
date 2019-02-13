@@ -2,6 +2,8 @@ package com.projet9.microservicereservations.entities;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.DefaultValue;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -17,6 +19,7 @@ public class ReservationEntity {
     private LocalDate dateReservation;
     private LocalDateTime timestampCommentaireReservation;
     private String commentaireReservation;
+    private boolean isReservationPrecedente;
 
     private int idAventure;
     private int idUser;
@@ -26,7 +29,7 @@ public class ReservationEntity {
     private EtatReservationEntity etatReservationEntity;
 
 
-    public ReservationEntity(int id, int idAventure, int idUser, LocalDate dateReservation, LocalDateTime timestampCommentaireReservation, String commentaireReservation, EtatReservationEntity etatReservationEntity) {
+    public ReservationEntity(int id, int idAventure, int idUser, LocalDate dateReservation, LocalDateTime timestampCommentaireReservation, String commentaireReservation, boolean isReservationPrecedente, EtatReservationEntity etatReservationEntity) {
         this.id = id;
         this.idAventure = idAventure;
         this.idUser = idUser;
@@ -34,6 +37,7 @@ public class ReservationEntity {
         this.timestampCommentaireReservation = timestampCommentaireReservation;
         this.commentaireReservation = commentaireReservation;
         this.etatReservationEntity = etatReservationEntity;
+        this.isReservationPrecedente = isReservationPrecedente;
     }
 
     // Constructeur par defaut exigé par hibernate
@@ -88,6 +92,15 @@ public class ReservationEntity {
     public void setCommentaireReservation(String commentaireReservation) {
         this.commentaireReservation = commentaireReservation;
     }
+
+    public boolean isReservationPrecedente() {
+        return isReservationPrecedente;
+    }
+
+    public void setReservationPrecedente(boolean reservationPrecedente) {
+        isReservationPrecedente = reservationPrecedente;
+    }
+
 
     public EtatReservationEntity getEtatReservationEntity() {
         return etatReservationEntity;

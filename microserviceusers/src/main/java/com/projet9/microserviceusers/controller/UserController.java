@@ -45,6 +45,32 @@ public class UserController {
         return UserMapper.toDto(userEntity.orElseThrow(() -> new ObjectNotFoundException(id, UserEntity.class)));
     }
 
+    @GetMapping(path = "/api/Users/autentificationById/{id}/{mdp}", produces = "application/json")
+    public boolean isAutentificationCorrectById(@PathVariable("id") int id, @PathVariable("mdp") String hashMdp){
+        User user;
+        try{
+            user = getById(id);
+        }catch(ObjectNotFoundException e){
+            return false;
+        }
+
+        if(user.getPassword().equals(hashMdp)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @GetMapping(path = "/api/Users/autentification/{email}/{mdp}", produces = "application/json")
+    public User autentification(@PathVariable("email") String email, @PathVariable("mdp") String hashMdp){
+        Optional<UserEntity> OptionalUserEntity = userDao.findByEmailAndPassword(email,hashMdp);
+        if(OptionalUserEntity.isPresent()){
+            return UserMapper.toDto(OptionalUserEntity.get());
+        }else{
+            return null;
+        }
+    }
+
     @DeleteMapping(path = "/api/Users/{id}", produces = "application/json")
     public void delete(@PathVariable("id") int id) {
         userDao.deleteById(id);

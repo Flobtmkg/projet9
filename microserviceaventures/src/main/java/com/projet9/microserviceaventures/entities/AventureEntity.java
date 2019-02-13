@@ -18,6 +18,8 @@ public class AventureEntity {
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private String description;
+    private int limitReservation;
+    private LocalDate dateCloture;
 
 
     @Lob
@@ -29,7 +31,7 @@ public class AventureEntity {
     private CategorieEntity categorieEntity;
 
 
-    public AventureEntity(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, byte[] image, CategorieEntity categorieEntity) {
+    public AventureEntity(int id, String nom, Float prix, LocalDate dateDebut, LocalDate dateFin, String description, int limitReservation, LocalDate dateCloture, byte[] image, CategorieEntity categorieEntity) {
         this.id = id;
         this.nom = nom;
         this.prix = prix;
@@ -38,6 +40,8 @@ public class AventureEntity {
         this.description = description;
         this.image = image;
         this.categorieEntity = categorieEntity;
+        this.limitReservation = limitReservation;
+        this.dateCloture = dateCloture;
     }
 
     // Constructeur par defaut exigé par hibernate
@@ -92,6 +96,26 @@ public class AventureEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
+    public int getLimitReservation() {
+        return limitReservation;
+    }
+
+    public void setLimitReservation(int limitReservation) {
+        this.limitReservation = limitReservation;
+    }
+
+
+
+    public LocalDate getDateCloture() {
+        return dateCloture;
+    }
+
+    public void setDateCloture(LocalDate dateCloture) {
+        this.dateCloture = dateCloture;
+    }
+
 
     public byte[] getImage() {
         return image;

@@ -13,6 +13,7 @@ public class Reservation {
     private int idAventure;
     private int idUser;
     private int numEtat;
+    private boolean isReservationPrecedente;
 
     // Objets composites
     private Aventure aventure;
@@ -21,7 +22,7 @@ public class Reservation {
 
 
     // Constructeur avec champs de base
-    public Reservation(int id, int idAventure, int idUser, int numEtat, LocalDate dateReservation, LocalDateTime timestampCommentaireReservation, String commentaireReservation, EtatReservation etatReservation) {
+    public Reservation(int id, int idAventure, int idUser, int numEtat, LocalDate dateReservation, LocalDateTime timestampCommentaireReservation, String commentaireReservation, boolean isReservationPrecedente, EtatReservation etatReservation) {
         this.id = id;
         this.idAventure = idAventure;
         this.idUser = idUser;
@@ -30,6 +31,7 @@ public class Reservation {
         this.timestampCommentaireReservation = timestampCommentaireReservation;
         this.commentaireReservation = commentaireReservation;
         this.etatReservation = etatReservation;
+        this.isReservationPrecedente = isReservationPrecedente;
     }
 
     // Constructeur par defaut
@@ -90,6 +92,14 @@ public class Reservation {
 
     public void setCommentaireReservation(String commentaireReservation) {
         this.commentaireReservation = commentaireReservation;
+    }
+
+    public boolean isReservationPrecedente() {
+        return isReservationPrecedente;
+    }
+
+    public void setReservationPrecedente(boolean reservationPrecedente) {
+        isReservationPrecedente = reservationPrecedente;
     }
 
     public User getUser() {
