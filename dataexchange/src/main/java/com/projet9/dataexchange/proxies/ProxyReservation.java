@@ -15,37 +15,42 @@ public interface ProxyReservation {
 
     // Accès aux reservations
 
-    @PostMapping("/api/Reservations")
+    @PostMapping("microservicereservations/api/Reservations")
     Reservation createReservation(@RequestBody Reservation aventure);
 
-    @PutMapping("/api/Reservations")
+    @PutMapping("microservicereservations/api/Reservations")
     Reservation updateReservation(@RequestBody Reservation aventure);
 
-    @GetMapping("/api/Reservations/{id}")
+    @GetMapping("microservicereservations/api/Reservations/{id}")
     Reservation getReservationById(@PathVariable("id") int id);
 
-    @GetMapping("/api/Reservations")
+    @GetMapping("microservicereservations/api/Reservations")
     List<Reservation> getAllReservation();
 
-    @DeleteMapping("/api/Reservations/{id}")
+    @DeleteMapping("microservicereservations/api/Reservations/{id}")
     void deleteReservation(@PathVariable("id") int id);
+
+    @GetMapping("microservicereservations/api/Reservations/User/{idUser}")
+    List<Reservation> getByUserId(@PathVariable("idUser") int id);
 
 
     // Accès aux etatReservations
 
-    @PostMapping("/api/EtatReservations")
+    @PostMapping("microservicereservations/api/EtatReservations")
     EtatReservation createCategorie(@RequestBody EtatReservation EtatReservation);
 
-    @PutMapping("/api/EtatReservations")
+    @PutMapping("microservicereservations/api/EtatReservations")
     EtatReservation updateCategorie(@RequestBody EtatReservation EtatReservation);
 
-    @GetMapping("/api/EtatReservations/{id}")
+    @GetMapping("microservicereservations/api/EtatReservations/{id}")
     EtatReservation getCategorieById(@PathVariable("id") int id);
 
-    @GetMapping("/api/EtatReservations")
+    @GetMapping("microservicereservations/api/EtatReservations")
     List<EtatReservation> getAllCategories();
 
-    @DeleteMapping("/api/EtatReservations/{id}")
+    @DeleteMapping("microservicereservations/api/EtatReservations/{id}")
     void deleteCategorie(@PathVariable("id") int id);
+
+
 
 }

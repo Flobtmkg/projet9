@@ -33,7 +33,7 @@ public class InscriptionController {
 
     @PostMapping("/inscription")
     public RedirectView Inscription(HttpServletRequest request){
-        // Récupérationdes données et création d'un utilisateur
+        // Récupération des données et création d'un utilisateur
         User user = new User();
         try{
             user.setPrenom(request.getParameter("prenom"));
@@ -41,12 +41,11 @@ public class InscriptionController {
             user.setEmail(request.getParameter("email"));
             user.setPassword(DigestUtils.sha256Hex(request.getParameter("motDePasse")));
             user.setDateNaissance(LocalDate.parse(request.getParameter("dateNaissance"), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            // Création de l'utilisateur
+            user = proxyUser.create(user);
         }catch(Exception e){
             return new RedirectView("/inscription#ModalerreurInscription");
         }
-
-        // Création de l'utilisateur
-        user = proxyUser.create(user);
         request.getSession().setAttribute("userGuest",user);
         return new RedirectView("/");
     }

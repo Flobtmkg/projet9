@@ -59,7 +59,7 @@
         <h2 class="infossurnoir" th:text="${aventure?.nom}"></h2>
         <h2 class="infossurnoir" th:text="'Catégorie : ' + ${aventure?.categorie?.nom}"></h2>
         <br>
-        <h5 class="infossurnoir" th:text="'Prix par personne : ' + ${aventure?.prix} + '€'"></h5>
+        <h5 class="infossurnoir" th:text="'Prix par personne : ' + ${#numbers.formatDecimal(aventure?.prix,1,'WHITESPACE',2,'COMMA')} + ' €'"></h5>
         <br>
         <h5 class="infossurnoir" th:text="'Commencement de l\'aventure : '+ ${#temporals.format(aventure?.dateDebut, 'dd/MM/yyyy')}"></h5>
         <h5 class="infossurnoir" th:text="'Fin de l\'aventure : ' + ${#temporals.format(aventure?.dateFin, 'dd/MM/yyyy')}"></h5>
@@ -69,7 +69,7 @@
     </div>
     <!--  -->
     <!-- Penser a check si une réservation de l'aventure n'existe pas déjà -->
-    <form th:if="${session?.userGuest?.id>0}" action="AjouterReservation" method="post" class="col-12 card" style="padding:0; background-color: unset; border: unset">
+    <form th:if="${session?.userGuest?.id>0}" th:action="@{/AjouterReservation}" method="post" class="col-12 card" style="padding:0; background-color: unset; border: unset">
         <div class="offset-sm-1 col-sm-10 col-lg-3 col-xl-2 col-12" style="padding:0;">
             <input type="hidden" name="idAventure" th:value="${aventure?.id}">
             <button type="submit" class="btn btnCustom btnGris col-12"><i class="far fa-bookmark"></i> Reserver cette aventure</button>

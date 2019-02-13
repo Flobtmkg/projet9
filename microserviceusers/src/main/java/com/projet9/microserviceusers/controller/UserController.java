@@ -21,8 +21,14 @@ public class UserController {
 
     @PostMapping(path = "/api/Users", produces = "application/json")
     public User create(@RequestBody User user) {
-        UserEntity savedUserEntity =  userDao.save(UserMapper.toEntity(user));
-        return UserMapper.toDto(savedUserEntity);
+        List<UserEntity> sameEmailUsers = userDao.findByEmail(user.getEmail());
+        if(sameEmailUsers.size()>0){
+            // Un utilisateur possède utilise déjà cet email
+            throw new ObjectNotFoundException(user.getId(),UserEntity.class);
+        }else{
+            UserEntity savedUserEntity =  userDao.save(UserMapper.toEntity(user));
+            return UserMapper.toDto(savedUserEntity);
+        }
     }
 
     @PutMapping(path = "/api/Users", produces = "application/json")

@@ -2,6 +2,7 @@ package com.projet9.microservicewebapp.controllers;
 
 import com.projet9.dataexchange.beans.*;
 import com.projet9.dataexchange.proxies.ProxyAventure;
+import com.projet9.dataexchange.proxies.ProxyReservation;
 import com.projet9.dataexchange.proxies.ProxyUser;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class EspaceUtilisateurController {
     ProxyAventure proxyAventure;
     @Autowired
     ProxyUser proxyUser;
+    @Autowired
+    ProxyReservation proxyReservation;
 
     @GetMapping("/espaceutilisateur")
     public String goToEspaceUtilisateur(HttpServletRequest request){
@@ -31,14 +34,11 @@ public class EspaceUtilisateurController {
         if(user==null){
             return "accueil";
         }
-        // test pour checker l'affichage des reservations
-        List<Reservation> lstRes = new ArrayList<>();
-        Reservation a = new Reservation(1, 1, 1, 1, LocalDate.now(), null, null,false, new EtatReservation(1, Etats.NONPAYEE.toString()));
-        a.setAventure(proxyAventure.getAventureById(1));
-        Reservation b = new Reservation(2, 2, 1, 3, LocalDate.now(), null, null,false, new EtatReservation(3,Etats.PAYEE.toString()));
-        b.setAventure(proxyAventure.getAventureById(2));
-        lstRes.add(a);
-        lstRes.add(b);
+
+        // Récupération des réservations
+        List<Reservation> lstRes = proxyReservation.getByUserId(user.getId());
+
+
         request.setAttribute("reservationsUtilisateur",lstRes);
         return "espaceutilisateur";
     }

@@ -2,6 +2,7 @@ package com.projet9.microservicereservations.controller;
 
 import com.projet9.dataexchange.beans.Reservation;
 import com.projet9.dataexchange.exceptions.ObjectNotFoundException;
+import com.projet9.dataexchange.proxies.ProxyAventure;
 import com.projet9.microservicereservations.dao.EtatReservationDao;
 import com.projet9.microservicereservations.dao.ReservationDao;
 import com.projet9.microservicereservations.entities.ReservationEntity;
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 
 @RestController
 public class ReservationController {
+    @Autowired
+    ProxyAventure proxyAventure;
 
     @Autowired
     ReservationDao reservationDao;
@@ -61,6 +64,15 @@ public class ReservationController {
     @DeleteMapping(path = "/api/Reservations/{id}", produces = "application/json")
     public void delete(@PathVariable("id") int id){
         reservationDao.deleteById(id);
+    }
+
+    @GetMapping(path = "/api/Reservations/User/{idUser}", produces = "application/json")
+    public List<Reservation> getByUserId(@PathVariable("idUser") int id) {
+        List<Reservation> listRes = reservationDao.findReservationEntitiesByIdUser(id).stream()
+                .map(ReservationMapper::toDto)
+                .collect(Collectors.toList());
+        listRes.forEach(reservation -> reservation.setAventure(proxyAventure.getAventureById(reservation.getIdAventure())));
+        return listRes;
     }
 
 }
