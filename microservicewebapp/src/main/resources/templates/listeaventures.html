@@ -41,14 +41,14 @@
 
             <form id="blockdescription" class="card offset-sm-1 col-sm-10 col-12 form-group">
                 <div id="paneldescription" class="card-body">
-                    <legend class="label1" th:text="${aventure?.nom}"><a id="liensDuHaut" target="_blank" th:href=""></a></legend>
+                    <legend class="label1" th:text="${aventure?.nom}"><a id="liensDuHaut"></a></legend>
                     <!-- imgPath -->
                         <div class="card cadrephoto">
-                            <a target="_blank"><img class="cadrephoto" src="../static/img/livre8.png"></a>
+                            <a target="_blank" th:href="@{/aventure/} + ${aventure?.id}"><img class="cadrephoto" src="../static/img/livre8.png"></a>
                         </div>
                     <!-- imgPath -->
                     <div class="col-8 infosDroiteImage">
-                        <p class="petittextsurnoir" th:text="${'Du ' + aventure.dateDebut + ' au ' + aventure.dateFin }"></p>
+                        <p class="petittextsurnoir" th:text="${'Du ' + #temporals.format(aventure.dateDebut, 'dd/MM/yyyy') + ' au ' + #temporals.format(aventure.dateFin, 'dd/MM/yyyy') }"></p>
                     </div>
                     <div class="col-8 infosDroiteImage">
                         <p class="petittextsurnoir" th:text="'Tarif : ' + ${#numbers.formatDecimal(aventure.prix,1,'WHITESPACE',2,'COMMA')}  + ' €'"></p>

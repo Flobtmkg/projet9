@@ -18,7 +18,7 @@ public class ListeAventuresController {
 
     @GetMapping("/categories/{id}")
     public String toListeAventures(@PathVariable int id, HttpServletRequest request){
-        List<Aventure> listAventure = proxyAventure.getAventureByCategorie(id);
+        List<Aventure> listAventure = proxyAventure.getAventuresByCategorie(id);
         request.setAttribute("listAventure", listAventure);
         return  "listeaventures";
     }

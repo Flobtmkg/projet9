@@ -44,7 +44,7 @@ public class Aventure {
     }
 
     public LocalDate getDateFin() {
-        return dateFin
+        return dateFin;
     }
 
     public void setDateFin(LocalDate dateFin) {

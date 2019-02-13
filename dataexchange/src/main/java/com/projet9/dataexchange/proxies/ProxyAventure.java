@@ -28,7 +28,7 @@ public interface ProxyAventure {
     Aventure getAventureById(@PathVariable("id") int id);
 
     @GetMapping("microserviceaventures/api/Aventures/Categories/{id}")
-    List<Aventure> getAventureByCategorie(@PathVariable("id") int id);
+    List<Aventure> getAventuresByCategorie(@PathVariable("id") int id);
 
     @DeleteMapping("microserviceaventures/api/Aventures/{id}")
     void deleteAventure(@PathVariable("id") int id);

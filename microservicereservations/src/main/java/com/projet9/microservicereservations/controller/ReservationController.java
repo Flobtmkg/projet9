@@ -51,6 +51,10 @@ public class ReservationController {
         return ReservationMapper.toDto(optionalReservationEntity.orElseThrow(()-> new ObjectNotFoundException(id,ReservationEntity.class)));
     }
 
+    @GetMapping(path = "/api/Reservations/Aventures/{id}", produces = "application/json")
+    public List<Reservation> getByAventure(@PathVariable("id") int id) {
+        return reservationDao.findReservationEntitiesByIdAventure(id).stream().map(ReservationMapper::toDto).collect(Collectors.toList());
+    }
 
     @GetMapping(path = "/api/Reservations", produces = "application/json")
     public List<Reservation> getAll(){

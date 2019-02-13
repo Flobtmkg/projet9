@@ -6,6 +6,13 @@ div#blockTransparent{height:400px;width:20px; float:left}
 textarea#textDescription{resize: none;font-style: italic}
 textarea#textDescription0{resize: none;font-style: italic;color:rgba(220,220,220,1);background-color:rgba(0,0,0,0);border-color:rgba(0,0,0,0)}
 textarea#textDescription1{resize: none;font-style: italic;color:rgba(220,220,220,1);background-color:rgba(0,0,0,0);border-color:rgba(0,0,0,0);width:33.33%!important;padding:0}
+.commentaire {
+    resize: none;
+    font-style: italic;
+    color:rgba(220,220,220,1);
+    background-color:rgba(0,0,0,0);
+    border-color:rgba(0,0,0,0)
+}
 .blockdescription{float: left;margin-top:20px;padding:0px;background-color:rgba(255,255,255,0.1)}
 .blockdescription3{float: left;margin-top:20px;padding:0px;background-color:rgba(255,255,255,0)}
 .nonreservation{color: rgba(255,255,0,0.4)}
@@ -77,4 +84,18 @@ div#ligneheader{border-bottom:2px;border-color:rgba(255, 255, 255, 0.6);border-b
 .liensBody{
     color:rgba(0, 0, 0, 1);
     text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.comm {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    padding: 5px;
+    color: rgba(220,220,220,1);
+}
+
+.headerComm {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    color: rgba(220,220,220,1);
 }
