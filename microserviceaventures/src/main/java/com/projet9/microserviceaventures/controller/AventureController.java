@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RestController
@@ -58,6 +59,11 @@ public class AventureController {
     public Aventure getById(@PathVariable("id") int id){
         Optional<AventureEntity> optionalAventureEntity = aventureDao.findById(id);
         return AventureMapper.toDto(optionalAventureEntity.orElseThrow(()-> new ObjectNotFoundException(id, AventureEntity.class)));
+    }
+
+    @GetMapping(path = "/api/Aventures/Categories/{id}", produces = "application/json")
+    public List<Aventure> getByCategorie(@PathVariable("id") int id) {
+        return aventureDao.findAventureEntitiesByCategorieEntity(categorieDao.findById(id).get()).stream().map(AventureMapper::toDto).collect(Collectors.toList());
     }
 
     @DeleteMapping(path = "/api/Aventures/{id}", produces = "application/json")
