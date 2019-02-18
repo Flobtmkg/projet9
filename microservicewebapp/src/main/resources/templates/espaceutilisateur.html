@@ -221,7 +221,7 @@
                             <div th:if="${reservation?.etatReservation?.etat == T(com.projet9.dataexchange.beans.Etats).PAYEE.toString()}" class="row ligne ligneReservation">
                                 <p class="col-1 petittextsurnoir recentrageLigne txtaucentre" th:text="'ID n° ' + ${reservation?.id}"></p>
                                 <p class="col-2 petittextsurnoir recentrageLigne txtaucentre"><a target="_blank" class="linkBlanc" th:text="${reservation?.aventure?.nom}" th:href="@{/aventure/} + ${reservation?.aventure?.id}" ></a></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
+                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
                                 <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateFin, 'dd/MM/yyyy')}"></p>
                                 <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${reservation?.etatReservation?.etat}"></p>
                                 <div style="margin-left: auto; margin-right: auto">

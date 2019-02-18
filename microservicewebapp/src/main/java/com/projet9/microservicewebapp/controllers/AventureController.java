@@ -31,7 +31,7 @@ public class AventureController {
         List<Reservation> reservations = proxyReservation.getReservationsByAventure(id).stream()
                 .filter(reservation -> reservation.getCommentaireReservation() != null)
                 .collect(Collectors.toList());
-        reservations.forEach(reservation -> reservation.setUser(proxyUser.getById(reservation.getId())));
+        reservations.forEach(reservation -> reservation.setUser(proxyUser.getById(reservation.getIdUser())));
         request.setAttribute("reservations", reservations);
         request.setAttribute("aventure", aventure);
         return "aventure";

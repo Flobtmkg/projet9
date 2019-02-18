@@ -106,7 +106,7 @@
         <div class="card-body paneldescription">
             <legend class="label1">Commentaires de nos aventuriers:</legend>
             <div class="col-12" th:each="reservation : ${reservations}">
-                <p class="headerComm" th:text="${reservation.user.prenom} + ' ' + ${reservation.user.nom} + ' - le ' + ${#temporals.format(reservation.timestampCommentaireReservation, 'dd/MM/yyyy à HH:mm:ss')}"></p>
+                <p class="headerComm" th:text="(${session?.userGuest?.id == reservation.user.id} ? 'Vous' : ${reservation.user.prenom} + ' ' + ${reservation.user.nom}) + ' - le ' + ${#temporals.format(reservation.timestampCommentaireReservation, 'dd/MM/yyyy à HH:mm:ss')}"></p>
                 <p class="comm" th:text="${reservation.commentaireReservation}"></p>
             </div>
         </div>
