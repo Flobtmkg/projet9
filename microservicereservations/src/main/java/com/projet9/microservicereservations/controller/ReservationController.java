@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 public class ReservationController {
+
     @Autowired
     ProxyAventure proxyAventure;
 
@@ -25,6 +26,7 @@ public class ReservationController {
 
     @Autowired
     EtatReservationDao etatReservationDao;
+
 
     @PostMapping(path = "/api/Reservations", produces = "application/json")
     public Reservation create(@RequestBody Reservation reservation){
@@ -54,10 +56,22 @@ public class ReservationController {
         return ReservationMapper.toDto(optionalReservationEntity.orElseThrow(()-> new ObjectNotFoundException(id,ReservationEntity.class)));
     }
 
+
+    @GetMapping(path = "/api/Reservations/User/{idUser}", produces = "application/json")
+    public List<Reservation> getByUserId(@PathVariable("idUser") int id) {
+        List<Reservation> listRes = reservationDao.findReservationEntitiesByIdUser(id).stream()
+                .map(ReservationMapper::toDto)
+                .collect(Collectors.toList());
+        listRes.forEach(reservation -> reservation.setAventure(proxyAventure.getAventureById(reservation.getIdAventure())));
+        return listRes;
+    }
+
+
     @GetMapping(path = "/api/Reservations/Aventures/{id}", produces = "application/json")
     public List<Reservation> getByAventure(@PathVariable("id") int id) {
         return reservationDao.findReservationEntitiesByIdAventure(id).stream().map(ReservationMapper::toDto).collect(Collectors.toList());
     }
+
 
     @GetMapping(path = "/api/Reservations", produces = "application/json")
     public List<Reservation> getAll(){
@@ -69,14 +83,4 @@ public class ReservationController {
     public void delete(@PathVariable("id") int id){
         reservationDao.deleteById(id);
     }
-
-    @GetMapping(path = "/api/Reservations/User/{idUser}", produces = "application/json")
-    public List<Reservation> getByUserId(@PathVariable("idUser") int id) {
-        List<Reservation> listRes = reservationDao.findReservationEntitiesByIdUser(id).stream()
-                .map(ReservationMapper::toDto)
-                .collect(Collectors.toList());
-        listRes.forEach(reservation -> reservation.setAventure(proxyAventure.getAventureById(reservation.getIdAventure())));
-        return listRes;
-    }
-
 }

@@ -49,6 +49,9 @@ public interface ProxyReservation {
     @GetMapping("microservicereservations/api/EtatReservations/{id}")
     EtatReservation getEtatReservationById(@PathVariable("id") int id);
 
+    @GetMapping("microservicereservations/api/EtatReservations/{code}")
+    EtatReservation getEtatReservationByCode(@PathVariable("code") String code);
+
     @GetMapping("microservicereservations/api/EtatReservations")
     List<EtatReservation> getAllEtatReservation();
 

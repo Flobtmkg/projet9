@@ -1,10 +1,10 @@
 package com.projet9.dataexchange.beans;
 
 public enum Etats {
-    NONPAYEE("Non-payé"),
-    ANNULEEAVANTPAIEMENT("Annulé avant paiement"),
-    PAYEE("Payé"),
-    ANNUlEEAPRESPAIEMENT("Annulé après paiement");
+    NONPAYEE("Non-payée"),
+    ANNULEEAVANTPAIEMENT("Annulée avant paiement"),
+    PAYEE("Payée"),
+    ANNUlEEAPRESPAIEMENT("Annulée après paiement");
 
     private String name = "";
 

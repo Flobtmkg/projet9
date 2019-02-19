@@ -18,6 +18,10 @@ public class ObjectNotFoundException extends RuntimeException{
         super("L'objet "+ c.getSimpleName() + " portant l'identifiant n°" + i + " n'a pas pu être trouvé dans la base de donnée");
     }
 
+    public ObjectNotFoundException(String code, Class c){
+        super("L'objet "+ c.getSimpleName() + " ayant pour code : " + code + " n'a pas pu être trouvé dans la base de donnée");
+    }
+
     public ObjectNotFoundException(String strErr){
         super(strErr);
     }

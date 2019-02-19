@@ -12,17 +12,17 @@ public class EtatReservationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "numEtat", updatable = false, nullable = false)
     private int numEtat;
-    private String etat;
+    private String code;
+    private String libelle;
 
-    public EtatReservationEntity(int numEtat, String etat) {
+    public EtatReservationEntity(int numEtat, String code, String libelle) {
         this.numEtat = numEtat;
-        this.etat = etat;
+        this.code = code;
+        this.libelle = libelle;
     }
 
     // Constructeur par defaut exigé par hibernate
-    public EtatReservationEntity(){
-
-    }
+    public EtatReservationEntity() {}
 
     public int getNumEtat() {
         return numEtat;
@@ -32,11 +32,19 @@ public class EtatReservationEntity {
         this.numEtat = numEtat;
     }
 
-    public String getEtat() {
-        return etat;
+    public String getCode() {
+        return code;
     }
 
-    public void setEtat(String etat) {
-        this.etat = etat;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
     }
 }

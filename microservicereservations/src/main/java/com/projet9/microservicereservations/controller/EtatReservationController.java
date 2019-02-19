@@ -40,7 +40,14 @@ public class EtatReservationController {
     @GetMapping(path = "/api/EtatReservations/{id}", produces = "application/json")
     public EtatReservation getById(@PathVariable("id") int id){
         Optional<EtatReservationEntity> optionalEtatReservationEntity = etatReservationDao.findById(id);
-        return EtatReservationMapper.toDto(optionalEtatReservationEntity.orElseThrow(()-> new ObjectNotFoundException(id,EtatReservationEntity.class)));
+        return EtatReservationMapper.toDto(optionalEtatReservationEntity.orElseThrow(()-> new ObjectNotFoundException(id, EtatReservationEntity.class)));
+    }
+
+
+    @GetMapping(path = "/api/EtatReservations/{code}", produces = "application/json")
+    public EtatReservation getByCode(@PathVariable("code") String code){
+        Optional<EtatReservationEntity> optionalEtatReservationEntity = etatReservationDao.findByCode(code);
+        return EtatReservationMapper.toDto(optionalEtatReservationEntity.orElseThrow(()-> new ObjectNotFoundException(code, EtatReservationEntity.class)));
     }
 
 

@@ -96,7 +96,7 @@
         </div>
         <footer>
             <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
-            <a href="AnnulerReservation?resid=${param.resid}" class="btn btn-primary btn-sm modalMargin"><i class="fas fa-times"></i> Confirmer</a>
+            <a href="/espaceutilisateur/annulerReservation/${param.idReservation}" class="btn btn-primary btn-sm modalMargin"><i class="fas fa-times"></i> Confirmer</a>
         </footer>
     </div>
 </div>
@@ -206,48 +206,34 @@
 
                 <div th:each="reservation : ${reservationsUtilisateur}" class="col-12 mCustomScrollbar table-scroll" data-mcs-theme="light-thin">
 
-                            <div th:if="${reservation?.etatReservation?.etat == T(com.projet9.dataexchange.beans.Etats).NONPAYEE.toString()}" class="row ligne ligneReservation">
-                                <p class="col-1 petittextsurnoir recentrageLigne txtaucentre" th:text="'ID n° ' + ${reservation?.id}"></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre"><a target="_blank" class="linkBlanc" th:text="${reservation?.aventure?.nom}" th:href="@{/aventure/} + ${reservation?.aventure?.id}" ></a></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateFin, 'dd/MM/yyyy')}"></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${reservation?.etatReservation?.etat}"></p>
-                                <div style="margin-left: auto; margin-right: auto">
-                                    <a class="btn btn-secondary btn-sm" title="Effectuer le paiement" ><i class="fas fa-money-check-alt fa-2x" style="color:white"></i></a>
-                                    <button class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" disabled="true" ><i class="fas fa-comments fa-2x" style="color:white"></i></button>
-                                </div>
-                            </div>
+                    <div th:class="${reservation?.etatReservation?.code == 'AAVP' || reservation?.etatReservation?.code == 'AAPP'} ? 'row ligne badRow2 ligneReservation' : 'row ligne ligneReservation'">
+                        <p class="col-1 petittextsurnoir recentrageLigne txtaucentre" th:text="'ID n° ' + ${reservation?.id}"></p>
+                        <p class="col-2 petittextsurnoir recentrageLigne txtaucentre"><a target="_blank" class="linkBlanc" th:text="${reservation?.aventure?.nom}" th:href="@{/aventure/} + ${reservation?.aventure?.id}" ></a></p>
+                        <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
+                        <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateFin, 'dd/MM/yyyy')}"></p>
+                        <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${reservation?.etatReservation?.libelle}"></p>
 
-                            <div th:if="${reservation?.etatReservation?.etat == T(com.projet9.dataexchange.beans.Etats).PAYEE.toString()}" class="row ligne ligneReservation">
-                                <p class="col-1 petittextsurnoir recentrageLigne txtaucentre" th:text="'ID n° ' + ${reservation?.id}"></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre"><a target="_blank" class="linkBlanc" th:text="${reservation?.aventure?.nom}" th:href="@{/aventure/} + ${reservation?.aventure?.id}" ></a></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateFin, 'dd/MM/yyyy')}"></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${reservation?.etatReservation?.etat}"></p>
-                                <div style="margin-left: auto; margin-right: auto">
-                                    <a class="btn btn-secondary btn-sm" title="Annuler cette réservation" th:href="@{/espaceutilisateur(resid=${reservation?.id})} + '#ModalConfirmationAnnulation'"><i class="fas fa-times fa-2x"></i></a>
-                                    <a th:if="${reservation?.aventure?.dateDebut.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" ><i class="fas fa-comments fa-2x" style="color:white"></i></a>
-                                    <button th:if="${!reservation?.aventure?.dateDebut.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" disabled="true" ><i class="fas fa-comments fa-2x" style="color:white"></i></button>
-                                </div>
-                            </div>
+                        <div th:if="${reservation?.etatReservation?.code == 'NP'}" style="margin-left: auto; margin-right: auto">
+                            <a th:if="${reservation?.aventure?.dateCloture.isAfter(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" th:href="@{/espaceutilisateur(idReservation=${reservation?.id})} + '#ModalConfirmationAnnulation'"><i class="fas fa-times fa-2x"></i></a>
+                            <button th:if="${reservation?.aventure?.dateCloture.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" disabled="true"><i class="fas fa-times fa-2x"></i></button>
+                            <a class="btn btn-secondary btn-sm" title="Effectuer le paiement" ><i class="fas fa-money-check-alt fa-2x" style="color:white"></i></a>
+                            <button class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" disabled="true" ><i class="fas fa-comments fa-2x" style="color:white"></i></button>
+                        </div>
 
-
-                            <div th:if="${reservation?.etatReservation?.etat == T(com.projet9.dataexchange.beans.Etats).ANNULEEAVANTPAIEMENT.toString() || reservation?.etatReservation?.etat == T(com.projet9.dataexchange.beans.Etats).ANNUlEEAPRESPAIEMENT.toString()}" class="row ligne badRow2 ligneReservation">
-                                <p class="col-1 petittextsurnoir recentrageLigne txtaucentre" th:text="'ID n° ' + ${reservation?.id}"></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre"><a target="_blank" class="linkBlanc" th:text="${reservation?.aventure?.nom}" th:href="@{/aventure/} + ${reservation?.aventure?.id}" ></a></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateFin, 'dd/MM/yyyy')}"></p>
-                                <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${reservation?.etatReservation?.etat}"></p>
-                                <div style="margin-left: auto; margin-right: auto">
-                                    <button class="btn btn-secondary btn-sm" title="Annuler cette réservation" disabled="true"><i class="fas fa-times fa-2x"></i></button>
-                                    <button class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" disabled="true" ><i class="fas fa-comments fa-2x" style="color:white"></i></button>
-                                </div>
-                            </div>
+                        <div th:if="${reservation?.etatReservation?.code == 'P'}" style="margin-left: auto; margin-right: auto">
+                            <a th:if="${reservation?.aventure?.dateCloture.isAfter(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" th:href="@{/espaceutilisateur(idReservation=${reservation?.id})} + '#ModalConfirmationAnnulation'"><i class="fas fa-times fa-2x"></i></a>
+                            <button th:if="${reservation?.aventure?.dateCloture.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" disabled="true"><i class="fas fa-times fa-2x"></i></button>
+                            <a th:if="${reservation?.aventure?.dateDebut.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" ><i class="fas fa-comments fa-2x" style="color:white"></i></a>
+                            <button th:if="${!reservation?.aventure?.dateDebut.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" disabled="true" ><i class="fas fa-comments fa-2x" style="color:white"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <h6 th:if="${reservationsUtilisateur== null || reservationsUtilisateur.isEmpty()}" class="infossurnoir"><br>Vous n'avez pas fait de reservation pour le moment.</h6>
+
         </div>
     </form>
 </div>
+
 </body>
 </html>

@@ -7,14 +7,12 @@ import com.projet9.dataexchange.proxies.ProxyUser;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,8 +25,10 @@ public class EspaceUtilisateurController {
     @Autowired
     ProxyReservation proxyReservation;
 
+
     @GetMapping("/espaceutilisateur")
     public String goToEspaceUtilisateur(HttpServletRequest request){
+
         // Vérification que l'utilisateur est connecté
         User user = (User)request.getSession().getAttribute("userGuest");
         if(user==null){
@@ -38,7 +38,6 @@ public class EspaceUtilisateurController {
         // Récupération des réservations
         List<Reservation> lstRes = proxyReservation.getByUserId(user.getId());
 
-
         request.setAttribute("reservationsUtilisateur",lstRes);
         return "espaceutilisateur";
     }
@@ -46,6 +45,7 @@ public class EspaceUtilisateurController {
 
     @PostMapping("/modifInfosGenerales")
     public RedirectView modifInfoPerso(HttpServletRequest request){
+
         // Récupération de l'utilisateur en session
         User actualUser = (User)request.getSession().getAttribute("userGuest");
         // Recupération et affectation des données
@@ -62,16 +62,15 @@ public class EspaceUtilisateurController {
     }
 
 
-
     @PostMapping("/modifInfosSupp")
     public RedirectView modifMdp(HttpServletRequest request){
+
         // Récupération de l'utilisateur en session
         User actualUser = (User)request.getSession().getAttribute("userGuest");
         // Recupération des données
         String motDePasseA = request.getParameter("motDePasseA");
         String motDePasseN = request.getParameter("motDePasseN");
         String motDePasseN2 = request.getParameter("motDePasseN2");
-
 
         // Comparaison avec le mdp en base
         if(motDePasseN.equals(motDePasseN2) && proxyUser.isAutentificationCorrectById(actualUser.getId(), DigestUtils.sha256Hex(motDePasseA))){
@@ -87,5 +86,26 @@ public class EspaceUtilisateurController {
         request.getSession().setAttribute("userGuest",actualUser);
         // Redirection avec affichage de la pop-up de validation
         return new RedirectView("/espaceutilisateur#ModalValidation");
+    }
+
+    @GetMapping("/espaceutilisateur/annulerReservation/{id}")
+    public RedirectView annulerReservation(HttpServletRequest request, @PathVariable("id") int idReservation){
+
+        //Récupération de la réservation
+        Reservation reservation = proxyReservation.getReservationById(idReservation);
+
+        //Si état à "Non payée" on passe à l'état "Annulée avant paiment"
+        //Si état à "Payée" on passe à l'état "Annulée après paiment"
+        if (reservation.getEtatReservation().getCode() == "NP") {
+            reservation.setEtatReservation(proxyReservation.getEtatReservationByCode("AAVP"));
+        } else if (reservation.getEtatReservation().getCode() == "P") {
+            reservation.setEtatReservation(proxyReservation.getEtatReservationByCode("AAPP"));
+        }
+
+        // Mise a jour en base de la réservation
+        proxyReservation.updateReservation(reservation);
+
+        // Redirection avec affichage de la pop-up de validation
+        return new RedirectView("/espaceutilisateur#ModalAnnule");
     }
 }

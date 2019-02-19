@@ -3,11 +3,13 @@ package com.projet9.dataexchange.beans;
 public class EtatReservation {
 
     private int numEtat;
-    private String etat;
+    private String code;
+    private String libelle;
 
-    public EtatReservation(int numEtat, String etat) {
+    public EtatReservation(int numEtat, String code, String libelle) {
         this.numEtat = numEtat;
-        this.etat = etat;
+        this.code = code;
+        this.libelle = libelle;
     }
 
     // Constructeur par defaut
@@ -21,11 +23,19 @@ public class EtatReservation {
         this.numEtat = numEtat;
     }
 
-    public String getEtat() {
-        return etat;
+    public String getCode() {
+        return code;
     }
 
-    public void setEtat(String etat) {
-        this.etat = etat;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
     }
 }
