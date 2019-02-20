@@ -27,7 +27,7 @@ public class EspaceUtilisateurController {
 
 
     @GetMapping("/espaceutilisateur")
-    public String goToEspaceUtilisateur(HttpServletRequest request){
+    public String goToEspaceUtilisateur(HttpServletRequest request, @RequestParam(required = false) Integer idReservation){
 
         // Vérification que l'utilisateur est connecté
         User user = (User)request.getSession().getAttribute("userGuest");
@@ -38,7 +38,9 @@ public class EspaceUtilisateurController {
         // Récupération des réservations
         List<Reservation> lstRes = proxyReservation.getByUserId(user.getId());
 
+        request.setAttribute("idReservation", idReservation);
         request.setAttribute("reservationsUtilisateur",lstRes);
+
         return "espaceutilisateur";
     }
 
@@ -89,16 +91,16 @@ public class EspaceUtilisateurController {
     }
 
     @GetMapping("/espaceutilisateur/annulerReservation/{id}")
-    public RedirectView annulerReservation(HttpServletRequest request, @PathVariable("id") int idReservation){
+    public RedirectView annulerReservation(@PathVariable("id") int idReservation){
 
         //Récupération de la réservation
         Reservation reservation = proxyReservation.getReservationById(idReservation);
 
         //Si état à "Non payée" on passe à l'état "Annulée avant paiment"
         //Si état à "Payée" on passe à l'état "Annulée après paiment"
-        if (reservation.getEtatReservation().getCode() == "NP") {
+        if (reservation.getEtatReservation().getCode().equals("NP")) {
             reservation.setEtatReservation(proxyReservation.getEtatReservationByCode("AAVP"));
-        } else if (reservation.getEtatReservation().getCode() == "P") {
+        } else if (reservation.getEtatReservation().getCode().equals("P")) {
             reservation.setEtatReservation(proxyReservation.getEtatReservationByCode("AAPP"));
         }
 

@@ -96,7 +96,7 @@
         </div>
         <footer>
             <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
-            <a href="/espaceutilisateur/annulerReservation/${param.idReservation}" class="btn btn-primary btn-sm modalMargin"><i class="fas fa-times"></i> Confirmer</a>
+            <a th:href="@{/espaceutilisateur/annulerReservation/} + ${idReservation}" class="btn btn-primary btn-sm modalMargin"><i class="fas fa-times"></i> Confirmer</a>
         </footer>
     </div>
 </div>
