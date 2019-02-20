@@ -4,7 +4,7 @@ package com.projet9.microserviceusers.entities;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity(name="user")
+@Entity(name="User")
 @Table(name="user")
 public class UserEntity {
 

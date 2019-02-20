@@ -4,7 +4,7 @@ package com.projet9.microserviceaventures.entities;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity(name="aventure")
+@Entity(name="Aventure")
 @Table(name="aventure")
 public class AventureEntity {
 

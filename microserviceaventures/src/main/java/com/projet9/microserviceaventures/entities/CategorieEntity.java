@@ -3,7 +3,7 @@ package com.projet9.microserviceaventures.entities;
 
 import javax.persistence.*;
 
-@Entity(name="categorie")
+@Entity(name="Categorie")
 @Table(name="categorie")
 public class CategorieEntity {
 
