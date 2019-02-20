@@ -98,10 +98,10 @@ public class EspaceUtilisateurController {
 
         //Si état à "Non payée" on passe à l'état "Annulée avant paiment"
         //Si état à "Payée" on passe à l'état "Annulée après paiment"
-        if (reservation.getEtatReservation().getCode().equals("NP")) {
-            reservation.setEtatReservation(proxyReservation.getEtatReservationByCode("AAVP"));
-        } else if (reservation.getEtatReservation().getCode().equals("P")) {
-            reservation.setEtatReservation(proxyReservation.getEtatReservationByCode("AAPP"));
+        if (reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode())) {
+            reservation.setEtatReservation(proxyReservation.getEtatReservationByCode(Etats.ANNULEEAVANTPAIEMENT.getCode()));
+        } else if (reservation.getEtatReservation().getCode().equals(Etats.PAYEE.getCode())) {
+            reservation.setEtatReservation(proxyReservation.getEtatReservationByCode(Etats.ANNUlEEAPRESPAIEMENT.getCode()));
         }
 
         // Mise a jour en base de la réservation

@@ -1,19 +1,19 @@
 package com.projet9.dataexchange.beans;
 
 public enum Etats {
-    NONPAYEE("Non-payée"),
-    ANNULEEAVANTPAIEMENT("Annulée avant paiement"),
-    PAYEE("Payée"),
-    ANNUlEEAPRESPAIEMENT("Annulée après paiement");
+    NONPAYEE("NP"),
+    ANNULEEAVANTPAIEMENT("AAVP"),
+    PAYEE("P"),
+    ANNUlEEAPRESPAIEMENT("AAPP");
 
-    private String name = "";
+    private String code;
 
-    Etats(String name){
-        this.name = name;
+    Etats(String code){
+        this.code = code;
     }
 
-    @Override
-    public String toString() {
-        return this.name;
+    public String getCode() {
+        return this.code;
     }
+
 }
