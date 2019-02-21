@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -38,8 +39,18 @@ public class EspaceUtilisateurController {
         // Récupération des réservations
         List<Reservation> lstRes = proxyReservation.getByUserId(user.getId());
 
-        request.setAttribute("idReservation", idReservation);
         request.setAttribute("reservationsUtilisateur",lstRes);
+
+        // Dans le cas d'une action sur une réservation (annulation, commentaire, paiement)
+        if (idReservation != null) {
+            request.setAttribute("idReservation", idReservation);
+            Reservation reservation = proxyReservation.getReservationById(Integer.parseInt(request.getParameter("idReservation")));
+
+            // Pour l'ajout d'un commentaire déjà existant
+            if (reservation.getCommentaireReservation() != null) {
+                request.setAttribute("commentaire", reservation.getCommentaireReservation());
+            }
+        }
 
         return "espaceutilisateur";
     }
@@ -108,6 +119,23 @@ public class EspaceUtilisateurController {
         proxyReservation.updateReservation(reservation);
 
         // Redirection avec affichage de la pop-up de validation
-        return new RedirectView("/espaceutilisateur#ModalAnnule");
+        return new RedirectView("/espaceutilisateur#ModalConfirmationAnnulation");
+    }
+
+    @PostMapping("/espaceutilisateur/ajouterCommentaireReservation")
+    public RedirectView ajouterCommentaire(@RequestParam String idReservation, @RequestParam String commentaire){
+
+        //Récupération de la réservation
+        Reservation reservation = proxyReservation.getReservationById(Integer.parseInt(idReservation));
+
+        // Affectation du commentaire et du timestamps à la réservation
+        reservation.setCommentaireReservation(commentaire);
+        reservation.setTimestampCommentaireReservation(LocalDateTime.now());
+
+        // Mise a jour en base
+        proxyReservation.updateReservation(reservation);
+
+        // Redirection avec affichage de la pop-up de confirmation
+        return new RedirectView("/espaceutilisateur#ModalConfirmationCommentaire");
     }
 }

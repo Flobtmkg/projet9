@@ -50,22 +50,6 @@
     </div>
 </div>
 <!---->
-<div id="ModalAnnule" class="cModal">
-    <div>
-        <header>
-            <h2 class="modalHeader">Confirmation!</h2>
-        </header>
-        <div class="contenuErreur">
-            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
-                <i style="color: green" class="fas fa-check-circle fa-5x"></i>
-            </div>
-            <p class="texterreur">La reservation a été annulée.</p>
-        </div>
-        <footer>
-            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
-        </footer>
-    </div>
-</div>
 <div id="Modalerreur" class="cModal">
     <div>
         <header>
@@ -82,25 +66,6 @@
         </footer>
     </div>
 </div>
-<!---->
-<div id="ModalConfirmationAnnulation" class="cModal">
-    <div>
-        <header>
-            <h2 class="modalHeader">Confirmation requise</h2>
-        </header>
-        <div class="contenuErreur">
-            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
-                <i style="color: darkblue" class="fas fa-question-circle fa-5x"></i>
-            </div>
-            <p class="texterreur">Confirmez vous l'annulation de la réservation ?</p>
-        </div>
-        <footer>
-            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
-            <a th:href="@{/espaceutilisateur/annulerReservation/} + ${idReservation}" class="btn btn-primary btn-sm modalMargin"><i class="fas fa-times"></i> Confirmer</a>
-        </footer>
-    </div>
-</div>
-<!---->
 <!---->
 <div id="Modalmodif" class="cModal">
     <div>
@@ -165,6 +130,75 @@
     </div>
 </div>
 <!--->
+<div id="ModalConfirmationAnnulation" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Confirmation!</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: green" class="fas fa-check-circle fa-5x"></i>
+            </div>
+            <p class="texterreur">La reservation a été annulée.</p>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+        </footer>
+    </div>
+</div>
+<div id="ModalValidationAnnulation" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Confirmation requise</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: darkblue" class="fas fa-question-circle fa-5x"></i>
+            </div>
+            <p class="texterreur">Confirmez vous l'annulation de la réservation ?</p>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+            <a th:href="@{/espaceutilisateur/annulerReservation/} + ${idReservation}" class="btn btn-primary btn-sm modalMargin">Confirmer</a>
+        </footer>
+    </div>
+</div>
+<!--->
+<div id="ModalConfirmationCommentaire" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Confirmation!</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: green" class="fas fa-check-circle fa-5x"></i>
+            </div>
+            <p class="texterreur">Le commentaire a été ajouté.</p>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+        </footer>
+    </div>
+</div>
+<div id="ModalCommentaire" class="cModal">v
+    <div>
+        <header>
+            <h2 class="infossurblanc2">Ajouter un commentaire</h2>
+        </header>
+        <div>
+            <Form th:action="@{/espaceutilisateur/ajouterCommentaireReservation}" method="post">
+                <p style="color: darkred" th:if="${commentaire}">Attention, vous avez déjà ajouté un commentaire pour cette réservation. Si vous continuez il sera écrasé.</p>
+                <label>Votre commentaire :</label>
+                <textarea class="form-control" placeholder="C'était génial !!" name="commentaire" required>[[${commentaire}]]</textarea>
+                <input type="hidden" name="idReservation" th:value="${idReservation}"/>
+                <footer>
+                    <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Annuler</a>
+                    <input type="submit" class="btn btn-success btn-sm btnvalider" value="Valider">
+                </footer>
+            </Form>
+        </div>
+    </div>
+</div>
 <!--->
 <!--->
 <!--->
@@ -195,35 +229,36 @@
             <div th:if="${reservationsUtilisateur!=null && !reservationsUtilisateur.isEmpty()}">
                 <div class="col-12 ligneheader">
                     <div class="row contenuheader">
-                        <label class="col-1 infossurnoirheader txtaucentre">Reservation</label>
-                        <label class="col-2 infossurnoirheader txtaucentre">Aventure</label>
-                        <label class="col-2 infossurnoirheader txtaucentre">Date de début</label>
-                        <label class="col-2 infossurnoirheader txtaucentre">Date de fin</label>
-                        <label class="col-2 infossurnoirheader txtaucentre">Etat de la reservation</label>
-                        <label class="col-3 infossurnoirheader txtaucentre">Actions</label>
+                        <label class="colperso infossurnoirheader txtaucentre">Reservation</label>
+                        <label class="colperso infossurnoirheader txtaucentre">Aventure</label>
+                        <label class="colperso infossurnoirheader txtaucentre">Date de début</label>
+                        <label class="colperso infossurnoirheader txtaucentre">Date de fin</label>
+                        <label class="colperso infossurnoirheader txtaucentre">Date de cloture</label>
+                        <label class="colperso infossurnoirheader txtaucentre">Etat de la reservation</label>
+                        <label class="colperso infossurnoirheader txtaucentre">Actions</label>
                     </div>
                 </div>
 
                 <div th:each="reservation : ${reservationsUtilisateur}" class="col-12 mCustomScrollbar table-scroll" data-mcs-theme="light-thin">
 
                     <div th:class="${reservation?.etatReservation?.code == 'AAVP' || reservation?.etatReservation?.code == 'AAPP'} ? 'row ligne badRow2 ligneReservation' : 'row ligne ligneReservation'">
-                        <p class="col-1 petittextsurnoir recentrageLigne txtaucentre" th:text="'ID n° ' + ${reservation?.id}"></p>
-                        <p class="col-2 petittextsurnoir recentrageLigne txtaucentre"><a target="_blank" class="linkBlanc" th:text="${reservation?.aventure?.nom}" th:href="@{/aventure/} + ${reservation?.aventure?.id}" ></a></p>
-                        <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
-                        <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateFin, 'dd/MM/yyyy')}"></p>
-                        <p class="col-2 petittextsurnoir recentrageLigne txtaucentre" th:text="${reservation?.etatReservation?.libelle}"></p>
+                        <p class="colperso petittextsurnoir recentrageLigne txtaucentre" th:text="'ID n° ' + ${reservation?.id}"></p>
+                        <p class="colperso petittextsurnoir recentrageLigne txtaucentre"><a target="_blank" class="linkBlanc" th:text="${reservation?.aventure?.nom}" th:href="@{/aventure/} + ${reservation?.aventure?.id}" ></a></p>
+                        <p class="colperso petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateDebut, 'dd/MM/yyyy')}"></p>
+                        <p class="colperso petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateFin, 'dd/MM/yyyy')}"></p>
+                        <p class="colperso petittextsurnoir recentrageLigne txtaucentre" th:text="${#temporals.format(reservation?.aventure?.dateCloture, 'dd/MM/yyyy')}"></p>
+                        <p class="colperso petittextsurnoir recentrageLigne txtaucentre" th:text="${reservation?.etatReservation?.libelle}"></p>
 
                         <div th:if="${reservation?.etatReservation?.code == 'NP'}" style="margin-left: auto; margin-right: auto">
-                            <a th:if="${reservation?.aventure?.dateCloture.isAfter(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" th:href="@{/espaceutilisateur(idReservation=${reservation?.id})} + '#ModalConfirmationAnnulation'"><i class="fas fa-times fa-2x"></i></a>
+                            <a th:if="${reservation?.aventure?.dateCloture.isAfter(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" th:href="@{/espaceutilisateur(idReservation=${reservation?.id})} + '#ModalValidationAnnulation'"><i class="fas fa-times fa-2x"></i></a>
                             <button th:if="${reservation?.aventure?.dateCloture.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" disabled="true"><i class="fas fa-times fa-2x"></i></button>
                             <a class="btn btn-secondary btn-sm" title="Effectuer le paiement" ><i class="fas fa-money-check-alt fa-2x" style="color:white"></i></a>
-                            <button class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" disabled="true" ><i class="fas fa-comments fa-2x" style="color:white"></i></button>
                         </div>
 
                         <div th:if="${reservation?.etatReservation?.code == 'P'}" style="margin-left: auto; margin-right: auto">
-                            <a th:if="${reservation?.aventure?.dateCloture.isAfter(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" th:href="@{/espaceutilisateur(idReservation=${reservation?.id})} + '#ModalConfirmationAnnulation'"><i class="fas fa-times fa-2x"></i></a>
+                            <a th:if="${reservation?.aventure?.dateCloture.isAfter(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" th:href="@{/espaceutilisateur(idReservation=${reservation?.id})} + '#ModalValidationAnnulation'"><i class="fas fa-times fa-2x"></i></a>
                             <button th:if="${reservation?.aventure?.dateCloture.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" disabled="true"><i class="fas fa-times fa-2x"></i></button>
-                            <a th:if="${reservation?.aventure?.dateDebut.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" ><i class="fas fa-comments fa-2x" style="color:white"></i></a>
+                            <a th:if="${reservation?.aventure?.dateDebut.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure"  th:href="@{/espaceutilisateur(idReservation=${reservation?.id})} + '#ModalCommentaire'"><i class="fas fa-comments fa-2x" style="color:white"></i></a>
                             <button th:if="${!reservation?.aventure?.dateDebut.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Laisser un commentaire sur cette aventure" disabled="true" ><i class="fas fa-comments fa-2x" style="color:white"></i></button>
                         </div>
                     </div>
