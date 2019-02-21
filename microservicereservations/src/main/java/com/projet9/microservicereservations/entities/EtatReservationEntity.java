@@ -3,7 +3,7 @@ package com.projet9.microservicereservations.entities;
 
 import javax.persistence.*;
 
-@Entity(name="etat_reservation")
+@Entity(name="EtatReservation")
 @Table(name="etat_reservation")
 public class EtatReservationEntity {
 

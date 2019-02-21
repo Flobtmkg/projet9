@@ -10,9 +10,15 @@ import com.projet9.microserviceaventures.mapper.CategorieMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collector;
@@ -65,6 +71,34 @@ public class AventureController {
     public List<Aventure> getByCategorie(@PathVariable("id") int id) {
         return aventureDao.findAventureEntitiesByCategorieEntity(categorieDao.findById(id).get()).stream().map(AventureMapper::toDto).collect(Collectors.toList());
     }
+
+    @PostMapping(path = "/api/Aventures/Recherche/", produces = "application/json")
+    public List<Aventure> getByRechercheMotsCles(@RequestBody List<String> motsCles) {
+        return rechercheByMotsCles(motsCles).stream().map(AventureMapper::toDto).collect(Collectors.toList());
+    }
+
+
+
+    // Méthode private de requète critéria en spring data pour rechercher par mots clés
+    private List<AventureEntity> rechercheByMotsCles(List<String> motsCles){
+        return aventureDao.findAll(new Specification<AventureEntity>() {
+            @Override
+            public Predicate toPredicate(Root<AventureEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+                if(motsCles!=null) {
+                    for (String mot:motsCles) {
+                        predicates.add(criteriaBuilder.or(
+                                criteriaBuilder.like(root.get("nom"), "%" + mot + "%"),
+                                criteriaBuilder.like(root.get("description"), "%" + mot + "%")
+                        ));
+                    }
+                }
+                return criteriaBuilder.or(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        });
+    }
+
+
 
     @DeleteMapping(path = "/api/Aventures/{id}", produces = "application/json")
     public void delete(@PathVariable("id") int id){

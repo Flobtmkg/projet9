@@ -7,7 +7,7 @@ import javax.ws.rs.DefaultValue;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity(name="reservation")
+@Entity(name="Reservation")
 @Table(name="reservation")
 public class ReservationEntity {
 

@@ -33,6 +33,9 @@ public interface ProxyAventure {
     @DeleteMapping("microserviceaventures/api/Aventures/{id}")
     void deleteAventure(@PathVariable("id") int id);
 
+    @PostMapping(path = "microserviceaventures/api/Aventures/Recherche/")
+    List<Aventure> getByRechercheMotsCles(@RequestBody List<String> motsCles);
+
 
     // Accès aux categories
 
