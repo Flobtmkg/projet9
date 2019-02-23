@@ -159,7 +159,8 @@
         </div>
         <footer>
             <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
-            <a th:href="@{/espaceutilisateur/annulerReservation/} + ${idReservation}" class="btn btn-primary btn-sm modalMargin">Confirmer</a>
+            <!--Ne pas virer ce commentaire: Bug de parsing des attributs thymeleaf-->
+            <a th:href="@{/espaceutilisateur/annulerReservation/} + ${idReservation}" class="btn btn-success btn-sm btnvalider" >Confirmer</a>
         </footer>
     </div>
 </div>
@@ -187,7 +188,7 @@
         </header>
         <div>
             <Form th:action="@{/espaceutilisateur/ajouterCommentaireReservation}" method="post">
-                <p style="color: darkred" th:if="${commentaire}">Attention, vous avez déjà ajouté un commentaire pour cette réservation. Si vous continuez il sera écrasé.</p>
+                <p style="color: darkred" th:if="${commentaire}"><br>Attention, vous avez déjà ajouté un commentaire pour cette réservation. Si vous continuez il sera écrasé.</p>
                 <label>Votre commentaire :</label>
                 <textarea class="form-control" placeholder="C'était génial !!" name="commentaire" required>[[${commentaire}]]</textarea>
                 <input type="hidden" name="idReservation" th:value="${idReservation}"/>
