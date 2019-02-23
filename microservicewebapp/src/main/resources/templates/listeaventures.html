@@ -35,6 +35,22 @@
 
 
     <div class="container-fluid">
+        <!--  -->
+        <!--  Formulaire de recherche-->
+        <!--  -->
+        <div th:if="${motCles != null}" id="blockdescription3" class="card offset-sm-0 col-12 form-group">
+            <div class="offset-sm-0 col-12">
+                <div class="form-group col-sm-10 offset-sm-1 col-12 offset-0 aligneAGauche">
+                    <legend class="label1">Résultats de recherche:</legend>
+                    <div class=" col-12 aligneAGauche">
+                        <label class="infossurnoir"><b>Mots clés : </b><i>[[${motCles}]]</i></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <!--  Formulaire de recherche-->
+        <!---->
 
         <!--Boucle de résultats-->
         <div th:each="aventure : ${listAventure}">

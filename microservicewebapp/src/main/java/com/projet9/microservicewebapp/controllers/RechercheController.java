@@ -20,6 +20,7 @@ public class RechercheController {
     public String doRecherche(HttpServletRequest request){
         List<String> motsCles = Arrays.asList(request.getParameter("motCles").split(" "));
         List<Aventure> aventureList = proxyAventure.getByRechercheMotsCles(motsCles);
+        request.setAttribute("motCles",request.getParameter("motCles")) ;
         request.setAttribute("listAventure",aventureList) ;
         return "listeaventures";
     }
