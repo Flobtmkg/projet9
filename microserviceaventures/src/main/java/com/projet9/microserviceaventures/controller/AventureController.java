@@ -49,11 +49,24 @@ public class AventureController {
     @PutMapping(path = "/api/Aventures", produces = "application/json")
     public Aventure update(@RequestBody Aventure aventure){
         if(aventureDao.existsById(aventure.getId())){
+            // L'image peut être nulle en entrée dans ce cas on ne modifie pas la valeur en base
+            if(aventure.getImage()==null){
+                // L'image déja existante doit être sétée sur le bean
+                aventure.setImage(aventureDao.getOne(aventure.getId()).getImage());
+            }
             AventureEntity savedAventureEntity = aventureDao.save(AventureMapper.toEntity(aventure));
             return AventureMapper.toDto(savedAventureEntity);
         }
         throw new ObjectNotFoundException(aventure.getId(),AventureEntity.class);
     }
+
+
+    @GetMapping(path = "/api/Aventures/Image{id}", produces = "application/json")
+    public byte[] getImageById(@PathVariable("id") int id)  {
+        Optional<AventureEntity> aventureEntity = aventureDao.findById(id);
+        return aventureEntity.orElseThrow(() -> new ObjectNotFoundException(id, AventureEntity.class)).getImage();
+    }
+
 
     @GetMapping(path = "/api/Aventures", produces = "application/json")
     public List<Aventure> getAll(){
@@ -76,7 +89,6 @@ public class AventureController {
     public List<Aventure> getByRechercheMotsCles(@RequestBody List<String> motsCles) {
         return rechercheByMotsCles(motsCles).stream().map(AventureMapper::toDto).collect(Collectors.toList());
     }
-
 
 
     // Méthode private de requète critéria en spring data pour rechercher par mots clés

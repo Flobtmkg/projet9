@@ -93,6 +93,24 @@
         </div>
     </div>
 </div>
+<div id="ModalUploadImage" class="cModal">
+    <div>
+        <header>
+            <h2 class="infossurblanc2">Choisisez votre photo de profil</h2>
+        </header>
+        <div>
+            <Form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+                <div class="input-group">
+                    <input accept="image/*" class="boutonParcourir" type="file" name="file" value="Parcourir..." required>
+                </div>
+                <footer>
+                    <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Annuler</a>
+                    <input type="submit" class="btn btn-success btn-sm btnvalider" value="Envoyer">
+                </footer>
+            </Form>
+        </div>
+    </div>
+</div>
 <div id="Modalmodifmdp" class="cModal">
     <div>
         <header>
@@ -206,9 +224,14 @@
 <div class="container-fluid">
     <div class="blockduHaut">
         <!-- imgPath -->
-        <div class="offset-sm-1 cadrephoto2" style="background: url('/img/user.jpg') center no-repeat; background-size: 100% auto; background-color:rgba(0, 0, 0, 0.6)">
-            <img class="photo cadrephoto" style="background: center no-repeat; background-size: 100% auto; background-color:rgba(0, 0, 0, 0)">
-        </div>
+        <a th:href="@{/espaceutilisateur} + '#ModalUploadImage'">
+            <div class="offset-sm-1 cadrephoto2">
+                <img th:src="@{/images/user/} + ${session?.userGuest?.id}" class="photo cadrephoto imageOverlay" style="background: center no-repeat; background-size: 100% auto;background-color:rgba(0, 0, 0, 0.2)">
+                <div class="middleOverlay">
+                    <div class="textOverlay">Changer l'image</div>
+                </div>
+            </div>
+        </a>
         <!-- imgPath -->
         <div id="blockTransparent"></div>
         <div id="presentation">

@@ -36,6 +36,8 @@ public interface ProxyAventure {
     @PostMapping(path = "microserviceaventures/api/Aventures/Recherche/")
     List<Aventure> getByRechercheMotsCles(@RequestBody List<String> motsCles);
 
+    @GetMapping(path = "microserviceaventures/api/Aventures/Image{id}")
+    byte[] getImageById(@PathVariable("id") int id);
 
     // Accès aux categories
 

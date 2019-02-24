@@ -15,14 +15,13 @@ public class User {
     private byte[] image;
 
 
-    public User(int id, String nom, String prenom, LocalDate dateNaissance, String email, String password, byte[] image) {
+    public User(int id, String nom, String prenom, LocalDate dateNaissance, String email, String password) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
         this.email = email;
         this.password = password;
-        this.image = image;
     }
 
     // Constructeur par defaut

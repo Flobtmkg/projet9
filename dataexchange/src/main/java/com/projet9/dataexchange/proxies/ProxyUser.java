@@ -33,4 +33,7 @@ public interface ProxyUser {
 
     @GetMapping(value = "microserviceusers/api/Users/autentification/{email}/{mdp}")
     User autentification(@PathVariable("email") String email, @PathVariable("mdp") String hashMdp);
+
+    @GetMapping(path = "microserviceusers/api/Users/Image{id}")
+    byte[] getImageById(@PathVariable("id") int id);
 }

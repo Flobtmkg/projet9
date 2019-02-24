@@ -34,6 +34,11 @@ public class UserController {
     @PutMapping(path = "/api/Users", produces = "application/json")
     public User update(@RequestBody User user) {
         if (userDao.existsById(user.getId())) {
+            // L'image peut être nulle en entrée dans ce cas on ne modifie pas la valeur en base
+            if(user.getImage()==null){
+                // L'image déja existante doit être sétée sur le bean
+                user.setImage(userDao.getOne(user.getId()).getImage());
+            }
             userDao.save(UserMapper.toEntity(user));
             return user;
         }
@@ -49,6 +54,12 @@ public class UserController {
     public User getById(@PathVariable("id") int id)  {
         Optional<UserEntity> userEntity = userDao.findById(id);
         return UserMapper.toDto(userEntity.orElseThrow(() -> new ObjectNotFoundException(id, UserEntity.class)));
+    }
+
+    @GetMapping(path = "/api/Users/Image{id}", produces = "application/json")
+    public byte[] getImageById(@PathVariable("id") int id)  {
+        Optional<UserEntity> userEntity = userDao.findById(id);
+        return userEntity.orElseThrow(() -> new ObjectNotFoundException(id, UserEntity.class)).getImage();
     }
 
     @GetMapping(path = "/api/Users/autentificationById/{id}/{mdp}", produces = "application/json")

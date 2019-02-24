@@ -19,7 +19,6 @@ public class AventureMapper {
                 aventureEntity.getDescription(),
                 aventureEntity.getLimitReservation(),
                 aventureEntity.getDateCloture(),
-                aventureEntity.getImage(),
                 aventureEntity.getCategorieEntity().getId(),
                 CategorieMapper.toDto(aventureEntity.getCategorieEntity())
         );

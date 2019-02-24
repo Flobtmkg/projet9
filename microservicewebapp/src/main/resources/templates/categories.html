@@ -44,7 +44,7 @@
                     <legend class="label1" th:text="${categorie?.nom}"><a id="liensDuHaut" ></a></legend>
                     <!-- imgPath -->
                         <div class="card cadrephoto">
-                            <a th:href="@{/categories/} + ${categorie?.id}"><img class="cadrephoto" src="/img/livre8.png"></a>
+                            <a th:href="@{/categories/} + ${categorie?.id}"><img class="cadrephoto" th:src="@{/images/aventure/0}" ></a>
                         </div>
                     <!-- imgPath -->
                     <div id="infosDroiteImage" class="col-8">

@@ -6,7 +6,7 @@ import com.projet9.microserviceusers.entities.UserEntity;
 public class UserMapper {
 
     public static User toDto(UserEntity userEntity) {
-        return new User(userEntity.getId(), userEntity.getNom(), userEntity.getPrenom(), userEntity.getDateNaissance(), userEntity.getEmail(), userEntity.getPassword(), userEntity.getImage());
+        return new User(userEntity.getId(), userEntity.getNom(), userEntity.getPrenom(), userEntity.getDateNaissance(), userEntity.getEmail(), userEntity.getPassword());
     }
 
     public static UserEntity toEntity(User user) {
