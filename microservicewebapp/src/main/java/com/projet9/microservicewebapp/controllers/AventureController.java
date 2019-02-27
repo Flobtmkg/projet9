@@ -46,7 +46,10 @@ public class AventureController {
 
         // Calcul des places restantes
         long nbReservation = reservations.stream()
-                .filter(reservation -> reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode()) || reservation.getEtatReservation().getCode().equals(Etats.PAYEE.getCode()))
+                .filter(reservation ->!reservation.isReservationPrecedente() &&
+                        (reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode()) ||
+                        reservation.getEtatReservation().getCode().equals(Etats.PAYEE.getCode()))
+                    )
                 .count();
         long placesRestantes = aventure.getLimiteReservation() - nbReservation;
 
