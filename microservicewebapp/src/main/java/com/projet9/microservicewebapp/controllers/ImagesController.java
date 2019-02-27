@@ -52,7 +52,7 @@ public class ImagesController {
 
 
     @GetMapping("/images/aventure/{id}")
-    public void getImageByAventureId(@PathVariable("id") int idAventure, HttpServletResponse response, HttpServletRequest request){
+    public void getImageByAventureId(@PathVariable("id") int idAventure, HttpServletResponse response){
         // Si on ne veut afficher que l'image par défaut on peut l'appeller avec /images/aventure/0
         if(idAventure!=0){
             imageProcedure(response, proxyAventure.getImageById(idAventure),entiteeAventure);
@@ -62,7 +62,7 @@ public class ImagesController {
     }
 
     @GetMapping("/images/user/{id}")
-    public void getImageByUserId(@PathVariable("id") int idUser, HttpServletResponse response, HttpServletRequest request){
+    public void getImageByUserId(@PathVariable("id") int idUser, HttpServletResponse response){
         // On get l'image en byte[] depuis l'entité user
         imageProcedure(response, proxyUser.getImageById(idUser),entiteeUser);
     }
@@ -83,8 +83,8 @@ public class ImagesController {
 
     private void addImageToResponse(HttpServletResponse response, byte[] image) throws Exception{
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-            response.getOutputStream().write(image);
-            response.getOutputStream().close();
+        response.getOutputStream().write(image);
+        response.getOutputStream().close();
     }
 
 

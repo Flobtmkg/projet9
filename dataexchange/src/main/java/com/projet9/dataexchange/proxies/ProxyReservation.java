@@ -27,14 +27,15 @@ public interface ProxyReservation {
     @GetMapping("microservicereservations/api/Reservations/Aventures/{id}")
     List<Reservation> getReservationsByAventure(@PathVariable("id") int id);
 
+    @GetMapping("microservicereservations/api/Reservations/User/{idUser}")
+    List<Reservation> getReservationByUserId(@PathVariable("idUser") int id);
+
     @GetMapping("microservicereservations/api/Reservations")
     List<Reservation> getAllReservation();
 
     @DeleteMapping("microservicereservations/api/Reservations/{id}")
     void deleteReservation(@PathVariable("id") int id);
 
-    @GetMapping("microservicereservations/api/Reservations/User/{idUser}")
-    List<Reservation> getByUserId(@PathVariable("idUser") int id);
 
 
     // Accès aux etatReservations

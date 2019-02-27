@@ -37,7 +37,16 @@ public class EspaceUtilisateurController {
         }
 
         // Récupération des réservations
-        List<Reservation> lstRes = proxyReservation.getByUserId(user.getId());
+        List<Reservation> lstRes = proxyReservation.getReservationByUserId(user.getId());
+
+        // Annulation automatique des réservation de plus de 24h non payées
+        lstRes.stream()
+                .filter(reservation -> reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode())
+                        && reservation.getDateReservation().plusDays(1).isBefore(LocalDate.now()))
+                .forEach(reservation -> {
+                    reservation.setEtatReservation(proxyReservation.getEtatReservationByCode(Etats.ANNULEEAVANTPAIEMENT.getCode()));
+                    proxyReservation.updateReservation(reservation);
+                });
 
         request.setAttribute("reservationsUtilisateur",lstRes);
 
