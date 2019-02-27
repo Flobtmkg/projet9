@@ -33,7 +33,25 @@
 <div id="divdefond"></div>
 
 <!-- Espace de definition des fenêtres modales -->
-<div id="ModalValidation" class="cModal">
+<div id="ModalValidationReservation" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Confirmation requise</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: darkblue" class="fas fa-question-circle fa-5x"></i>
+            </div>
+            <p class="texterreur">Voulez-vous effectuer la réservation pour cette aventure ? Une fois la réservation effectuée vous avez 24h pour procéder au peiement</p>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+            <!--Ne pas virer ce commentaire: Bug de parsing des attributs thymeleaf-->
+            <a th:href="@{/aventure/{id}/reserver(id=${aventure.id})}" class="btn btn-success btn-sm btnvalider" > Confirmer</a>
+        </footer>
+    </div>
+</div>
+<div id="ModalConfirmationAnnulation" class="cModal">
     <div>
         <header>
             <h2 class="modalHeader">Confirmation!</h2>
@@ -43,13 +61,13 @@
                 <i style="color: green" class="fas fa-check-circle fa-5x"></i>
             </div>
             <p class="texterreur">Votre réservation a bien été prise en compte.</p>
+            <p class="texterreur">Vous pouvez effectuer le paiement dès à présent ou dans les 24h.</p>
         </div>
         <footer>
             <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
         </footer>
     </div>
 </div>
-
 <div id="ModalPaiement" class="cModal">
     <div>
         <header>
@@ -92,36 +110,31 @@
     </div>
 </div>
 
-
-
-
-
-
 <!-- Espace de definition des blocks -->
-<div class="container-fluid">
-    <div id="cadrephoto" class="offset-sm-1 col-9 col-sm-5 col-lg-3 col-xl-2" th:style="'background:url(' + @{/images/aventure/} + ${aventure?.id} + ') center no-repeat; background-size: 100% auto;'" ></div>
-    <div id="blockTransparent"></div>
-    <div id="presentation" class="offset-0 offset-sm-1 offset-lg-0 col-lg-6 col-sm-10 col-12">
-        <h2 class="infossurnoir" th:text="${aventure?.nom}"></h2>
-        <h2 class="infossurnoir" th:text="'Catégorie : ' + ${aventure?.categorie?.nom}"></h2>
-        <br>
-        <h5 class="infossurnoir" th:text="'Prix par personne : ' + ${#numbers.formatDecimal(aventure?.prix,1,'WHITESPACE',2,'COMMA')} + ' €'"></h5>
-        <br>
-        <h5 class="infossurnoir" th:text="'Commencement de l\'aventure : '+ ${#temporals.format(aventure?.dateDebut, 'dd/MM/yyyy')}"></h5>
-        <h5 class="infossurnoir" th:text="'Fin de l\'aventure : ' + ${#temporals.format(aventure?.dateFin, 'dd/MM/yyyy')}"></h5>
-        <h5 class="infossurnoir" th:text="'Date limite d\'inscription : ' + ${#temporals.format(aventure?.dateCloture, 'dd/MM/yyyy')}"></h5>
-        <br>
-        <h6 class="infossurnoir" th:text="'Nombre de participants maximum: ' + ${aventure?.limiteReservation}"></h6>
-        <h6 class="infossurnoir" th:text="'Places restantes : ' + ${placesRestantes}"></h6>
+        <div id="cadrephoto" class="offset-sm-1 col-9 col-sm-5 col-lg-3 col-xl-2" th:style="'background:url(' + @{/images/aventure/} + ${aventure?.id} + ') center no-repeat; background-size: 100% auto;'" ></div>
+        <div id="blockTransparent"></div>
+        <div id="presentation" class="offset-0 offset-sm-1 offset-lg-0 col-lg-6 col-sm-10 col-12">
+            <h2 class="infossurnoir" th:text="${aventure?.nom}"></h2>
+            <h2 class="infossurnoir" th:text="'Catégorie : ' + ${aventure?.categorie?.nom}"></h2>
+            <br>
+            <h5 class="infossurnoir" th:text="'Prix par personne : ' + ${#numbers.formatDecimal(aventure?.prix,1,'WHITESPACE',2,'COMMA')} + ' € TTC'"></h5>
+            <br>
+            <h5 class="infossurnoir" th:text="'Début de l\'aventure : '+ ${#temporals.format(aventure?.dateDebut, 'dd/MM/yyyy')}"></h5>
+            <h5 class="infossurnoir" th:text="'Fin de l\'aventure : ' + ${#temporals.format(aventure?.dateFin, 'dd/MM/yyyy')}"></h5>
+            <h5 class="infossurnoir" th:text="'Date limite d\'inscription : ' + ${#temporals.format(aventure?.dateCloture, 'dd/MM/yyyy')}"></h5>
+            <br>
+            <h6 class="infossurnoir" th:text="'Nombre de participants maximum: ' + ${aventure?.limiteReservation}"></h6>
+            <h6 class="infossurnoir" th:text="'Places restantes : ' + ${placesRestantes}"></h6>
+        </div>
     </div>
     <!--  -->
-    <!-- Penser a check si une réservation de l'aventure n'existe pas déjà -->
-    <div th:if="${session?.userGuest?.id>0 && reservationPossible}" class="offset-sm-1 col-sm-10 col-lg-3 col-xl-2 col-12" style="padding:0; background-color: unset; border: unset">
-        <a th:href="'#ModalPaiement'" class="btn btnCustom btnGris col-12"><i class="far fa-bookmark"></i> Reserver cette aventure</a>
+    <!-- Check si une réservation de l'aventure n'existe pas déjà pour l'utilisateur connecté-->
+    <div th:if="${session?.userGuest?.id>0 && reservationPossible && placesRestantes > 0}" class="offset-sm-1 col-sm-10 col-lg-3 col-xl-2 col-12" style="padding:0; background-color: unset; border: unset">
+        <a class="btn btnCustom btnGris col-12" th:href="@{/aventure/{id}(id=${aventure.id})} + '#ModalValidationReservation'"><i class="far fa-bookmark"></i> Reserver cette aventure</a>
     </div>
-    <div th:if="${session?.userGuest?.id>0 && !reservationPossible}" class="offset-sm-1 col-sm-10 col-lg-3 col-xl-2 col-12" style="padding:0; background-color: unset; border: unset">
-        <button  class="btn btnCustom btnGris col-12" disabled><i class="far fa-bookmark"></i> Vous avez une réservation en cours pour cette aventure</button>
-    </div>
+    <div th:if="${session?.userGuest?.id>0 && !reservationPossible}" class="offset-sm-1 col-sm-10 col-lg-5 col-xl-4 col-12" style="padding:0; background-color: unset; border: unset">
+        <a class="btn btnCustom btnGris col-12" th:href="@{/espaceutilisateur}">Vous avez une réservation en cours pour cette aventure</a>
+</div>
 
 
     <!-- Penser a gérer les cas de réservation impossible -->
