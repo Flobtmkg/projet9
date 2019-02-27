@@ -13,7 +13,7 @@ public class EtatReservation {
     }
 
     // Constructeur par defaut
-    EtatReservation(){}
+    public EtatReservation(){}
 
     public int getNumEtat() {
         return numEtat;

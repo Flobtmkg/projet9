@@ -1,10 +1,8 @@
 package com.projet9.microservicewebapp.controllers;
 
-import com.projet9.dataexchange.beans.Aventure;
-import com.projet9.dataexchange.beans.Etats;
-import com.projet9.dataexchange.beans.Reservation;
-import com.projet9.dataexchange.beans.User;
+import com.projet9.dataexchange.beans.*;
 import com.projet9.dataexchange.proxies.ProxyAventure;
+import com.projet9.dataexchange.proxies.ProxyPaiement;
 import com.projet9.dataexchange.proxies.ProxyReservation;
 import com.projet9.dataexchange.proxies.ProxyUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,8 @@ public class AventureController {
     ProxyReservation proxyReservation;
     @Autowired
     ProxyUser proxyUser;
+    @Autowired
+    ProxyPaiement proxyPaiement;
 
     @GetMapping("/aventure/{id}")
     public String goToAventure(HttpServletRequest request, @PathVariable("id") int id){
@@ -74,6 +74,33 @@ public class AventureController {
         request.setAttribute("placesRestantes", placesRestantes);
         request.setAttribute("reservations", reservationsAvecCommentaire);
 
+        return "aventure";
+    }
+
+    @GetMapping("/aventure/payment/{id}")
+    public String testPayment(HttpServletRequest request, @PathVariable("id") int idAventure){
+        Reservation reservation = new Reservation();
+
+        Aventure aventure = proxyAventure.getAventureById(idAventure);
+        User user = (User) request.getSession().getAttribute("userGuest");
+        EtatReservation etatReservation = proxyReservation.getEtatReservationByCode(Etats.NONPAYEE.getCode());
+
+        reservation.setAventure(aventure);
+        reservation.setIdAventure(aventure.getId());
+        reservation.setUser(user);
+        reservation.setIdUser(user.getId());
+        reservation.setEtatReservation(etatReservation);
+        reservation.setNumEtat(etatReservation.getNumEtat());
+
+        reservation.setReservationPrecedente(false);
+        reservation.setDateReservation(LocalDate.now());
+
+        boolean result = proxyPaiement.doPayement(reservation);
+        if(result==true){
+            // blabla
+        }else{
+            // blabla
+        }
         return "aventure";
     }
 }

@@ -50,6 +50,53 @@
     </div>
 </div>
 
+<div id="ModalPaiement" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Paiement</h2>
+        </header>
+        <div class="contenuErreur">
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <!--<input type="hidden" name="cmd" value="_xclick">-->
+                <input type="hidden" name="cmd" value="_ext-enter">
+                <input type="hidden" name="redirect_cmd" value="_xclick">
+                <input type="hidden" name="business" value="8GCRQ6ZD2TMG6">
+                <input type="hidden" name="item_name" value="Reservation">
+                <input type="hidden" name="item_number" value="2">
+
+                <input type="hidden" name="amount" value="0.01">
+                <input type="hidden" name="lc" value="FR">
+
+                <input type="hidden" name="button_subtype" value="services">
+                <input type="hidden" name="no_note" value="1">
+                <input type="hidden" name="no_shipping" value="1">
+                <input type="hidden" name="rm" value="1">
+                <input type="hidden" name="return" value="http://localhost:8080//aventure/paiement/validation">
+                <input type="hidden" name="cancel_return" value="http://localhost:8080/">
+                <input type="hidden" name="currency_code" value="EUR">
+
+                <input type="hidden" name="email" value="florian.couturier33@gmail.com">
+                <input type="hidden" name="first_name" value="Florian">
+                <input type="hidden" name="last_name" value="Couturier">
+
+                <input type="hidden" name="custom" value="">
+                <!---->
+                <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynowCC_LG.gif:NonHosted">
+                <input type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal, le réflexe sécurité pour payer en ligne">
+                <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+            </form>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+        </footer>
+    </div>
+</div>
+
+
+
+
+
+
 <!-- Espace de definition des blocks -->
 <div class="container-fluid">
     <div id="cadrephoto" class="offset-sm-1 col-9 col-sm-5 col-lg-3 col-xl-2" th:style="'background:url(' + @{/images/aventure/} + ${aventure?.id} + ') center no-repeat; background-size: 100% auto;'" ></div>
@@ -70,7 +117,7 @@
     <!--  -->
     <!-- Penser a check si une réservation de l'aventure n'existe pas déjà -->
     <div th:if="${session?.userGuest?.id>0 && reservationPossible}" class="offset-sm-1 col-sm-10 col-lg-3 col-xl-2 col-12" style="padding:0; background-color: unset; border: unset">
-        <a  class="btn btnCustom btnGris col-12"><i class="far fa-bookmark"></i> Reserver cette aventure</a>
+        <a th:href="'#ModalPaiement'" class="btn btnCustom btnGris col-12"><i class="far fa-bookmark"></i> Reserver cette aventure</a>
     </div>
     <div th:if="${session?.userGuest?.id>0 && !reservationPossible}" class="offset-sm-1 col-sm-10 col-lg-3 col-xl-2 col-12" style="padding:0; background-color: unset; border: unset">
         <button  class="btn btnCustom btnGris col-12" disabled><i class="far fa-bookmark"></i> Vous avez une réservation en cours pour cette aventure</button>
