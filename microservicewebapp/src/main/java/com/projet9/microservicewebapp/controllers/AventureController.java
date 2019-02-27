@@ -1,9 +1,6 @@
 package com.projet9.microservicewebapp.controllers;
 
-import com.projet9.dataexchange.beans.Aventure;
-import com.projet9.dataexchange.beans.Etats;
-import com.projet9.dataexchange.beans.Reservation;
-import com.projet9.dataexchange.beans.User;
+import com.projet9.dataexchange.beans.*;
 import com.projet9.dataexchange.proxies.ProxyAventure;
 import com.projet9.dataexchange.proxies.ProxyReservation;
 import com.projet9.dataexchange.proxies.ProxyUser;
@@ -11,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -31,6 +29,7 @@ public class AventureController {
 
     @GetMapping("/aventure/{id}")
     public String goToAventure(HttpServletRequest request, @PathVariable("id") int id){
+
         Aventure aventure = proxyAventure.getAventureById(id);
 
         List<Reservation> reservations = proxyReservation.getReservationsByAventure(id);
@@ -46,7 +45,7 @@ public class AventureController {
 
         // Calcul des places restantes
         long nbReservation = reservations.stream()
-                .filter(reservation ->!reservation.isReservationPrecedente() &&
+                .filter(reservation -> !reservation.isReservationPrecedente() &&
                         (reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode()) ||
                         reservation.getEtatReservation().getCode().equals(Etats.PAYEE.getCode()))
                     )
@@ -78,5 +77,35 @@ public class AventureController {
         request.setAttribute("reservations", reservationsAvecCommentaire);
 
         return "aventure";
+    }
+
+    @GetMapping("/aventure/{id}/reserver")
+    public RedirectView reserverAventure(HttpServletRequest request, @PathVariable("id") int id) {
+
+        // Récupération de l'aventure et de l'utilisateur
+        Aventure aventure = proxyAventure.getAventureById(id);
+        User user = (User)request.getSession().getAttribute("userGuest");
+
+        // Initialisation de la réservation à créer
+        Reservation reservation = new Reservation();
+        EtatReservation etatReservation = proxyReservation.getEtatReservationByCode(Etats.NONPAYEE.getCode());
+
+        // Construction de la réservation
+        reservation.setAventure(aventure);
+        reservation.setIdAventure(aventure.getId());
+        reservation.setUser(user);
+        reservation.setIdUser(user.getId());
+        reservation.setEtatReservation(etatReservation);
+        reservation.setNumEtat(etatReservation.getNumEtat());
+        reservation.setDateReservation(LocalDate.now());
+        reservation.setReservationPrecedente(false);
+
+        // Création de la réservation en base
+        proxyReservation.createReservation(reservation);
+
+        request.setAttribute("nouvelleReservation", reservation);
+
+        // Redirection avec affichage de la pop-up de validation
+        return new RedirectView("/aventure/" + id + "#ModalConfirmationAnnulation");
     }
 }
