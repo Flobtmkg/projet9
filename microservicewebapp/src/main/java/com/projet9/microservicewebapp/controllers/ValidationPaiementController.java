@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class ValidationPaimentController {
+public class ValidationPaiementController {
 
     @Autowired
     ProxyReservation proxyReservation;
@@ -22,17 +22,16 @@ public class ValidationPaimentController {
         // IdReservation retourné par Paypal en cas de payement validé
         String idReservation = request.getParameter("custom");
         Reservation reservation;
-        if(idReservation.isEmpty() == false){
+        if(idReservation != null){
             reservation = proxyReservation.getReservationById(Integer.valueOf(idReservation));
+            reservation.setEtatReservation(proxyReservation.getEtatReservationByCode(Etats.PAYEE.getCode()));
+            reservation.setNumEtat(reservation.getEtatReservation().getNumEtat());
+            // Mise a jour de la reseration
+            proxyReservation.updateReservation(reservation);
+            return new RedirectView("/espaceutilisateur");
         }else{
-            // Erreur de renvoi de variable par Paypal qui n'est pas sensée arriver
-            return new RedirectView("/espaceutilisateur#ModalERREURQQCHCESTMALPASSE");
+            // Erreur
+            return new RedirectView("/");
         }
-        reservation.setEtatReservation(proxyReservation.getEtatReservationByCode(Etats.PAYEE.getCode()));
-        reservation.setNumEtat(reservation.getEtatReservation().getNumEtat());
-        // Mise a jour de la reseration
-        proxyReservation.updateReservation(reservation);
-
-        return new RedirectView("/espaceutilisateur");
     }
 }

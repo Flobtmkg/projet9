@@ -4,10 +4,14 @@ import com.projet9.dataexchange.beans.*;
 import com.projet9.dataexchange.proxies.ProxyAventure;
 import com.projet9.dataexchange.proxies.ProxyReservation;
 import com.projet9.dataexchange.proxies.ProxyUser;
+import com.projet9.microservicewebapp.managers.ReservationManager;
+import com.projet9.microservicewebapp.managers.UserManager;
+import com.projet9.microservicewebapp.managers.UtilitaireManager;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +30,13 @@ public class EspaceUtilisateurController {
     @Autowired
     ProxyReservation proxyReservation;
 
+    @Autowired
+    ReservationManager reservationManager;
+    @Autowired
+    UserManager userManager;
+    @Autowired
+    UtilitaireManager utilitaireManager;
+
 
     @GetMapping("/espaceutilisateur")
     public String goToEspaceUtilisateur(HttpServletRequest request, @RequestParam(required = false) Integer idReservation){
@@ -39,26 +50,30 @@ public class EspaceUtilisateurController {
         // Récupération des réservations
         List<Reservation> lstRes = proxyReservation.getReservationByUserId(user.getId());
 
-        // Annulation automatique des réservation de plus de 24h non payées
+        /*// Annulation automatique des réservation de plus de 24h non payées
         lstRes.stream()
                 .filter(reservation -> reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode())
                         && reservation.getDateReservation().plusDays(1).isBefore(LocalDate.now()))
                 .forEach(reservation -> {
                     reservation.setEtatReservation(proxyReservation.getEtatReservationByCode(Etats.ANNULEEAVANTPAIEMENT.getCode()));
                     proxyReservation.updateReservation(reservation);
-                });
+                });*/
+
+        lstRes = reservationManager.annulationAutoReservationNonPayees(lstRes);
 
         request.setAttribute("reservationsUtilisateur",lstRes);
 
         // Dans le cas d'une action sur une réservation (annulation, commentaire, paiement)
         if (idReservation != null) {
-            request.setAttribute("idReservation", idReservation);
+            //request.setAttribute("idReservation", idReservation);
             Reservation reservation = proxyReservation.getReservationById(Integer.parseInt(request.getParameter("idReservation")));
-
+            reservation.setAventure(proxyAventure.getAventureById(reservation.getIdAventure()));
+            request.setAttribute("selectedReservation", reservation);
+            request.setAttribute("currentIP", utilitaireManager.getCurrentIPAddress());
             // Pour l'ajout d'un commentaire déjà existant
-            if (reservation.getCommentaireReservation() != null) {
+            /*if (reservation.getCommentaireReservation() != null) {
                 request.setAttribute("commentaire", reservation.getCommentaireReservation());
-            }
+            }*/
         }
 
         return "espaceutilisateur";
@@ -67,17 +82,18 @@ public class EspaceUtilisateurController {
 
     @PostMapping("/modifInfosGenerales")
     public RedirectView modifInfoPerso(HttpServletRequest request){
-
         // Récupération de l'utilisateur en session
         User actualUser = (User)request.getSession().getAttribute("userGuest");
-        // Recupération et affectation des données
+
+        actualUser = userManager.changementInfosPerso(actualUser,request);
+        /*// Recupération et affectation des données
         actualUser.setPrenom(request.getParameter("prenom"));
         actualUser.setNom(request.getParameter("nom"));
         actualUser.setDateNaissance(LocalDate.parse(request.getParameter("dateNaissance"),DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         actualUser.setEmail(request.getParameter("email"));
         // Mise a jour en base
         proxyUser.update(actualUser);
-        // Renvoi de l'utilisateur en session
+        // Renvoi de l'utilisateur en session*/
         request.getSession().setAttribute("userGuest",actualUser);
         // Redirection avec affichage de la pop-up de validation
         return new RedirectView("/espaceutilisateur#ModalValidation");
@@ -89,6 +105,7 @@ public class EspaceUtilisateurController {
 
         // Récupération de l'utilisateur en session
         User actualUser = (User)request.getSession().getAttribute("userGuest");
+
         // Recupération des données
         String motDePasseA = request.getParameter("motDePasseA");
         String motDePasseN = request.getParameter("motDePasseN");
@@ -98,7 +115,7 @@ public class EspaceUtilisateurController {
         if(motDePasseN.equals(motDePasseN2) && proxyUser.isAutentificationCorrectById(actualUser.getId(), DigestUtils.sha256Hex(motDePasseA))){
             actualUser.setPassword(DigestUtils.sha256Hex(motDePasseN));
             // Mise a jour en base
-            proxyUser.update(actualUser);
+            actualUser = proxyUser.update(actualUser);
         }else{
             // Erreur
             return new RedirectView("/espaceutilisateur#Modalerreur");
@@ -109,6 +126,8 @@ public class EspaceUtilisateurController {
         // Redirection avec affichage de la pop-up de validation
         return new RedirectView("/espaceutilisateur#ModalValidation");
     }
+
+
 
     @GetMapping("/espaceutilisateur/annulerReservation/{id}")
     public RedirectView annulerReservation(@PathVariable("id") int idReservation){
@@ -130,6 +149,8 @@ public class EspaceUtilisateurController {
         // Redirection avec affichage de la pop-up de validation
         return new RedirectView("/espaceutilisateur#ModalConfirmationAnnulation");
     }
+
+
 
     @PostMapping("/espaceutilisateur/ajouterCommentaireReservation")
     public RedirectView ajouterCommentaire(@RequestParam String idReservation, @RequestParam String commentaire){

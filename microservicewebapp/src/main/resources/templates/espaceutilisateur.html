@@ -178,7 +178,7 @@
         <footer>
             <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
             <!--Ne pas virer ce commentaire: Bug de parsing des attributs thymeleaf-->
-            <a th:href="@{/espaceutilisateur/annulerReservation/} + ${idReservation}" class="btn btn-success btn-sm btnvalider" > Confirmer</a>
+            <a th:href="@{/espaceutilisateur/annulerReservation/} + ${selectedReservation?.id}" class="btn btn-success btn-sm btnvalider" > Confirmer</a>
         </footer>
     </div>
 </div>
@@ -199,23 +199,77 @@
         </footer>
     </div>
 </div>
-<div id="ModalCommentaire" class="cModal">v
+<div id="ModalCommentaire" class="cModal">
     <div>
         <header>
             <h2 class="infossurblanc2">Ajouter un commentaire</h2>
         </header>
         <div>
+            <!--Bug de parsing ne pas toucher ce commentaire-->
             <Form th:action="@{/espaceutilisateur/ajouterCommentaireReservation}" method="post">
-                <p style="color: darkred" th:if="${commentaire}"><br>Attention, vous avez déjà ajouté un commentaire pour cette réservation. Si vous continuez il sera écrasé.</p>
+                <!--Bug de parsing ne pas toucher ce commentaire-->
+                <p style="color: darkred" th:if="${selectedReservation?.commentaireReservation}"><br>Attention, vous avez déjà ajouté un commentaire pour cette réservation. Si vous continuez il sera écrasé.</p>
                 <label>Votre commentaire :</label>
-                <textarea class="form-control" placeholder="C'était génial !!" name="commentaire" required>[[${commentaire}]]</textarea>
-                <input type="hidden" name="idReservation" th:value="${idReservation}"/>
+                <textarea class="form-control" placeholder="Ecrivez votre commentaire ici..." name="commentaire" required>[[${selectedReservation?.commentaireReservation}]]</textarea>
+                <input type="hidden" name="idReservation" th:value="${selectedReservation?.id}"/>
                 <footer>
                     <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Annuler</a>
                     <input type="submit" class="btn btn-success btn-sm btnvalider" value="Valider">
                 </footer>
             </Form>
         </div>
+    </div>
+</div>
+<!-->
+<div id="ModalConfirmationReservation" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Paiement de la reservation n°[[${selectedReservation?.id}]]</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: green" class="fas fa-check-circle fa-5x"></i>
+            </div>
+            <p class="texterreur">Votre réservation a bien été prise en compte, mais est en attente de paiement.</p>
+            <p class="texterreur">Vous pouvez effectuer le paiement dès à présent ou dans un délai de 24h après réservation.</p>
+        </div>
+        <form style="text-align: center" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <!--<input type="hidden" name="cmd" value="_xclick">-->
+            <input type="hidden" name="cmd" value="_ext-enter">
+            <input type="hidden" name="redirect_cmd" value="_xclick">
+            <input type="hidden" name="business" value="8GCRQ6ZD2TMG6">
+            <input type="hidden" name="item_name" th:value="'Reservation ' + ${selectedReservation?.aventure?.nom}">
+            <input type="hidden" name="item_number" value="1">
+
+            <input type="hidden" name="amount" value="0.01">
+            <input type="hidden" name="lc" value="FR">
+
+            <input type="hidden" name="button_subtype" value="services">
+            <input type="hidden" name="no_note" value="1">
+            <input type="hidden" name="no_shipping" value="1">
+            <!--rm = méthode de redirection-->
+            <input type="hidden" name="rm" value="2">
+            <!--Les notifications instantanées ne sont pas utilisables hors HTTPS avec certificat G5 Root -->
+            <!--<input type="hidden" name="notify_url" th:value="'https://' + ${currentIP} + '/aventure/paiement/validation'">-->
+            <input type="hidden" name="return" th:value="'http://' + ${currentIP} + ':8080/aventure/paiement/validation'">
+            <input type="hidden" name="cancel_return" th:value="'http://' + ${currentIP} + ':8080/'">
+            <input type="hidden" name="currency_code" value="EUR">
+
+            <!--Variables d'informations utilisateurs-->
+            <input type="hidden" name="email" th:value="${session?.userGuest?.email}">
+            <input type="hidden" name="first_name" th:value="${session?.userGuest?.prenom}">
+            <input type="hidden" name="last_name" th:value="${session?.userGuest?.nom}">
+
+            <!--On passe dans la variable Custom d'idNouvelleReservation-->
+            <input type="hidden" name="custom" th:value="${selectedReservation?.id}">
+            <!---->
+            <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynowCC_LG.gif:NonHosted">
+            <input class="btnPaypal" type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal, le réflexe sécurité pour payer en ligne">
+            <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+        </form>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+        </footer>
     </div>
 </div>
 <!--->
@@ -275,7 +329,7 @@
                         <div th:if="${reservation?.etatReservation?.code == T(com.projet9.dataexchange.beans.Etats).NONPAYEE.getCode()}" style="margin-left: auto; margin-right: auto">
                             <a th:if="${reservation?.aventure?.dateCloture.isAfter(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" th:href="@{/espaceutilisateur(idReservation=${reservation?.id})} + '#ModalValidationAnnulation'"><i class="fas fa-times fa-2x"></i></a>
                             <button th:if="${reservation?.aventure?.dateCloture.isBefore(#temporals.createToday())}" class="btn btn-secondary btn-sm" title="Annuler cette réservation" disabled="true"><i class="fas fa-times fa-2x"></i></button>
-                            <a class="btn btn-secondary btn-sm" title="Effectuer le paiement" ><i class="fas fa-money-check-alt fa-2x" style="color:white"></i></a>
+                            <a th:href="@{/espaceutilisateur(idReservation=${reservation?.id})} + '#ModalConfirmationReservation'" class="btn btn-secondary btn-sm" title="Effectuer le paiement" ><i class="fas fa-money-check-alt fa-2x" style="color:white"></i></a>
                         </div>
 
                         <div th:if="${reservation?.etatReservation?.code == T(com.projet9.dataexchange.beans.Etats).PAYEE.getCode()}" style="margin-left: auto; margin-right: auto">

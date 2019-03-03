@@ -3,6 +3,7 @@ package com.projet9.microservicewebapp.controllers;
 import com.projet9.dataexchange.beans.User;
 import com.projet9.dataexchange.proxies.ProxyAventure;
 import com.projet9.dataexchange.proxies.ProxyUser;
+import com.projet9.microservicewebapp.managers.ImagesManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -29,14 +30,8 @@ public class ImagesController {
     @Autowired
     ProxyUser proxyUser;
 
-    static final String entiteeUser = "user";
-    static final String entiteeAventure = "aventure";
-
-    // Value des images par defaut
-    @Value("classpath:/static/img/user.jpg")
-    private Resource defaultImageUser;
-    @Value("classpath:/static/img/icon4.png")
-    private Resource defaultImageAventure;
+    @Autowired
+    ImagesManager imagesManager;
 
 
 
@@ -55,16 +50,16 @@ public class ImagesController {
     public void getImageByAventureId(@PathVariable("id") int idAventure, HttpServletResponse response){
         // Si on ne veut afficher que l'image par défaut on peut l'appeller avec /images/aventure/0
         if(idAventure!=0){
-            imageProcedure(response, proxyAventure.getImageById(idAventure),entiteeAventure);
+            imageProcedure(response, proxyAventure.getImageById(idAventure),ImagesManager.entiteeAventure);
         }else{
-            imageProcedure(response, null,entiteeAventure);
+            imageProcedure(response, null,ImagesManager.entiteeAventure);
         }
     }
 
     @GetMapping("/images/user/{id}")
     public void getImageByUserId(@PathVariable("id") int idUser, HttpServletResponse response){
         // On get l'image en byte[] depuis l'entité user
-        imageProcedure(response, proxyUser.getImageById(idUser),entiteeUser);
+        imageProcedure(response, proxyUser.getImageById(idUser),ImagesManager.entiteeUser);
     }
 
 
@@ -73,7 +68,7 @@ public class ImagesController {
             addImageToResponse(response, image);
         }catch (Exception e){
             try{
-                addImageToResponse(response, getDefaultImage(entitee));
+                addImageToResponse(response, imagesManager.getDefaultImage(entitee));
             }catch(Exception e2){
                 response.setStatus(404);
             }
@@ -88,7 +83,7 @@ public class ImagesController {
     }
 
 
-    private byte[] getDefaultImage(String entitee) throws Exception{
+    /*private byte[] getDefaultImage(String entitee) throws Exception{
         File f;
         if(entiteeUser.equals(entitee)){
             f = defaultImageUser.getFile();
@@ -99,5 +94,5 @@ public class ImagesController {
         DataInputStream dis = new DataInputStream(new FileInputStream(f));
         dis.readFully(imageBytes);
         return imageBytes;
-    }
+    }*/
 }
