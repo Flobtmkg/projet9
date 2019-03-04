@@ -43,14 +43,7 @@ public class AventureController {
                     proxyReservation.updateReservation(reservation);
                 });
 
-        // Calcul des places restantes
-        long nbReservation = reservations.stream()
-                .filter(reservation -> !reservation.isReservationPrecedente() &&
-                        (reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode()) ||
-                        reservation.getEtatReservation().getCode().equals(Etats.PAYEE.getCode()))
-                    )
-                .count();
-        long placesRestantes = aventure.getLimiteReservation() - nbReservation;
+        long placesRestantes = calculerPlacesRestantes(aventure, reservations);
 
         // Si l'utilisateur est connecté : vérification d'un réservation déjà en cours
         User user = (User)request.getSession().getAttribute("userGuest");
@@ -86,26 +79,46 @@ public class AventureController {
         Aventure aventure = proxyAventure.getAventureById(id);
         User user = (User)request.getSession().getAttribute("userGuest");
 
-        // Initialisation de la réservation à créer
-        Reservation reservation = new Reservation();
-        EtatReservation etatReservation = proxyReservation.getEtatReservationByCode(Etats.NONPAYEE.getCode());
+        if (calculerPlacesRestantes(aventure, proxyReservation.getReservationsByAventure(id)) > 0) {
 
-        // Construction de la réservation
-        reservation.setAventure(aventure);
-        reservation.setIdAventure(aventure.getId());
-        reservation.setUser(user);
-        reservation.setIdUser(user.getId());
-        reservation.setEtatReservation(etatReservation);
-        reservation.setNumEtat(etatReservation.getNumEtat());
-        reservation.setDateReservation(LocalDate.now());
-        reservation.setReservationPrecedente(false);
+            // Initialisation de la réservation à créer
+            Reservation reservation = new Reservation();
+            EtatReservation etatReservation = proxyReservation.getEtatReservationByCode(Etats.NONPAYEE.getCode());
 
-        // Création de la réservation en base
-        proxyReservation.createReservation(reservation);
+            // Construction de la réservation
+            reservation.setAventure(aventure);
+            reservation.setIdAventure(aventure.getId());
+            reservation.setUser(user);
+            reservation.setIdUser(user.getId());
+            reservation.setEtatReservation(etatReservation);
+            reservation.setNumEtat(etatReservation.getNumEtat());
+            reservation.setDateReservation(LocalDate.now());
+            reservation.setReservationPrecedente(false);
 
-        request.setAttribute("nouvelleReservation", reservation);
+            // Création de la réservation en base
+            proxyReservation.createReservation(reservation);
 
-        // Redirection avec affichage de la pop-up de validation
-        return new RedirectView("/aventure/" + id + "#ModalConfirmationAnnulation");
+            request.setAttribute("nouvelleReservation", reservation);
+
+            // Redirection avec affichage de la pop-up de validation
+            return new RedirectView("/aventure/" + id + "#ModalConfirmationAnnulation");
+
+        } else {
+            return new RedirectView("/aventure/" + id + "#ModalConfirmationAnnul");
+        }
+
+
+    }
+
+
+    // Méthode privée de calcul des places restantes
+    private long calculerPlacesRestantes(Aventure aventure, List<Reservation> reservations) {
+        long nbReservation = reservations.stream()
+                .filter(reservation -> !reservation.isReservationPrecedente() &&
+                        (reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode()) ||
+                                reservation.getEtatReservation().getCode().equals(Etats.PAYEE.getCode()))
+                )
+                .count();
+        return aventure.getLimiteReservation() - nbReservation;
     }
 }
