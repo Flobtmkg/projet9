@@ -51,7 +51,7 @@
         </footer>
     </div>
 </div>
-<div id="ModalConfirmationAnnulation" class="cModal">
+<div id="ModalConfirmationReservation" class="cModal">
     <div>
         <header>
             <h2 class="modalHeader">Confirmation!</h2>
@@ -63,14 +63,47 @@
             <p class="texterreur">Votre réservation a bien été prise en compte.</p>
             <p class="texterreur">Vous pouvez effectuer le paiement dès à présent ou dans les 24h.</p>
         </div>
+        <form style="text-align: center" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <!--<input type="hidden" name="cmd" value="_xclick">-->
+            <input type="hidden" name="cmd" value="_ext-enter">
+            <input type="hidden" name="redirect_cmd" value="_xclick">
+            <input type="hidden" name="business" value="8GCRQ6ZD2TMG6">
+            <input type="hidden" name="item_name" th:value="'Reservation ' + ${aventure?.nom}">
+            <input type="hidden" name="item_number" value="1">
+
+            <input type="hidden" name="amount" value="0.01">
+            <input type="hidden" name="lc" value="FR">
+
+            <input type="hidden" name="button_subtype" value="services">
+            <input type="hidden" name="no_note" value="1">
+            <input type="hidden" name="no_shipping" value="1">
+            <!--rm = méthode de redirection-->
+            <input type="hidden" name="rm" value="2">
+            <!--Les notifications instantanées ne sont pas utilisables hors HTTPS avec certificat G5 Root -->
+            <!--<input type="hidden" name="notify_url" th:value="'https://' + ${currentIP} + '/aventure/paiement/validation'">-->
+            <input type="hidden" name="return" th:value="'http://' + ${currentIP} + ':8080/aventure/paiement/validation'">
+            <input type="hidden" name="cancel_return" th:value="'http://' + ${currentIP} + ':8080/'">
+            <input type="hidden" name="currency_code" value="EUR">
+
+            <!--Variables d'informations utilisateurs-->
+            <input type="hidden" name="email" th:value="${session?.userGuest?.email}">
+            <input type="hidden" name="first_name" th:value="${session?.userGuest?.prenom}">
+            <input type="hidden" name="last_name" th:value="${session?.userGuest?.nom}">
+
+            <!--On passe dans la variable Custom d'idNouvelleReservation-->
+            <input type="hidden" name="custom" th:value="${nouvelleReservation?.id}">
+            <!---->
+            <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynowCC_LG.gif:NonHosted">
+            <input class="btnPaypal" type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal, le réflexe sécurité pour payer en ligne">
+            <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+        </form>
         <footer>
             <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
         </footer>
     </div>
 </div>
+
 <!-- Espace de definition des blocks -->
-<div class="container-fluid">
-    <div class="row">
         <div id="cadrephoto" class="offset-sm-1 col-9 col-sm-5 col-lg-3 col-xl-2" th:style="'background:url(' + @{/images/aventure/} + ${aventure?.id} + ') center no-repeat; background-size: 100% auto;'" ></div>
         <div id="blockTransparent"></div>
         <div id="presentation" class="offset-0 offset-sm-1 offset-lg-0 col-lg-6 col-sm-10 col-12">

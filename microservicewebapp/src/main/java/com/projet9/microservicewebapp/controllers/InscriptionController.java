@@ -2,6 +2,7 @@ package com.projet9.microservicewebapp.controllers;
 
 import com.projet9.dataexchange.beans.User;
 import com.projet9.dataexchange.proxies.ProxyUser;
+import com.projet9.microservicewebapp.managers.UserManager;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +20,12 @@ public class InscriptionController {
     @Autowired
     ProxyUser proxyUser;
 
+    @Autowired
+    UserManager userManager;
+
     @GetMapping("/inscription")
     public String goToInscription(HttpServletRequest request){
+
         // Vérification que l'utilisateur n'est pas déjà connecté
         User user = (User)request.getSession().getAttribute("userGuest");
         if(user==null){
@@ -36,13 +41,14 @@ public class InscriptionController {
         // Récupération des données et création d'un utilisateur
         User user = new User();
         try{
-            user.setPrenom(request.getParameter("prenom"));
+            userManager.creationUtilisateur(user, request);
+            /*user.setPrenom(request.getParameter("prenom"));
             user.setNom(request.getParameter("nom"));
             user.setEmail(request.getParameter("email"));
             user.setPassword(DigestUtils.sha256Hex(request.getParameter("motDePasse")));
             user.setDateNaissance(LocalDate.parse(request.getParameter("dateNaissance"), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             // Création de l'utilisateur
-            user = proxyUser.create(user);
+            user = proxyUser.create(user);*/
         }catch(Exception e){
             return new RedirectView("/inscription#ModalerreurInscription");
         }

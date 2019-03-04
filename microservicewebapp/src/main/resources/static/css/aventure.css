@@ -99,3 +99,11 @@ div#ligneheader{border-bottom:2px;border-color:rgba(255, 255, 255, 0.6);border-b
     color: rgba(220,220,220,1);
     font-size:small;
 }
+.btnvalider{
+    margin-top:22px;
+    width:80px;
+    margin-bottom: 10px;
+}
+.btnPaypal{
+    padding-top : 10px;
+}
