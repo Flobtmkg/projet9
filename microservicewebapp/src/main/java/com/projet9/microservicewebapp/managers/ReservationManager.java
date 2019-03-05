@@ -19,6 +19,7 @@ public class ReservationManager {
     @Autowired
     ProxyUser proxyUser;
 
+
     public List<Reservation> annulationAutoReservationNonPayees(List<Reservation> reservations){
         // Annulation automatique des réservation de l'aventure de plus de 24h non payées
         reservations.stream()
@@ -28,9 +29,8 @@ public class ReservationManager {
                     reservation.setEtatReservation(proxyReservation.getEtatReservationByCode(Etats.ANNULEEAVANTPAIEMENT.getCode()));
                     proxyReservation.updateReservation(reservation);
                 });
-    return reservations;
+        return reservations;
     }
-
 
 
     public int getNombreReservationsRestantes(List<Reservation> reservations, Aventure aventure){
@@ -44,7 +44,6 @@ public class ReservationManager {
     }
 
 
-
     public boolean isReservationPossible(User user, Aventure aventure){
         List<Reservation> userReservations = proxyReservation.getReservationByUserId(user.getId());
         return !userReservations.stream().anyMatch(reservation ->
@@ -52,7 +51,6 @@ public class ReservationManager {
                         (reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode()) || reservation.getEtatReservation().getCode().equals(Etats.PAYEE.getCode())) &&
                         reservation.getAventure().getId() == aventure.getId());
     }
-
 
 
     public List<Reservation> getReservationsCommentees(List<Reservation> reservations){
@@ -63,7 +61,7 @@ public class ReservationManager {
                 reservationsAvecCommentaire.add(reservation);
             }
         });
-    return reservationsAvecCommentaire;
+        return reservationsAvecCommentaire;
     }
 
 

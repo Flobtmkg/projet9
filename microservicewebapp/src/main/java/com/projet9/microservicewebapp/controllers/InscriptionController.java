@@ -23,6 +23,7 @@ public class InscriptionController {
     @Autowired
     UserManager userManager;
 
+
     @GetMapping("/inscription")
     public String goToInscription(HttpServletRequest request){
 
@@ -38,21 +39,17 @@ public class InscriptionController {
 
     @PostMapping("/inscription")
     public RedirectView Inscription(HttpServletRequest request){
+
         // Récupération des données et création d'un utilisateur
         User user = new User();
         try{
             userManager.creationUtilisateur(user, request);
-            /*user.setPrenom(request.getParameter("prenom"));
-            user.setNom(request.getParameter("nom"));
-            user.setEmail(request.getParameter("email"));
-            user.setPassword(DigestUtils.sha256Hex(request.getParameter("motDePasse")));
-            user.setDateNaissance(LocalDate.parse(request.getParameter("dateNaissance"), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            // Création de l'utilisateur
-            user = proxyUser.create(user);*/
         }catch(Exception e){
             return new RedirectView("/inscription#ModalerreurInscription");
         }
+
         request.getSession().setAttribute("userGuest",user);
+
         return new RedirectView("/");
     }
 }

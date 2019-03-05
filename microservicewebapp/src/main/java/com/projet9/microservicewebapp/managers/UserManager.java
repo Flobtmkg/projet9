@@ -16,6 +16,7 @@ public class UserManager {
     @Autowired
     ProxyUser proxyUser;
 
+
     public User changementInfosPerso(User actualUser, HttpServletRequest request){
         // Recupération et affectation des données
         actualUser.setPrenom(request.getParameter("prenom"));

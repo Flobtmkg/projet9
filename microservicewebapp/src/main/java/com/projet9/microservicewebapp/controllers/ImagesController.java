@@ -34,7 +34,6 @@ public class ImagesController {
     ImagesManager imagesManager;
 
 
-
     @PostMapping("/upload")
     public RedirectView userFileUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
         User user = (User)request.getSession().getAttribute("userGuest");

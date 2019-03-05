@@ -102,7 +102,22 @@
         </footer>
     </div>
 </div>
-
+<div id="ModalReservationErreur" class="cModal">
+    <div>
+        <header>
+            <h2 class="modalHeader">Oups!</h2>
+        </header>
+        <div class="contenuErreur">
+            <div class="contenuImageErreur"style="float: left; margin-right:15px;box-sizing: content-box">
+                <i style="color: darkred" class="fas fa-exclamation-triangle fa-5x"></i>
+            </div>
+            <p class="texterreur">La dernière place a été réservée avant vous.</p>
+        </div>
+        <footer>
+            <a href="#fermer" class="btn btn-outline-secondary btn-sm modalMargin"><i class="fas fa-times"></i> Fermer</a>
+        </footer>
+    </div>
+</div>
 <!-- Espace de definition des blocks -->
         <div id="cadrephoto" class="offset-sm-1 col-9 col-sm-5 col-lg-3 col-xl-2" th:style="'background:url(' + @{/images/aventure/} + ${aventure?.id} + ') center no-repeat; background-size: 100% auto;'" ></div>
         <div id="blockTransparent"></div>
