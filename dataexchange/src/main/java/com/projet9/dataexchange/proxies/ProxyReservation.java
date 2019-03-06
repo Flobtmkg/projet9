@@ -16,10 +16,10 @@ public interface ProxyReservation {
     // Accès aux reservations
 
     @PostMapping("microservicereservations/api/Reservations")
-    Reservation createReservation(@RequestBody Reservation aventure);
+    Reservation createReservation(@RequestBody Reservation reservation);
 
     @PutMapping("microservicereservations/api/Reservations")
-    Reservation updateReservation(@RequestBody Reservation aventure);
+    Reservation updateReservation(@RequestBody Reservation reservation);
 
     @GetMapping("microservicereservations/api/Reservations/{id}")
     Reservation getReservationById(@PathVariable("id") int id);
