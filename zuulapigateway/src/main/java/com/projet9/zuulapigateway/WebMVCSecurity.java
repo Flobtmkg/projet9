@@ -1,4 +1,4 @@
-package com.projet9.microservicewebapp;
+package com.projet9.zuulapigateway;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -20,6 +20,6 @@ public class WebMVCSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**").antMatchers("*/api/**");
+        web.ignoring().antMatchers("/**/api/**");
     }
 }

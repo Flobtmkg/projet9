@@ -1,4 +1,4 @@
-package com.projet9.microserviceusers;
+package com.projet9.dataexchange;
 
 import feign.auth.BasicAuthRequestInterceptor;
 import org.springframework.context.annotation.Bean;

@@ -1,5 +1,6 @@
 package com.projet9.dataexchange.proxies;
 
+import com.projet9.dataexchange.FeignConfig;
 import com.projet9.dataexchange.beans.Aventure;
 import com.projet9.dataexchange.beans.Categorie;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "zuulapigateway")
+@FeignClient(name = "zuulapigateway", configuration = FeignConfig.class)
 @RibbonClient(name = "microserviceaventures")
 public interface ProxyAventure {
 
