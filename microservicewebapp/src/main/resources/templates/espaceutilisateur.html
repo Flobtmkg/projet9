@@ -233,7 +233,7 @@
             <p class="texterreur">Votre réservation a bien été prise en compte, mais est en attente de paiement.</p>
             <p class="texterreur">Vous pouvez effectuer le paiement dès à présent ou dans un délai de 24h après réservation.</p>
         </div>
-        <form style="text-align: center" th:action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <form style="text-align: center" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
             <!--<input type="hidden" name="cmd" value="_xclick">-->
             <input type="hidden" name="cmd" value="_ext-enter">
             <input type="hidden" name="redirect_cmd" value="_xclick">

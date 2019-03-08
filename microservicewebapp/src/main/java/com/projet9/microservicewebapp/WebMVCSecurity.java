@@ -16,10 +16,11 @@ public class WebMVCSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/").permitAll();
+        http.csrf().ignoringAntMatchers("/**/aventure/paiement/validation");
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**").antMatchers("*/api/**");
+        web.ignoring().antMatchers("/resources/**");
     }
 }
