@@ -6,6 +6,8 @@ import com.projet9.microserviceusers.dao.UserDao;
 import com.projet9.microserviceusers.entities.UserEntity;
 import com.projet9.microserviceusers.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

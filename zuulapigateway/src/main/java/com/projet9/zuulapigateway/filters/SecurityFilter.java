@@ -1,6 +1,7 @@
 package com.projet9.zuulapigateway.filters;
 
 import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,8 @@ public class SecurityFilter extends ZuulFilter {
 
     @Override
     public Object run() throws ZuulException {
-        log.info("test");
+        RequestContext ctx = RequestContext.getCurrentContext();
+        ctx.addZuulRequestHeader("ZuulOrigin", "true");
         return null;
     }
 }

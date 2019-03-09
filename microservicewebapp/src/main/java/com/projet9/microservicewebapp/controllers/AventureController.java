@@ -2,7 +2,6 @@ package com.projet9.microservicewebapp.controllers;
 
 import com.projet9.dataexchange.beans.*;
 import com.projet9.dataexchange.proxies.ProxyAventure;
-import com.projet9.dataexchange.proxies.ProxyPaiement;
 import com.projet9.dataexchange.proxies.ProxyReservation;
 import com.projet9.dataexchange.proxies.ProxyUser;
 import com.projet9.microservicewebapp.managers.ReservationManager;
@@ -29,8 +28,6 @@ public class AventureController {
     ProxyReservation proxyReservation;
     @Autowired
     ProxyUser proxyUser;
-    @Autowired
-    ProxyPaiement proxyPaiement;
 
     @Autowired
     ReservationManager reservationManager;

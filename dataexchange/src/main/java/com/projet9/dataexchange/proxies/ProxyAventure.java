@@ -5,7 +5,6 @@ import com.projet9.dataexchange.beans.Aventure;
 import com.projet9.dataexchange.beans.Categorie;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,7 +40,6 @@ public interface ProxyAventure {
     byte[] getImageById(@PathVariable("id") int id);
 
     // Accès aux categories
-
     @PostMapping("microserviceaventures/api/Categories")
     Categorie createCategorie(@RequestBody Categorie categorie);
 
