@@ -18,10 +18,10 @@ public class SecurityFilter extends GenericFilterBean
             throws IOException, ServletException
     {
         final HttpServletRequest httpRequest = (HttpServletRequest)request;
-
+        String path = httpRequest.getRequestURI();
         //extract token from header
         final String accessToken = httpRequest.getHeader("ZuulOrigin");
-        if (null != accessToken) {
+        if (null != accessToken || path.contains("/actuator")) {
             chain.doFilter(request, response);
         }
     }

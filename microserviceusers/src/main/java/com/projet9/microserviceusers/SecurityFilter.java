@@ -1,7 +1,5 @@
 package com.projet9.microserviceusers;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -21,9 +19,10 @@ public class SecurityFilter extends GenericFilterBean
     {
         final HttpServletRequest httpRequest = (HttpServletRequest)request;
 
+        String path = httpRequest.getRequestURI();
         //extract token from header
         final String accessToken = httpRequest.getHeader("ZuulOrigin");
-        if (null != accessToken) {
+        if (null != accessToken || path.contains("/actuator")) {
             chain.doFilter(request, response);
         }
     }
