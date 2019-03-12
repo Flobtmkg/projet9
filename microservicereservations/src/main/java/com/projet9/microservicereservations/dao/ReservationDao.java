@@ -13,4 +13,8 @@ public interface ReservationDao extends JpaRepository<ReservationEntity, Integer
 
     List<ReservationEntity> findReservationEntitiesByIdAventure(int id);
 
+    void deleteReservationEntitiesByIdUser(int idUser);
+
+    void deleteReservationEntitiesByIdAventure(int idAventure);
+
 }

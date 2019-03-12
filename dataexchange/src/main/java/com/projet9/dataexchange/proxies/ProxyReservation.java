@@ -38,6 +38,12 @@ public interface ProxyReservation {
     @DeleteMapping("microservicereservations/api/Reservations/{id}")
     void deleteReservation(@PathVariable("id") int id);
 
+    @DeleteMapping("microservicereservations/api/Reservations/User/{idUser}")
+    void deleteByUserId(@PathVariable("idUser") int idUser);
+
+    @DeleteMapping("microservicereservations/api/Reservations/Aventure/{idAventure}")
+    void deleteByAventureId(@PathVariable("idAventure") int idUser);
+
 
 
     // Accès aux etatReservations

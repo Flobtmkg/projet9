@@ -25,7 +25,7 @@ public class ReservationEntity {
     private int idUser;
 
     @ManyToOne
-    @JoinColumn(name = "num_Etat")
+    @JoinColumn(name = "num_etat")
     private EtatReservationEntity etatReservationEntity;
 
 

@@ -2,6 +2,7 @@ package com.projet9.microserviceusers.controller;
 
 import com.projet9.dataexchange.beans.User;
 import com.projet9.dataexchange.exceptions.ObjectNotFoundException;
+import com.projet9.dataexchange.proxies.ProxyReservation;
 import com.projet9.microserviceusers.dao.UserDao;
 import com.projet9.microserviceusers.entities.UserEntity;
 import com.projet9.microserviceusers.mapper.UserMapper;
@@ -19,6 +20,8 @@ public class UserController {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private ProxyReservation proxyReservation;
 
 
     @PostMapping(path = "/api/Users", produces = "application/json")
@@ -92,6 +95,7 @@ public class UserController {
 
     @DeleteMapping(path = "/api/Users/{id}", produces = "application/json")
     public void delete(@PathVariable("id") int id) {
+        proxyReservation.deleteByUserId(id);
         userDao.deleteById(id);
     }
 }

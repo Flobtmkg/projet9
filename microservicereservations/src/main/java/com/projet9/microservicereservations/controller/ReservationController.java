@@ -83,4 +83,14 @@ public class ReservationController {
     public void delete(@PathVariable("id") int id){
         reservationDao.deleteById(id);
     }
+
+    @DeleteMapping(path = "/api/Reservations/User/{idUser}", produces = "application/json")
+    public void deleteByUserId(@PathVariable("idUser") int idUser){
+        reservationDao.deleteReservationEntitiesByIdUser(idUser);
+    }
+
+    @DeleteMapping(path = "/api/Reservations/Aventure/{idAventure}", produces = "application/json")
+    public void deleteByAventureId(@PathVariable("idAventure") int idAventure){
+        reservationDao.deleteReservationEntitiesByIdAventure(idAventure);
+    }
 }

@@ -2,6 +2,7 @@ package com.projet9.microserviceaventures.controller;
 
 import com.projet9.dataexchange.beans.Aventure;
 import com.projet9.dataexchange.exceptions.ObjectNotFoundException;
+import com.projet9.dataexchange.proxies.ProxyReservation;
 import com.projet9.microserviceaventures.dao.AventureDao;
 import com.projet9.microserviceaventures.dao.CategorieDao;
 import com.projet9.microserviceaventures.entities.AventureEntity;
@@ -33,6 +34,8 @@ public class AventureController {
     CategorieDao categorieDao;
     @Autowired
     AventureDao aventureDao;
+    @Autowired
+    ProxyReservation proxyReservation;
 
 
     @PostMapping(path = "/api/Aventures", produces = "application/json")
@@ -114,6 +117,7 @@ public class AventureController {
 
     @DeleteMapping(path = "/api/Aventures/{id}", produces = "application/json")
     public void delete(@PathVariable("id") int id){
+        proxyReservation.deleteByAventureId(id);
         aventureDao.deleteById(id);
     }
 
