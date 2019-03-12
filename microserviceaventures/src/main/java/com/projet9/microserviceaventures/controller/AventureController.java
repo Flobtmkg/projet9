@@ -64,7 +64,7 @@ public class AventureController {
     }
 
 
-    @GetMapping(path = "/api/Aventures/Image{id}", produces = "application/json")
+    @GetMapping(path = "/api/Aventures/Image/{id}", produces = "application/json")
     public byte[] getImageById(@PathVariable("id") int id)  {
         Optional<AventureEntity> aventureEntity = aventureDao.findById(id);
         return aventureEntity.orElseThrow(() -> new ObjectNotFoundException(id, AventureEntity.class)).getImage();

@@ -61,7 +61,7 @@ public class UserController {
         return UserMapper.toDto(userEntity.orElseThrow(() -> new ObjectNotFoundException(id, UserEntity.class)));
     }
 
-    @GetMapping(path = "/api/Users/Image{id}", produces = "application/json")
+    @GetMapping(path = "/api/Users/Image/{id}", produces = "application/json")
     public byte[] getImageById(@PathVariable("id") int id)  {
         Optional<UserEntity> userEntity = userDao.findById(id);
         return userEntity.orElseThrow(() -> new ObjectNotFoundException(id, UserEntity.class)).getImage();
