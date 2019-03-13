@@ -9,6 +9,7 @@ import com.projet9.microservicereservations.entities.ReservationEntity;
 import com.projet9.microservicereservations.mapper.EtatReservationMapper;
 import com.projet9.microservicereservations.mapper.ReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -84,10 +85,12 @@ public class ReservationController {
         reservationDao.deleteById(id);
     }
 
+
     @DeleteMapping(path = "/api/Reservations/User/{idUser}", produces = "application/json")
     public void deleteByUserId(@PathVariable("idUser") int idUser){
         reservationDao.deleteReservationEntitiesByIdUser(idUser);
     }
+
 
     @DeleteMapping(path = "/api/Reservations/Aventure/{idAventure}", produces = "application/json")
     public void deleteByAventureId(@PathVariable("idAventure") int idAventure){
