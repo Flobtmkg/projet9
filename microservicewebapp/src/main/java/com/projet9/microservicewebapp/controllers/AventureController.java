@@ -54,7 +54,6 @@ public class AventureController {
         if(user != null){
             aReservationEnCours = reservationManager.aReservationEnCours(user, aventure);
             aReservationTerminee = reservationManager.aReservationTerminee(user, aventure);
-
         } else {
             aReservationEnCours = false;
             aReservationTerminee = false;
