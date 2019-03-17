@@ -44,12 +44,23 @@ public class ReservationManager {
     }
 
 
-    public boolean isReservationPossible(User user, Aventure aventure){
+    public boolean aReservationEnCours(User user, Aventure aventure){
         List<Reservation> userReservations = proxyReservation.getReservationByUserId(user.getId());
-        return !userReservations.stream().anyMatch(reservation ->
+        return userReservations.stream().anyMatch(reservation ->
                 !reservation.isReservationPrecedente() &&
-                        (reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode()) || reservation.getEtatReservation().getCode().equals(Etats.PAYEE.getCode())) &&
-                        reservation.getAventure().getId() == aventure.getId());
+                (reservation.getEtatReservation().getCode().equals(Etats.NONPAYEE.getCode()) || reservation.getEtatReservation().getCode().equals(Etats.PAYEE.getCode())) &&
+                aventure.getDateFin().isAfter(LocalDate.now()) &&
+                reservation.getAventure().getId() == aventure.getId());
+    }
+
+
+    public boolean aReservationTerminee(User user, Aventure aventure){
+        List<Reservation> userReservations = proxyReservation.getReservationByUserId(user.getId());
+        return userReservations.stream().anyMatch(reservation ->
+                !reservation.isReservationPrecedente() &&
+                reservation.getEtatReservation().getCode().equals(Etats.PAYEE.getCode()) &&
+                aventure.getDateFin().isBefore(LocalDate.now()) &&
+                reservation.getAventure().getId() == aventure.getId());
     }
 
 

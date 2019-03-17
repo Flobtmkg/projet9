@@ -136,30 +136,30 @@
         </div>
     </div>
     <!--  -->
-    <!-- Check si une réservation de l'aventure n'existe pas déjà pour l'utilisateur connecté-->
-    <div th:if="${session?.userGuest?.id>0 && reservationPossible && placesRestantes > 0}" class="offset-sm-1 col-sm-10 col-lg-3 col-xl-2 col-12" style="padding:0; background-color: unset; border: unset">
-        <a class="btn btnCustom btnGris col-12" th:href="@{/aventure/{id}(id=${aventure.id})} + '#ModalValidationReservation'"><i class="far fa-bookmark"></i> Reserver cette aventure</a>
+    <div th:if="${session?.userGuest?.id > 0 && !aReservationEnCours && placesRestantes > 0 && aventure.dateCloture.isAfter(#temporals.createToday())}" class="offset-sm-1 col-sm-10 col-lg-3 col-xl-2 col-12" style="padding:0; background-color: unset; border: unset">
+        <a class="btn btnCustom btnGris col-12" th:href="@{/aventure/{id}(id=${aventure.id})} + '#ModalValidationReservation'"><i class="far fa-bookmark"></i>Réserver cette aventure</a>
     </div>
-    <div th:if="${session?.userGuest?.id>0 && !reservationPossible}" class="offset-sm-1 col-sm-10 col-lg-5 col-xl-4 col-12" style="padding:0; background-color: unset; border: unset">
+    <!-- Check si une réservation de l'aventure n'existe pas déjà pour l'utilisateur connecté-->
+    <div th:if="${aReservationEnCours}" class="offset-sm-1 col-sm-10 col-lg-5 col-xl-4 col-12" style="padding:0; background-color: unset; border: unset">
         <a class="btn btnCustom btnGris col-12" th:href="@{/espaceutilisateur}">Vous avez une réservation en cours pour cette aventure</a>
-</div>
+    </div>
+    <!--Check si date de fin dépassée et résa utilisateur : Vous avez participé à cette aventure -->
+    <div th:if="${aReservationTerminee}" class="offset-sm-1 col-sm-10 col-lg-5 col-xl-4 col-12" style="padding:0; background-color: unset; border: unset">
+        <a class="btn btnCustom btnGris col-12" th:href="@{/espaceutilisateur}">Vous avez participé à cette aventure</a>
+    </div>
+    <!--Check si date limite de résa dépassée : Réservations closes -->
+    <div th:if="${!aReservationEnCours && aventure.dateDebut.isAfter(#temporals.createToday()) && aventure.dateCloture.isBefore(#temporals.createToday())}" class="offset-sm-1 col-sm-10 col-lg-5 col-xl-4 col-12" style="padding:0; background-color: unset; border: unset">
+        <button class="btn btnCustom btnGris col-12" disabled>Les réservations sont cloturées</button>
+    </div>
+    <!--Check si date de début dépassée : Aventure en cours -->
+    <div th:if="${!aReservationEnCours && aventure.dateDebut.isBefore(#temporals.createToday()) && aventure.dateFin.isAfter(#temporals.createToday())}" class="offset-sm-1 col-sm-10 col-lg-5 col-xl-4 col-12" style="padding:0; background-color: unset; border: unset">
+        <button class="btn btnCustom btnGris col-12" disabled>Aventure en cours</button>
+    </div>
+    <!--Check si date de fin dépassée : Aventure terminée -->
+    <div th:if="${!aReservationTerminee && aventure.dateFin.isBefore(#temporals.createToday())}" class="offset-sm-1 col-sm-10 col-lg-5 col-xl-4 col-12" style="padding:0; background-color: unset; border: unset">
+        <button class="btn btnCustom btnGris col-12" disabled>Aventure terminée</button>
+    </div>
 
-
-    <!-- Penser a gérer les cas de réservation impossible -->
-    <!--<c:if test="${sessionScope.userGuest.idUtilisateur!=0 && !empty sessionScope.userGuest.idUtilisateur && (livreprete==true || livreReserve==true || attenteComplete==true)}">
-        <form class="card offset-sm-1 col-sm-10 col-12 form-group blockdescription3">
-            <c:if test="${sessionScope.userGuest.idUtilisateur!=0 && !empty sessionScope.userGuest.idUtilisateur && livreprete==true}">
-                <p id="aafficherenligne" class="nonreservation">Reservation impossible. Vous avez déjà un prêt en cours pour cet ouvrage.</p>
-            </c:if>
-            <c:if test="${sessionScope.userGuest.idUtilisateur!=0 && !empty sessionScope.userGuest.idUtilisateur && livreReserve==true}">
-                <p id="aafficherenligne" class="nonreservation">Reservation impossible. Vous avez déjà une réservation en cours pour cet ouvrage.</p>
-            </c:if>
-            <c:if test="${sessionScope.userGuest.idUtilisateur!=0 && !empty sessionScope.userGuest.idUtilisateur && attenteComplete==true}">
-                <p id="aafficherenligne" class="nonreservation">Reservation impossible. La liste d'attente et pleine.</p>
-            </c:if>
-        </form>
-    </c:if>-->
-    <!--  -->
     <form class="card offset-sm-1 col-sm-10 col-12 form-group blockdescription">
         <div class="card-body paneldescription">
             <legend class="label1">Description de l'aventure:</legend>

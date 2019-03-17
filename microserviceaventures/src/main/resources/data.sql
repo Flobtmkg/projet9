@@ -1,6 +1,12 @@
-INSERT INTO categorie (id, nom, description) VALUES (1, 'Mer', 'La mer c''est trop cool !');
-INSERT INTO categorie (id, nom, description) VALUES (2, 'Montagne', 'La montagne ça vous gagne !');
+INSERT INTO categorie (id, nom, description) VALUES (1, 'Montagne', 'La montagne ça vous gagne !');
+INSERT INTO categorie (id, nom, description) VALUES (2, 'Désert Subtropical', 'Pour un dépaysement total dans des paysages à couper le souffle !');
+INSERT INTO categorie (id, nom, description) VALUES (3, 'Pôle', 'Vivez à la fois le grand frois et le grand frisson !');
+INSERT INTO categorie (id, nom, description) VALUES (4, 'Jungle', 'Laissez vous emporter au fin fond des poumons de notre planête !');
 
-INSERT INTO aventure (id, nom, prix, date_debut, date_fin, date_cloture, description, id_categorie, limit_reservation) VALUES (1, 'Aventure1', 100, '2019-02-19', '2019-02-23', '2019-01-19', 'C''est l''aventure 1 whouhou', 1, 34);
-INSERT INTO aventure (id, nom, prix, date_debut, date_fin, date_cloture, description, id_categorie, limit_reservation) VALUES (2, 'Aventure2', 200, '2019-04-06', '2019-04-13', '2019-4-23', 'C''est l''aventure 2 whaaaaa', 1, 45);
-INSERT INTO aventure (id, nom, prix, date_debut, date_fin, date_cloture, description, id_categorie, limit_reservation) VALUES (3, 'Aventure3', 300, '2019-01-14', '2019-01-24', '2019-01-03', 'C''est l''aventure 3 woooooh', 2, 28);
+INSERT INTO aventure (id, nom, prix, date_debut, date_fin, date_cloture, description, id_categorie, limit_reservation) VALUES (1, 'Tour du Pic du Midi d''Ossau', 250, '2019-02-19', '2019-02-23', '2019-01-19', 'C''est la description du tour du Pic du Midi d''Ossau', 1, 30);
+INSERT INTO aventure (id, nom, prix, date_debut, date_fin, date_cloture, description, id_categorie, limit_reservation) VALUES (2, 'Trek dans la Cordillère des Andes', 1700, '2019-03-15', '2019-03-25', '2019-01-15', 'C''est la description du trek dans la Cordillère des Andes', 1, 45);
+INSERT INTO aventure (id, nom, prix, date_debut, date_fin, date_cloture, description, id_categorie, limit_reservation) VALUES (3, 'Séjour dans la Vallée de la Mort', 1800, '2019-07-14', '2019-07-24', '2019-04-14', 'C''est la description du séjour dans la Vallée de la Mort', 2, 3);
+INSERT INTO aventure (id, nom, prix, date_debut, date_fin, date_cloture, description, id_categorie, limit_reservation) VALUES (4, 'Découverte du Sahara', 600, '2019-05-11', '2019-05-17', '2019-03-11', 'C''est la description de la découverte du Sahara', 2, 40);
+INSERT INTO aventure (id, nom, prix, date_debut, date_fin, date_cloture, description, id_categorie, limit_reservation) VALUES (5, 'Séjour en Alaska', 1600, '2019-08-09', '2019-08-19', '2019-04-09', 'C''est la description du séjour en Alaska', 3, 35);
+INSERT INTO aventure (id, nom, prix, date_debut, date_fin, date_cloture, description, id_categorie, limit_reservation) VALUES (6, 'Découverte du Groenland', 1500, '2019-06-20', '2019-06-30', '2019-02-20', 'C''est la description de la découverte du Groenland', 3, 20);
+INSERT INTO aventure (id, nom, prix, date_debut, date_fin, date_cloture, description, id_categorie, limit_reservation) VALUES (7, 'Trek dans le Bassin du Congo', 1200, '2018-11-10', '2018-11-20', '2018-07-10', 'C''est la description du trek dans le Bassin du Congo', 4, 15);

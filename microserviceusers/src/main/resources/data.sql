@@ -1,2 +1,3 @@
-INSERT INTO user (id, nom, prenom, date_naissance, email, password) VALUES (1, 'Camberbet', 'Romain', '1994-12-04', 'romain.c-h@hotmail.fr', 'e46240714b5db3a23eee60479a623efba4d633d27fe4f03c904b9e219a7fbe60');
+INSERT INTO user (id, nom, prenom, date_naissance, email, password) VALUES (1, 'Camberbet', 'Romain', '1994-04-12', 'romain.c-h@hotmail.fr', 'e46240714b5db3a23eee60479a623efba4d633d27fe4f03c904b9e219a7fbe60');
 INSERT INTO user (id, nom, prenom, date_naissance, email, password) VALUES (2, 'Couturier', 'Florian', '1990-10-18', 'manewadress@gmail.com', 'e46240714b5db3a23eee60479a623efba4d633d27fe4f03c904b9e219a7fbe60');
+INSERT INTO user (id, nom, prenom, date_naissance, email, password) VALUES (3, 'Dupond', 'Jean', '1984-03-18', 'adresse@gmail.com', 'e46240714b5db3a23eee60479a623efba4d633d27fe4f03c904b9e219a7fbe60');

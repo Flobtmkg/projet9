@@ -47,11 +47,17 @@ public class AventureController {
         // Calcul des places restantes
         int placesRestantes = reservationManager.getNombreReservationsRestantes(reservations,aventure);
 
-        // Si l'utilisateur est connecté : vérification d'un réservation déjà en cours
+        // Si l'utilisateur est connecté : vérification d'un réservation déjà en cours ou terminée
+        boolean aReservationEnCours;
+        boolean aReservationTerminee;
         User user = (User)request.getSession().getAttribute("userGuest");
         if(user != null){
-            boolean reservationPossible = reservationManager.isReservationPossible(user, aventure);
-            request.setAttribute("reservationPossible", reservationPossible);
+            aReservationEnCours = reservationManager.aReservationEnCours(user, aventure);
+            aReservationTerminee = reservationManager.aReservationTerminee(user, aventure);
+
+        } else {
+            aReservationEnCours = false;
+            aReservationTerminee = false;
         }
 
         // Récupération des réservations avec commentaires
@@ -65,6 +71,8 @@ public class AventureController {
         request.setAttribute("aventure", aventure);
         request.setAttribute("placesRestantes", placesRestantes);
         request.setAttribute("reservations", reservationsAvecCommentaire);
+        request.setAttribute("aReservationEnCours", aReservationEnCours);
+        request.setAttribute("aReservationTerminee", aReservationTerminee);
         request.setAttribute("currentIP", utilitaireManager.getCurrentIPAddress());
 
         return "aventure";
