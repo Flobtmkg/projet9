@@ -1,12 +1,10 @@
 package com.projet9.microservicewebapp.managers;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 
 @Component
 public class ImagesManager {
@@ -14,23 +12,27 @@ public class ImagesManager {
     public static final String entiteeUser = "user";
     public static final String entiteeAventure = "aventure";
 
-    // Value des images par defaut
-    @Value("classpath:/static/img/user.jpg")
-    private Resource defaultImageUser;
-    @Value("classpath:/static/img/icon4.png")
-    private Resource defaultImageAventure;
 
+    private static final String userImage = "static/img/user.jpg";
+    private static final String aventureImage = "static/img/icon4.png";
+
+    @Autowired
+    ResourceLoader resourceLoader;
 
     public byte[] getDefaultImage(String entitee) throws Exception{
-        File f;
+        InputStream is;
         if(entiteeUser.equals(entitee)){
-            f = defaultImageUser.getFile();
+            is = resourceLoader.getClassLoader().getResourceAsStream(userImage);
         }else{
-            f = defaultImageAventure.getFile();
+            is = resourceLoader.getClassLoader().getResourceAsStream(aventureImage);
         }
-        byte[] imageBytes = new byte[(int) f.length()];
-        DataInputStream dis = new DataInputStream(new FileInputStream(f));
-        dis.readFully(imageBytes);
-        return imageBytes;
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] data = new byte[16384];
+        while ((nRead = is.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+        buffer.flush();
+        return buffer.toByteArray();
     }
 }
