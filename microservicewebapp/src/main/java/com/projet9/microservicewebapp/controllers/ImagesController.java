@@ -69,6 +69,7 @@ public class ImagesController {
             try{
                 addImageToResponse(response, imagesManager.getDefaultImage(entitee));
             }catch(Exception e2){
+                e2.printStackTrace();
                 response.setStatus(404);
             }
         }
@@ -81,17 +82,4 @@ public class ImagesController {
         response.getOutputStream().close();
     }
 
-
-    /*private byte[] getDefaultImage(String entitee) throws Exception{
-        File f;
-        if(entiteeUser.equals(entitee)){
-            f = defaultImageUser.getFile();
-        }else{
-            f = defaultImageAventure.getFile();
-        }
-        byte[] imageBytes = new byte[(int) f.length()];
-        DataInputStream dis = new DataInputStream(new FileInputStream(f));
-        dis.readFully(imageBytes);
-        return imageBytes;
-    }*/
 }
