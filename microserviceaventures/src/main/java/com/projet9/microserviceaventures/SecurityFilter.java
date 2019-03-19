@@ -21,7 +21,7 @@ public class SecurityFilter extends GenericFilterBean
         String path = httpRequest.getRequestURI();
         //extract token from header
         final String accessToken = httpRequest.getHeader("ZuulOrigin");
-        if (null != accessToken || path.contains("/actuator")) {
+        if (null != accessToken || path.contains("/actuator") || path.contains("/h2-console")) {
             chain.doFilter(request, response);
         }
     }
